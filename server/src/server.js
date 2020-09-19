@@ -1,65 +1,18 @@
 const { GraphQLServer } = require('graphql-yoga');
-const models = require('./database/models');
 const bodyParser = require('body-parser');
 const session = require('express-session');
-
+const typeDefs = require('./components/graphql.types');
+const resolvers = require('./components/graphql.resolvers');
 const setupAuth = require('./components/auth');
-
-const typeDefs = `
-	type User {
-		email: String!
-		snippets: [Snippet!]
-		snippetGroups: [SnippetGroup!]
-	}
-	
-	type SnippetGroup {
-		name: String!
-		snippets: [Snippet!]
-	}
-	
-	type Snippet {
-		name: String!
-		content: String!
-	}
-
-	type Query {
-		users: [User]
-		user(userId: Int!): User
-	}
-`;
-
-// noinspection JSUnusedGlobalSymbols
-const resolvers = {
-	Query: {
-		users: async () => {
-			return await models.User.findAll();
-		},
-		user: async (parent, { userId }) => {
-			return await models.User.findByPk(userId);
-		}
-	},
-	User: {
-		snippets: async (parent) => {
-			return await models.Snippet.findAll({ where: { userId: parent.dataValues.id } });
-		},
-		snippetGroups: async (parent) => {
-			return await models.SnippetGroup.findAll({ where: { userId: parent.dataValues.id } });
-		},
-	},
-	SnippetGroup: {
-		snippets: async (parent) => {
-			return await models.Snippet.findAll({ where: { snippetGroupId: parent.dataValues.id } });
-		},
-	}
-};
 
 const server = new GraphQLServer({
 	typeDefs,
 	resolvers,
+	context: ({ req, res }) => { req, res },
 });
 
-server.express.use(bodyParser.json());       // to support JSON-encoded bodies
-server.express.use(bodyParser.urlencoded({     // to support URL-encoded bodies
+server.express.use(bodyParser.json());
+server.express.use(bodyParser.urlencoded({
 	extended: true
 }));
 server.express.use(session({

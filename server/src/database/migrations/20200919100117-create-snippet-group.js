@@ -1,7 +1,7 @@
 'use strict';
 module.exports = {
 	up: async (queryInterface, Sequelize) => {
-		await queryInterface.createTable('Snippets', {
+		await queryInterface.createTable('SnippetGroups', {
 			id: {
 				allowNull: false,
 				autoIncrement: true,
@@ -11,14 +11,7 @@ module.exports = {
 			name: {
 				type: Sequelize.STRING
 			},
-			content: {
-				type: Sequelize.TEXT('long')
-			},
 			userId: {
-				type: Sequelize.INTEGER,
-				allowNull: false,
-			},
-			snippetGroupId: {
 				type: Sequelize.INTEGER,
 				allowNull: false,
 			},
@@ -33,6 +26,6 @@ module.exports = {
 		});
 	},
 	down: async (queryInterface, Sequelize) => {
-		await queryInterface.dropTable('Snippets');
+		await queryInterface.dropTable('SnippetGroups');
 	}
 };

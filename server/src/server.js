@@ -6,6 +6,12 @@ const typeDefs = `
 		name: String!
 		email: String!
 		snippets: [Snippet!]
+		snippetGroups: [SnippetGroup!]
+	}
+	
+	type SnippetGroup {
+		name: String!
+		snippets: [Snippet!]
 	}
 	
 	type Snippet {
@@ -37,7 +43,15 @@ const resolvers = {
 	User: {
 		snippets: async (parent, args, { graphModels }) => {
 			return await models.Snippet.findAll({ where: { userId: parent.dataValues.id }});
-		}
+		},
+		snippetGroups: async (parent, args, { graphModels }) => {
+			return await models.SnippetGroup.findAll({ where: { userId: parent.dataValues.id }});
+		},
+	},
+	SnippetGroup: {
+		snippets: async (parent, args, { graphModels }) => {
+			return await models.Snippet.findAll({ where: { snippetGroupId: parent.dataValues.id }});
+		},
 	}
 };
 

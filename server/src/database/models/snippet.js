@@ -9,13 +9,22 @@ module.exports = (sequelize, DataTypes) => {
 				foreignKey: 'userId',
 				as: 'user',
 				onDelete: 'CASCADE',
-			})
+			});
+			Snippet.belongsTo(models.SnippetGroup, {
+				foreignKey: 'snippetGroupId',
+				as: 'snippetGroup',
+				onDelete: 'CASCADE',
+			});
 		}
 	};
 	Snippet.init({
 		name: DataTypes.STRING,
 		content: DataTypes.STRING,
 		userId: {
+			type: DataTypes.INTEGER,
+			allowNull: false,
+		},
+		snippetGroupId: {
 			type: DataTypes.INTEGER,
 			allowNull: false,
 		},

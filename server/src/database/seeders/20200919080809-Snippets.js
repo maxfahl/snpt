@@ -5,6 +5,7 @@ module.exports = {
 			[
 				{
 					userId: 1,
+					snippetGroupId: 2,
 					name: "HTML Boilerplate",
 					content: `
 						<!doctype html>
@@ -30,6 +31,7 @@ module.exports = {
 				},
 				{
 					userId: 1,
+					snippetGroupId: 2,
 					name: "Hello world",
 					content: "Hello world",
 					createdAt: new Date(),
@@ -41,5 +43,5 @@ module.exports = {
 		),
 
 	down: (queryInterface, Sequelize) =>
-		queryInterface.bulkDelete("Posts", null, {})
+		queryInterface.bulkDelete("Snippets", null, {})
 };

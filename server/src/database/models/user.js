@@ -10,6 +10,11 @@ module.exports = (sequelize, DataTypes) => {
 				as: 'snippets',
 				onDelete: 'CASCADE',
 			});
+			User.hasMany(models.SnippetGroup, {
+				foreignKey: 'userId',
+				as: 'snippetGroups',
+				onDelete: 'CASCADE',
+			});
 		}
 	};
 	User.init({

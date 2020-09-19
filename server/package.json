@@ -1,8 +1,21 @@
 {
-  "name": "snpt-server",
-  "version": "0.0.1",
-  "description": "Server for snpt app.",
-  "main": "index.js",
-  "author": "Max Fahl",
-  "license": "MIT"
+	"name": "snpt-server",
+	"version": "0.0.1",
+	"description": "Server for snpt app.",
+	"main": "index.js",
+	"author": "Max Fahl",
+	"license": "MIT",
+	"scripts": {
+		"start": "nodemon server.js"
+	},
+	"devDependencies": {
+		"dotenv": "^8.2.0",
+		"nodemon": "^2.0.4"
+	},
+	"dependencies": {
+		"pg": "^8.3.3",
+		"pg-hstore": "^2.3.3",
+		"sequelize": "^6.3.5",
+		"sequelize-cli": "^6.2.0"
+	}
 }

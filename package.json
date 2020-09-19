@@ -1,0 +1,11 @@
+{
+  "name": "snpt",
+  "version": "0.0.1",
+  "description": "Server and client for snpt app.",
+  "main": "index.js",
+  "author": "Max Fahl",
+  "license": "MIT",
+  "devDependencies": {
+    "concurrency": "^0.1.4"
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "name": "snpt-server",
+  "version": "0.0.1",
+  "description": "Server for snpt app.",
+  "main": "index.js",
+  "author": "Max Fahl",
+  "license": "MIT"
+}

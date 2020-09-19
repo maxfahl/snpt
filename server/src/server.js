@@ -7,7 +7,6 @@ const setupAuth = require('./components/auth');
 
 const typeDefs = `
 	type User {
-		name: String!
 		email: String!
 		snippets: [Snippet!]
 		snippetGroups: [SnippetGroup!]

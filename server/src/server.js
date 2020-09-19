@@ -21,6 +21,7 @@ const typeDefs = `
 
 	type Query {
 		users: [User]
+		user(userId: Int!): User
 	}
 `;
 
@@ -36,6 +37,9 @@ const resolvers = {
 		users: async (parent, args, { graphModels }) => {
 			return await models.User.findAll();
 		},
+		user: async (parent, { userId }, { graphModels }) => {
+			return await models.User.findByPk(userId);
+		}
 		// userSnippets: async (root, { userId }, { graphModels }) => {
 		// 	return await models.Snippet.findAll({ where: { userId }});
 		// }

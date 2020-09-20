@@ -13,11 +13,10 @@ const userComponent = {
 		const token = auth.split('Bearer ')[1];
 		if (!token) throw new AuthenticationError('you should provide a token!');
 
-		const user = await jwt.verify(token, JWT_SECRET, (err, decoded) => {
+		return await jwt.verify(token, JWT_SECRET, (err, decoded) => {
 			if (err) throw new AuthenticationError('invalid token!');
 			return decoded;
 		});
-		return user;
 	}
 };
 

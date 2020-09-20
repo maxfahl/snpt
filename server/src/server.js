@@ -8,6 +8,7 @@ const server = new ApolloServer({
 	resolvers,
 	context: ({ req }) => {
 		const auth = req.headers.authorization || '';
+		console.log(auth);
 		return {
 			auth
 		};

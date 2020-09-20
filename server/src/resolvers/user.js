@@ -26,17 +26,14 @@ const validateInput = (email, password) => {
 	const emailValid = (!!email ? !!email.trim() : false);
 	const passwordValid = (!!password ? !!password.trim() : false);
 	const valid = emailValid && passwordValid;
-
 	const out = {
 		valid,
 		errors: []
 	};
-
 	if (!emailValid)
 		out.errors.push('Email cannot be blank.');
 	if (!passwordValid)
 		out.errors.push('Password cannot be blank.');
-
 	return out;
 };
 
@@ -50,6 +47,8 @@ const resolvers = {
 			const user = await getUser(auth);
 			if (user && user.id === userId) {
 				return await models.User.findByPk(userId);
+			} else {
+				throw new AuthenticationError('Not authorized!');
 			}
 		}
 	},
@@ -88,7 +87,6 @@ const resolvers = {
 			parent,
 			{ email, password }
 		) {
-			console.log('Register user');
 			const { errors, valid } = validateInput(
 				email,
 				password,

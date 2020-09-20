@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { atom } from 'recoil';
+import { atom, selector } from 'recoil';
 import { majorScale, Pane } from "evergreen-ui";
 import SnippetGroupList from "../components/snippet-group-list";
 import SnippetList from "../components/snippet-list";
@@ -20,12 +20,12 @@ export const snippetGroupsState = atom({
 // 	default: [],
 // });
 
-// export const getSnippetGroups = selector({
-// 	key: 'getSnippetGroups',
-// 	get: (get => {
-// 		const
-// 	})
-// });
+export const snippetGroupsSelector = selector({
+	key: 'getSnippetGroups',
+	get: (get => {
+		// const
+	})
+});
 
 export default class Library extends Component {
 
@@ -41,8 +41,12 @@ export default class Library extends Component {
 
 	render() {
 		return (<Pane id="library" width={majorScale(80)} display="flex">
-			<SnippetGroupList />
-			<SnippetList />
+			<Pane className="snippet-group-list-container" flex="1" display="flex" flexDirection="column">
+				<SnippetGroupList />
+			</Pane>
+			<Pane className="snippet-list-container" flex="1">
+				<SnippetList />
+			</Pane>
 		</Pane>);
 	}
 }

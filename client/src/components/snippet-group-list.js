@@ -1,10 +1,41 @@
 import React from 'react'
-import { majorScale, Pane } from "evergreen-ui";
+import { Pane } from "evergreen-ui";
+import { gql, useLazyQuery, useQuery } from "@apollo/client";
+import { useRecoilState } from 'recoil';
+import { snippetGroupsState } from "../containers/library";
+import SnippetGroupListItem from "./snippet-group-list-item";
+
+const GET_USER_SNIPPET_GROUPS = gql`
+  query UserSnippetGroups($userId: Int!) {
+    user(userId: $userId) {
+      snippetGroups {
+      	id,
+      	name
+      }
+    }
+  }
+`;
 
 function SnippetGroupList() {
-	return (<Pane class="snippet-group-list" flex="auto">
+	const [snippetGroups, setSnippetGroups] = useRecoilState(snippetGroupsState);
+	const { loading, data } = useQuery(
+		GET_USER_SNIPPET_GROUPS,
+		{
+			variables: { userId: 1 }
+		}
+	);
 
-	</Pane>);
+	if (loading) return <p>Loading ...</p>;
+
+	if (data && data.user.snippetGroups) {
+		setSnippetGroups(data.user.snippetGroups);
+	}
+
+	return (<>
+		{ snippetGroups.map(sg => (
+			<SnippetGroupListItem snippetGroup={ sg } key={ sg.id }/>
+		)) }
+	</>);
 }
 
 export default SnippetGroupList;

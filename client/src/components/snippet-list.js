@@ -2,9 +2,9 @@ import React from 'react'
 import { Pane } from "evergreen-ui";
 
 function SnippetList() {
-	return (<Pane className="snippet-list" flex="auto">
+	return (<>
 
-	</Pane>);
+	</>);
 }
 
 export default SnippetList;

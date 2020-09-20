@@ -4,7 +4,7 @@ const JWT_SECRET = process.env.JWT_SECRET;
 
 const {
 	AuthenticationError,
-} = require('graphql-yoga');
+} = require('apollo-server');
 
 const userComponent = {
 	getUser: async auth => {

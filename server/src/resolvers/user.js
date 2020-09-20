@@ -9,7 +9,7 @@ const {
 	UserInputError, // Throw an error if empty fields.
 	AuthenticationError,
 	ValidationError
-} = require('graphql-yoga');
+} = require('apollo-server');
 
 const getToken = ({ id, email }) => {
 	return jwt.sign(
@@ -74,19 +74,19 @@ const resolvers = {
 			const user = await models.User.findOne({ where: { email } });
 			if (!user) throw new AuthenticationError('this user is not found!');
 
-			const match = bcrypt.compare(password, user.password);
+			const match = await bcrypt.compare(password, user.password);
 			if (!match) throw new AuthenticationError('wrong password!');
 
 			const token = getToken(user);
 			return {
-				...user.dataValues,
+				user: user.dataValues,
 				token
 			};
 		},
 
 		async RegisterUser(
 			parent,
-			{ user: { email, password } }
+			{ email, password }
 		) {
 			console.log('Register user');
 			const { errors, valid } = validateInput(
@@ -96,7 +96,7 @@ const resolvers = {
 			if (!valid) throw new UserInputError('Error', { errors });
 
 			const user = await models.User.findOne({ where: { email } });
-			if (user) throw new ValidationError('This username is not valid!');
+			if (user) throw new ValidationError('A user with that email already exist!');
 
 			const now = new Date();
 			password = await bcrypt.hash(password, 10); // hashing the password
@@ -110,7 +110,7 @@ const resolvers = {
 			const token = getToken(savedUser);
 
 			return {
-				...savedUser.dataValues,
+				user: savedUser.dataValues,
 				token
 			};
 		}

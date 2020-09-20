@@ -5,14 +5,12 @@ module.exports = {
 			{
 				email: 'max@fahl.se',
 				password: 'none',
-				salt: '',
 				createdAt: new Date(),
 				updatedAt: new Date(),
 			},
 			{
 				email: 'eliinbj@hotmail.com',
 				password: 'none',
-				salt: '',
 				createdAt: new Date(),
 				updatedAt: new Date(),
 			},

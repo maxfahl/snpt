@@ -1,8 +1,13 @@
 const typeDefs = `
 	type User {
 		email: String!
+		token: String!
 		snippets: [Snippet!]
 		snippetGroups: [SnippetGroup!]
+	}
+	input RegisterUserInput {
+		email: String!
+		password: String!
 	}
 	
 	type SnippetGroup {
@@ -18,6 +23,11 @@ const typeDefs = `
 	type Query {
 		users: [User]
 		user(userId: Int!): User
+	}
+	
+	type Mutation {
+		LoginUser(email: String!, password: String!): User!
+		RegisterUser(user: RegisterUserInput!): User!
 	}
 `;
 

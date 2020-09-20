@@ -1,5 +1,7 @@
 import React, { Component } from "react";
-import { majorScale } from "evergreen-ui";
+import { majorScale, Pane } from "evergreen-ui";
+import SnippetGroupList from "../components/snippet-group-list";
+import SnippetList from "../components/snippet-list";
 
 export default class Library extends Component {
 
@@ -8,8 +10,9 @@ export default class Library extends Component {
 	}
 
 	render() {
-		return (<div id="library" style={{ width: majorScale(40) }}>
-			<p>Library</p>
-		</div>);
+		return (<Pane id="library" width={majorScale(80)} display="flex">
+			<SnippetGroupList />
+			<SnippetList />
+		</Pane>);
 	}
 }

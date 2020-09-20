@@ -1,8 +1,8 @@
 import React from 'react'
-import { majorScale, Pane } from "evergreen-ui";
+import { Pane } from "evergreen-ui";
 
 function SnippetList() {
-	return (<Pane class="snippet-list" flex="auto">
+	return (<Pane className="snippet-list" flex="auto">
 
 	</Pane>);
 }

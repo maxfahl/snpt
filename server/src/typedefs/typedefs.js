@@ -11,11 +11,13 @@ const typeDefs = `
 	}
 	
 	type SnippetGroup {
+		id: Int!
 		name: String!
 		snippets: [Snippet!]
 	}
 	
 	type Snippet {
+		id: Int!
 		name: String!
 		content: String!
 	}

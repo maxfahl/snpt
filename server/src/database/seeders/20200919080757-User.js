@@ -4,13 +4,7 @@ module.exports = {
 		[
 			{
 				email: 'max@fahl.se',
-				password: 'none',
-				createdAt: new Date(),
-				updatedAt: new Date(),
-			},
-			{
-				email: 'eliinbj@hotmail.com',
-				password: 'none',
+				password: '$2a$10$vaugLwfYKX1gdMWuQsjFhOUGj1NAF8/JIEkqI/hKOrau2kkVw9.9a',
 				createdAt: new Date(),
 				updatedAt: new Date(),
 			},

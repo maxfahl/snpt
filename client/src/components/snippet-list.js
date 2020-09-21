@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'
 import { useRecoilValue } from "recoil";
 import { selectedSnippetGroupState } from "../containers/library";
 import { gql, useApolloClient } from "@apollo/client";
-import SnippetGroupListItem from "./snippet-group-list-item";
 import SnippetListItem from "./snippet-list-item";
 
 const GET_SNIPPET_GROUP_SNIPPETS = gql`
@@ -22,7 +21,6 @@ function SnippetList() {
 	const client = useApolloClient();
 
 	useEffect(() => {
-		// console.log(client);
 		const fetchSnippetGroupSnippets = async () => {
 			await client.query(
 				{
@@ -42,7 +40,9 @@ function SnippetList() {
 		};
 		if (!!selectedSnippetGroup)
 			fetchSnippetGroupSnippets();
-	}, [selectedSnippetGroup]);
+		else
+			setSnippets([]);
+	}, [selectedSnippetGroup, client]);
 
 	return (<>
 		{ snippets.map(s => (

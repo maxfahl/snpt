@@ -40,7 +40,8 @@ function SnippetGroupList() {
 	});
 
 	const onGroupClick = (e, sg) => {
-		setSelectedSnippetGroup(sg.id);
+		const toSelect = selectedSnippetGroup === sg.id ? null : sg.id;
+		setSelectedSnippetGroup(toSelect);
 	};
 
 	return (<>

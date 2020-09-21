@@ -1,39 +1,54 @@
-import React from 'react'
-import { Pane } from "evergreen-ui";
-import { gql, useLazyQuery, useQuery } from "@apollo/client";
+import React, { useEffect } from 'react'
+import { gql, useApolloClient } from "@apollo/client";
 import { useRecoilState } from 'recoil';
-import { snippetGroupsState } from "../containers/library";
+import { selectedSnippetGroupState, snippetGroupsState } from "../containers/library";
 import SnippetGroupListItem from "./snippet-group-list-item";
 
 const GET_USER_SNIPPET_GROUPS = gql`
-  query UserSnippetGroups($userId: Int!) {
-    user(userId: $userId) {
-      snippetGroups {
-      	id,
-      	name
-      }
+    query UserSnippetGroups($userId: Int!) {
+        user(userId: $userId) {
+            snippetGroups {
+                id,
+                name
+            }
+        }
     }
-  }
 `;
 
 function SnippetGroupList() {
 	const [snippetGroups, setSnippetGroups] = useRecoilState(snippetGroupsState);
-	const { loading, data } = useQuery(
-		GET_USER_SNIPPET_GROUPS,
-		{
-			variables: { userId: 1 }
-		}
-	);
+	const [selectedSnippetGroup, setSelectedSnippetGroup] = useRecoilState(selectedSnippetGroupState);
+	const client = useApolloClient();
 
-	if (loading) return <p>Loading ...</p>;
+	useEffect(() => {
+		const fetchSnippetGroups = async () => {
+			await client.query(
+				{
+					query: GET_USER_SNIPPET_GROUPS,
+					variables: {
+						userId: 1,
+					}
+				}
+			).then(
+				response => setSnippetGroups(response.data.user.snippetGroups),
+				error => {
+					console.error(error);
+				}
+			);
+		};
+		fetchSnippetGroups();
+	});
 
-	if (data && data.user.snippetGroups) {
-		setSnippetGroups(data.user.snippetGroups);
-	}
+	const onGroupClick = (e, sg) => {
+		setSelectedSnippetGroup(sg.id);
+	};
 
 	return (<>
 		{ snippetGroups.map(sg => (
-			<SnippetGroupListItem snippetGroup={ sg } key={ sg.id }/>
+			<SnippetGroupListItem onSelect={ onGroupClick }
+								  isSelected={ selectedSnippetGroup === sg.id }
+								  snippetGroup={ sg }
+								  key={ sg.id }/>
 		)) }
 	</>);
 }

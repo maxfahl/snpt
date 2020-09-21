@@ -1,5 +1,3 @@
-@import './assets/main.css';
-
 html, body, #root, .app {
 	height: 100%;
 }

@@ -1,8 +1,8 @@
 import React, { FunctionComponent, useEffect, useState } from 'react'
-import { useRecoilValue } from "recoil";
-import { selectedSnippetGroupState } from "../containers/library";
 import { gql, useApolloClient } from "@apollo/client";
 import SnippetListItem from "./snippet-list-item";
+import { useOvermind } from "../overmind";
+import { Snippet } from "../models/snippet";
 
 const GET_SNIPPET_GROUP_SNIPPETS = gql`
     query SnippetGroupSnippets($snippetGroupId: Int!) {
@@ -16,33 +16,27 @@ const GET_SNIPPET_GROUP_SNIPPETS = gql`
 `;
 
 const SnippetList: FunctionComponent = () => {
-	const selectedSnippetGroup = useRecoilValue(selectedSnippetGroupState);
-	const [snippets, setSnippets] = useState([]);
+	const { state: { selectedSnippetGroup } } = useOvermind();
+	const [snippets, setSnippets] = useState<Snippet[]>([]);
 	const client = useApolloClient();
 
 	useEffect(() => {
 		const fetchSnippetGroupSnippets = async () => {
-			await client.query(
+			const response = await client.query(
 				{
 					query: GET_SNIPPET_GROUP_SNIPPETS,
 					variables: {
 						snippetGroupId: selectedSnippetGroup
 					}
 				}
-			).then(
-				response => {
-					setSnippets(response.data.snippetGroup.snippets);
-				},
-				error => {
-					console.error(error);
-				}
 			);
+			setSnippets(response.data.snippetGroup.snippets as Snippet[]);
 		};
 		if (!!selectedSnippetGroup)
 			fetchSnippetGroupSnippets();
 		else
 			setSnippets([]);
-	}, [selectedSnippetGroup, client]);
+	}, [selectedSnippetGroup]);
 
 	return (<>
 		{ snippets.map(s => (

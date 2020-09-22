@@ -2,11 +2,16 @@
 	"compilerOptions": {
 		"target": "es5",
 		"module": "commonjs",
-		"strict": false,
+		"strict": true,
 		"jsx": "react",
 		"lib": ["dom", "es2015"],
 		"allowSyntheticDefaultImports": true,
 		"esModuleInterop": true,
-		"experimentalDecorators": true
-	}
+		"experimentalDecorators": true,
+		"noImplicitAny": false
+	},
+	"exclude": [
+		"**/*.spec.ts",
+		"node_modules/**/*"
+	]
 }

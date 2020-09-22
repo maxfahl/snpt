@@ -1,7 +1,8 @@
 import React, { FunctionComponent, useEffect, useState } from 'react'
 import { gql, useApolloClient } from "@apollo/client";
 import SnippetGroupListItem from "./snippet-group-list-item";
-import { useApp } from "../overmind";
+import { useOvermind } from "../overmind";
+import { SnippetGroup } from "../models/snippet-group";
 
 const GET_USER_SNIPPET_GROUPS = gql`
     query UserSnippetGroups($userId: Int!) {
@@ -15,38 +16,32 @@ const GET_USER_SNIPPET_GROUPS = gql`
 `;
 
 const SnippetGroupList: FunctionComponent = () => {
-	const [snippetGroups, setSnippetGroups] = useState([]);
-	// const [snippetGroups, setSnippetGroups] = useRecoilState(snippetGroupsState);
-	// const [selectedSnippetGroup, setSelectedSnippetGroup] = useRecoilState(selectedSnippetGroupState);
-	const { state: { selectedSnippetGroup }, actions: { setSelectedSnipperGroup } } = useApp();
+	const [snippetGroups, setSnippetGroups] = useState<SnippetGroup[]>([]);
+	const { state: { selectedSnippetGroup }, actions: { setSelectedSnipperGroup } } = useOvermind();
 	const client = useApolloClient();
 
 	useEffect(() => {
 		const fetchSnippetGroups = async () => {
-			await client.query(
+			const response = await client.query(
 				{
 					query: GET_USER_SNIPPET_GROUPS,
 					variables: {
 						userId: 1,
 					}
 				}
-			).then(
-				response => setSnippetGroups(response.data.user.snippetGroups),
-				error => {
-					console.error(error);
-				}
 			);
+			setSnippetGroups(response.data.user.snippetGroups as SnippetGroup[]);
 		};
 		fetchSnippetGroups();
 	});
 
 	const onGroupClick = (e: MouseEvent, sg) => {
-		const toSelect = selectedSnippetGroup === sg.id ? null : sg.id;
+		const toSelect = selectedSnippetGroup === sg.id ? undefined : sg.id;
 		setSelectedSnipperGroup(toSelect);
 	};
 
 	return (<>
-		{ snippetGroups.map(sg => (
+		{ snippetGroups.map((sg) => (
 			<SnippetGroupListItem onSelect={ onGroupClick }
 								  isSelected={ selectedSnippetGroup === sg.id }
 								  snippetGroup={ sg }

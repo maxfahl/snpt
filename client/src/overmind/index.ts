@@ -10,7 +10,7 @@ export const config = {
 	// effects,
 };
 
-export const useApp = createHook<typeof config>();
+export const useOvermind = createHook<typeof config>();
 
 declare module 'overmind' {
 	interface Config extends IConfig<typeof config> {}

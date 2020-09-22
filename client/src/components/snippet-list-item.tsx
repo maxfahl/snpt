@@ -1,22 +1,22 @@
 import React, { FunctionComponent } from 'react'
-import { Heading, majorScale, Pane } from "evergreen-ui";
+import { Snippet } from "../models/snippet";
 
 type SnippetListItemProps = {
-	snippet: any,
+	snippet: Snippet,
 }
 
 const SnippetListItem: FunctionComponent<SnippetListItemProps> = ({ snippet }) => {
 	const myClasses = [
 		'snippet-list-item',
+		'py-2',
+		'px-4',
 	];
 
 	return (
-		<Pane className={myClasses.join(' ')}
-			  padding={ majorScale(1) }
-			  borderBottom="muted">
-			<Heading size={ 500 }>{ snippet.name }</Heading>
-		</Pane>
+		<div className={myClasses.join(' ')}>
+			<span className="text-xl">{ snippet.name }</span>
+		</div>
 	);
-}
+};
 
 export default SnippetListItem;

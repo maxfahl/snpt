@@ -2,7 +2,7 @@ const tailwindcss = require('tailwindcss');
 
 const IS_DEV = process.env.NODE_ENV === 'development';
 
-const plugins = [tailwindcss];
+const plugins = [tailwindcss('./tailwind.config.js')];
 
 if (!IS_DEV) {
 	const purgecss = require('@fullhuman/postcss-purgecss');

@@ -1,26 +1,28 @@
-import React, { FunctionComponent } from 'react'
-import { Heading, majorScale, Pane } from "evergreen-ui";
+import React, { FunctionComponent, MouseEvent } from 'react'
+import { SnippetGroup } from "../models/snippet-group";
 
 type SnippetGroupListItemProps = {
-	snippetGroup: any,
+	snippetGroup: SnippetGroup,
 	isSelected: boolean,
-	onSelect: (e: MouseEvent, sg: any) => void
+	onSelect: (e: MouseEvent, sg: SnippetGroup) => void
 }
 
 const SnippetGroupListItem: FunctionComponent<SnippetGroupListItemProps> = ({ snippetGroup, isSelected, onSelect }) => {
 	const myClasses = [
 		'snippet-group-list-item',
+		'py-2',
+		'px-4',
 		isSelected && 'selected'
 	];
 
 	return (
-		<Pane className={myClasses.join(' ')}
-			  background={isSelected ? 'tint2' : 'white'}
-			  padding={ majorScale(1) }
-			  borderBottom="muted"
-			  onClick={ e => onSelect(e, snippetGroup) }>
-			<Heading size={ 500 }>{ snippetGroup.name }</Heading>
-		</Pane>
+		<div className={myClasses.join(' ')}
+			  // background={isSelected ? 'tint2' : 'white'}
+			  // padding={ majorScale(1) }
+			  // borderBottom="muted"
+			  onClick={ (e: MouseEvent) => onSelect(e, snippetGroup) }>
+			<span className="text-xl">{ snippetGroup.name }</span>
+		</div>
 	);
 };
 

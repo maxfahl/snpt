@@ -1,7 +1,6 @@
-// import './App.css';
+import './App.css';
 import React, { FunctionComponent } from 'react';
 import { ApolloClient, InMemoryCache, ApolloProvider, createHttpLink } from '@apollo/client';
-import { majorScale, Pane } from "evergreen-ui";
 import Library from "./containers/library";
 import Editor from "./containers/editor";
 import { setContext } from "@apollo/client/link/context";
@@ -41,15 +40,15 @@ const App: FunctionComponent = () => {
 		<div className="app">
 			<Provider value={ overmind }>
 				<ApolloProvider client={ client }>
-					<Pane width="100%" height="100%" display="flex" flexDirection="column">
-						<Pane className="header" height={ majorScale(10) }>
+					<div className="bg-gray-900 text-white h-screen" style={{ display: 'flex', flexDirection: "column"}}>
+						<div className="header h-20">
 
-						</Pane>
-						<Pane className="main" flex="auto" display="flex">
+						</div>
+						<div className="main" style={{ flex: "1", display: "flex" }}>
 							<Library/>
 							<Editor/>
-						</Pane>
-					</Pane>
+						</div>
+					</div>
 				</ApolloProvider>
 			</Provider>
 		</div>

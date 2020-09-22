@@ -57,9 +57,9 @@ export const state: State = {
 */
 
 export type State = {
-	selectedSnippetGroup: number
+	selectedSnippetGroup: number|undefined
 };
 
 export const state: State = {
-	selectedSnippetGroup: null
+	selectedSnippetGroup: undefined
 };

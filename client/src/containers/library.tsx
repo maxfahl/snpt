@@ -3,18 +3,23 @@ import { atom } from 'recoil';
 import { majorScale, Pane } from "evergreen-ui";
 import SnippetGroupList from "../components/snippet-group-list";
 import SnippetList from "../components/snippet-list";
+import { useApp } from "../overmind";
+import { state } from "../overmind/state";
+import { createHook } from "overmind-react";
 
-export const snippetGroupsState = atom({
-	key: 'snippetGroups',
-	default: [],
-});
-
-export const selectedSnippetGroupState = atom({
-	key: 'selectedSnippetGroup',
-	default: null,
-});
+// export const snippetGroupsState = atom({
+// 	key: 'snippetGroups',
+// 	default: [],
+// });
+//
+// export const selectedSnippetGroupState = atom({
+// 	key: 'selectedSnippetGroup',
+// 	default: null,
+// });
 
 export default class Library extends Component {
+	// const { state, actions } = useApp();
+
 	render() {
 		return (<Pane id="library" width={majorScale(80)} display="flex">
 			<Pane className="snippet-group-list-container" flex="1" display="flex" flexDirection="column">

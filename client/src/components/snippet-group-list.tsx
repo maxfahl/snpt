@@ -1,8 +1,7 @@
-import React, { FunctionComponent, useEffect } from 'react'
+import React, { FunctionComponent, useEffect, useState } from 'react'
 import { gql, useApolloClient } from "@apollo/client";
-import { useRecoilState } from 'recoil';
-import { selectedSnippetGroupState, snippetGroupsState } from "../containers/library";
 import SnippetGroupListItem from "./snippet-group-list-item";
+import { useApp } from "../overmind";
 
 const GET_USER_SNIPPET_GROUPS = gql`
     query UserSnippetGroups($userId: Int!) {
@@ -16,8 +15,10 @@ const GET_USER_SNIPPET_GROUPS = gql`
 `;
 
 const SnippetGroupList: FunctionComponent = () => {
-	const [snippetGroups, setSnippetGroups] = useRecoilState(snippetGroupsState);
-	const [selectedSnippetGroup, setSelectedSnippetGroup] = useRecoilState(selectedSnippetGroupState);
+	const [snippetGroups, setSnippetGroups] = useState([]);
+	// const [snippetGroups, setSnippetGroups] = useRecoilState(snippetGroupsState);
+	// const [selectedSnippetGroup, setSelectedSnippetGroup] = useRecoilState(selectedSnippetGroupState);
+	const { state: { selectedSnippetGroup }, actions: { setSelectedSnipperGroup } } = useApp();
 	const client = useApolloClient();
 
 	useEffect(() => {
@@ -41,7 +42,7 @@ const SnippetGroupList: FunctionComponent = () => {
 
 	const onGroupClick = (e: MouseEvent, sg) => {
 		const toSelect = selectedSnippetGroup === sg.id ? null : sg.id;
-		setSelectedSnippetGroup(toSelect);
+		setSelectedSnipperGroup(toSelect);
 	};
 
 	return (<>

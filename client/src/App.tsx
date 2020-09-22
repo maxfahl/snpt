@@ -1,16 +1,22 @@
 // import './App.css';
 import React, { FunctionComponent } from 'react';
-import { RecoilRoot } from "recoil";
 import { ApolloClient, InMemoryCache, ApolloProvider, createHttpLink } from '@apollo/client';
 import { majorScale, Pane } from "evergreen-ui";
 import Library from "./containers/library";
 import Editor from "./containers/editor";
 import { setContext } from "@apollo/client/link/context";
+import { createOvermind } from "overmind";
+import { config } from "./overmind";
+import { Provider } from "overmind-react";
+
+export const overmind = createOvermind(config, {
+	devtools: false,
+});
 
 const App: FunctionComponent = () => {
 
 	const httpLink = createHttpLink({
-		uri: 'http://localhost:3001'
+		uri: 'http://localhost:3001',
 	});
 
 	const authLink = setContext((_, { headers }) => {
@@ -21,31 +27,31 @@ const App: FunctionComponent = () => {
 		return {
 			headers: {
 				...headers,
-				authorization: token ? `Bearer ${token}` : "",
-			}
+				authorization: token ? `Bearer ${ token }` : "",
+			},
 		}
 	});
 
 	const client = new ApolloClient({
 		link: authLink.concat(httpLink),
-		cache: new InMemoryCache()
+		cache: new InMemoryCache(),
 	});
 
 	return (
 		<div className="app">
-			<RecoilRoot>
-				<ApolloProvider client={client}>
+			<Provider value={ overmind }>
+				<ApolloProvider client={ client }>
 					<Pane width="100%" height="100%" display="flex" flexDirection="column">
-						<Pane className="header" height={majorScale(10)}>
+						<Pane className="header" height={ majorScale(10) }>
 
 						</Pane>
 						<Pane className="main" flex="auto" display="flex">
-							<Library />
-							<Editor />
+							<Library/>
+							<Editor/>
 						</Pane>
 					</Pane>
 				</ApolloProvider>
-			</RecoilRoot>
+			</Provider>
 		</div>
 	);
 };

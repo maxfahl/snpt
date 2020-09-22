@@ -1,21 +1,27 @@
-import React from 'react'
+import React, { FunctionComponent } from 'react'
 import { Heading, majorScale, Pane } from "evergreen-ui";
 
-function SnippetGroupListItem(props) {
+type SnippetGroupListItemProps = {
+	snippetGroup: any,
+	isSelected: boolean,
+	onSelect: (e: MouseEvent, sg: any) => void
+}
+
+const SnippetGroupListItem: FunctionComponent<SnippetGroupListItemProps> = ({ snippetGroup, isSelected, onSelect }) => {
 	const myClasses = [
 		'snippet-group-list-item',
-		props.isSelected && 'selected'
+		isSelected && 'selected'
 	];
 
 	return (
 		<Pane className={myClasses.join(' ')}
-			  background={props.isSelected ? 'tint2' : 'white'}
+			  background={isSelected ? 'tint2' : 'white'}
 			  padding={ majorScale(1) }
 			  borderBottom="muted"
-			  onClick={ e => props.onSelect(e, props.snippetGroup) }>
-			<Heading size={ 500 }>{ props.snippetGroup.name }</Heading>
+			  onClick={ e => onSelect(e, snippetGroup) }>
+			<Heading size={ 500 }>{ snippetGroup.name }</Heading>
 		</Pane>
 	);
-}
+};
 
 export default SnippetGroupListItem;

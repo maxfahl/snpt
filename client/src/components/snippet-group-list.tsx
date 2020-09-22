@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { FunctionComponent, useEffect } from 'react'
 import { gql, useApolloClient } from "@apollo/client";
 import { useRecoilState } from 'recoil';
 import { selectedSnippetGroupState, snippetGroupsState } from "../containers/library";
@@ -15,7 +15,7 @@ const GET_USER_SNIPPET_GROUPS = gql`
     }
 `;
 
-function SnippetGroupList() {
+const SnippetGroupList: FunctionComponent = () => {
 	const [snippetGroups, setSnippetGroups] = useRecoilState(snippetGroupsState);
 	const [selectedSnippetGroup, setSelectedSnippetGroup] = useRecoilState(selectedSnippetGroupState);
 	const client = useApolloClient();
@@ -52,6 +52,6 @@ function SnippetGroupList() {
 								  key={ sg.id }/>
 		)) }
 	</>);
-}
+};
 
 export default SnippetGroupList;

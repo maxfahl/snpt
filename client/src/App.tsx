@@ -1,5 +1,5 @@
 // import './App.css';
-import React from 'react';
+import React, { FunctionComponent } from 'react';
 import { RecoilRoot } from "recoil";
 import { ApolloClient, InMemoryCache, ApolloProvider, createHttpLink } from '@apollo/client';
 import { majorScale, Pane } from "evergreen-ui";
@@ -7,7 +7,7 @@ import Library from "./containers/library";
 import Editor from "./containers/editor";
 import { setContext } from "@apollo/client/link/context";
 
-const App = ({}) => {
+const App: FunctionComponent = () => {
 
 	const httpLink = createHttpLink({
 		uri: 'http://localhost:3001'
@@ -28,7 +28,6 @@ const App = ({}) => {
 
 	const client = new ApolloClient({
 		link: authLink.concat(httpLink),
-		// uri: 'http://localhost:3001',
 		cache: new InMemoryCache()
 	});
 

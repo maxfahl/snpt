@@ -1,7 +1,11 @@
-import React from 'react'
+import React, { FunctionComponent } from 'react'
 import { Heading, majorScale, Pane } from "evergreen-ui";
 
-function SnippetListItem(props) {
+type SnippetListItemProps = {
+	snippet: any,
+}
+
+const SnippetListItem: FunctionComponent<SnippetListItemProps> = ({ snippet }) => {
 	const myClasses = [
 		'snippet-list-item',
 	];
@@ -10,7 +14,7 @@ function SnippetListItem(props) {
 		<Pane className={myClasses.join(' ')}
 			  padding={ majorScale(1) }
 			  borderBottom="muted">
-			<Heading size={ 500 }>{ props.snippet.name }</Heading>
+			<Heading size={ 500 }>{ snippet.name }</Heading>
 		</Pane>
 	);
 }

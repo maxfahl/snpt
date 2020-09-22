@@ -7,7 +7,7 @@ import Library from "./containers/library";
 import Editor from "./containers/editor";
 import { setContext } from "@apollo/client/link/context";
 
-function App() {
+const App = ({}) => {
 
 	const httpLink = createHttpLink({
 		uri: 'http://localhost:3001'
@@ -16,7 +16,7 @@ function App() {
 	const authLink = setContext((_, { headers }) => {
 		// get the authentication token from local storage if it exists
 		// const token = localStorage.getItem('token');
-		const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJtYXhAZmFobC5zZSIsImlhdCI6MTYwMDY4OTE0OCwiZXhwIjoxNjAwNzc1NTQ4fQ.KnV-i8R9J4aD_OAG91PvBl5s8ogHF9lO0d2MKCT23Xk";
+		const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJtYXhAZmFobC5zZSIsImlhdCI6MTYwMDc4MDc5OCwiZXhwIjoxNjAwODY3MTk4fQ.h4W42kqp1U9rtn8MdqnlHtt6-SpWQb9kR-ZarTJ8n6A";
 		// return the headers to the context so httpLink can read them
 		return {
 			headers: {
@@ -49,6 +49,6 @@ function App() {
 			</RecoilRoot>
 		</div>
 	);
-}
+};
 
 export default App;

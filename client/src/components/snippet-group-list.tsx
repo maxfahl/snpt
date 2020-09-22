@@ -39,7 +39,7 @@ function SnippetGroupList() {
 		fetchSnippetGroups();
 	});
 
-	const onGroupClick = (e, sg) => {
+	const onGroupClick = (e: MouseEvent, sg) => {
 		const toSelect = selectedSnippetGroup === sg.id ? null : sg.id;
 		setSelectedSnippetGroup(toSelect);
 	};

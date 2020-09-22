@@ -15,7 +15,12 @@ if (!IS_DEV) {
 
 	plugins.push(
 		purgecss({
-			content: ['src/*.html'],
+			content: [
+				'src/*.html',
+				// '**/*.js',
+				// './node_modules/tailwindcss-dark-mode/prefers-dark.js'
+			],
+			// whitelist: ['mode-dark'],
 			extractors: [
 				{
 					extractor: TailwindExtractor,

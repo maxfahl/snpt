@@ -9,7 +9,7 @@ module.exports = {
 	important: false,
 	separator: ':',
 	theme: {
-		darkSelector: '.mode-dark',
+		// darkSelector: '.mode-dark',
 		screens: {
 			sm: '640px',
 			md: '768px',
@@ -779,12 +779,12 @@ module.exports = {
 		transitionDuration: ['responsive'],
 		transitionDelay: ['responsive'],
 		animation: ['responsive'],
-		backgroundColor: ['dark', 'dark-hover', 'dark-group-hover', 'dark-even', 'dark-odd'],
-		borderColor: ['dark', 'dark-disabled', 'dark-focus', 'dark-focus-within'],
-		textColor: ['dark', 'dark-hover', 'dark-active', 'dark-placeholder']
+		// backgroundColor: ['dark', 'dark-hover', 'dark-group-hover', 'dark-even', 'dark-odd'],
+		// borderColor: ['dark', 'dark-disabled', 'dark-focus', 'dark-focus-within'],
+		// textColor: ['dark', 'dark-hover', 'dark-active', 'dark-placeholder']
 	},
 	corePlugins: {},
 	plugins: [
-		require('tailwindcss-dark-mode')()
+		// require('tailwindcss-dark-mode')()
 	],
 }

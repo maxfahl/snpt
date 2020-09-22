@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useEffect, useState } from 'react'
+import React, { FunctionComponent, MouseEvent, useEffect, useState } from 'react'
 import { gql, useApolloClient } from "@apollo/client";
 import SnippetListItem from "./snippet-list-item";
 import { useOvermind } from "../overmind";
@@ -16,8 +16,8 @@ const GET_SNIPPET_GROUP_SNIPPETS = gql`
 `;
 
 const SnippetList: FunctionComponent = () => {
-	const { state: { selectedSnippetGroup } } = useOvermind();
 	const [snippets, setSnippets] = useState<Snippet[]>([]);
+	const { state: { selectedSnippet, selectedSnippetGroup }, actions: { setSelectedSnippet } } = useOvermind();
 	const client = useApolloClient();
 
 	useEffect(() => {
@@ -38,11 +38,19 @@ const SnippetList: FunctionComponent = () => {
 			setSnippets([]);
 	}, [selectedSnippetGroup]);
 
-	return (<>
+	const onSnippetClick = (e: MouseEvent, s: Snippet) => {
+		const toSelect = selectedSnippet === s.id ? 0 : s.id;
+		setSelectedSnippet(toSelect);
+	};
+
+	return (<div className="snippet-list divide-y divide-gray-800 border-r border-gray-800 flex-1 flex flex-col">
 		{ snippets.map(s => (
-			<SnippetListItem snippet={ s } key={ s.id }/>
+			<SnippetListItem isSelected={ selectedSnippet === s.id }
+							 onSelect={ onSnippetClick }
+							 snippet={ s }
+							 key={ s.id }/>
 		)) }
-	</>);
+	</div>);
 };
 
 export default SnippetList;

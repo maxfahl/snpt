@@ -12,16 +12,19 @@ const SnippetGroupListItem: FunctionComponent<SnippetGroupListItemProps> = ({ sn
 		'snippet-group-list-item',
 		'py-2',
 		'px-4',
-		isSelected && 'selected'
+		'cursor-pointer',
+		'transition-colors',
+		'duration-200',
+		'flex'
 	];
+
+	if (isSelected)
+		myClasses.push('bg-gray-800');
 
 	return (
 		<div className={myClasses.join(' ')}
-			  // background={isSelected ? 'tint2' : 'white'}
-			  // padding={ majorScale(1) }
-			  // borderBottom="muted"
 			  onClick={ (e: MouseEvent) => onSelect(e, snippetGroup) }>
-			<span className="text-xl">{ snippetGroup.name }</span>
+			<span className="md:text-md lg:text-lg flex-1 truncate">{ snippetGroup.name }</span>
 		</div>
 	);
 };

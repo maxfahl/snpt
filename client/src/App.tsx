@@ -41,7 +41,7 @@ const App: FunctionComponent = () => {
 			<Provider value={ overmind }>
 				<ApolloProvider client={ client }>
 					<div className="bg-gray-900 text-white h-screen" style={{ display: 'flex', flexDirection: "column"}}>
-						<div className="header h-20">
+						<div className="header h-16 border-b border-gray-800">
 
 						</div>
 						<div className="main" style={{ flex: "1", display: "flex" }}>

@@ -1,37 +1,23 @@
-import { derived } from 'overmind';
-/**
-export enum Filter {
-	ALL = 'all',
-	ACTIVE = 'active',
-	COMPLETED = 'completed',
+export type Auth = {
+	token: string;
 }
 
-export type Todo = {
-	id: string;
-	title: string;
-	completed: boolean;
-};
-
-type State = {
-	filter: Filter;
-	newTodoTitle: string;
-	todos: {
-		[id: string]: Todo;
-	};
-	editingTodoId: string | null;
-	editingTodoTitle: string;
-	currentTodos: Todo[];
-	activeTodoCount: number;
-	hasCompletedTodos: boolean;
-	isAllTodosChecked: boolean;
+export type State = {
+	selectedSnippetGroup: number,
+	selectedSnippet: number,
+	auth: Auth
 };
 
 export const state: State = {
-	filter: Filter.ALL,
-	newTodoTitle: '',
-	todos: {},
-	editingTodoId: null,
-	editingTodoTitle: '',
+	auth: {
+		token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJtYXhAZmFobC5zZSIsImlhdCI6MTYwMDg2OTUzMSwiZXhwIjoxNjAwOTU1OTMxfQ.DOuB5ueAQJ3gDNtkI7vIeJAEeHZrK10wJVI0u2F1XWQ'
+	},
+	selectedSnippetGroup: 0,
+	selectedSnippet: 0
+};
+
+/**
+ export const state: State = {
 	currentTodos: derived(({ todos, filter }: State) => {
 		return Object.values(todos).filter(todo => {
 			switch (filter) {
@@ -54,14 +40,4 @@ export const state: State = {
 		return currentTodos.every(todo => todo.completed);
 	}),
 };
-*/
-
-export type State = {
-	selectedSnippetGroup: number,
-	selectedSnippet: number
-};
-
-export const state: State = {
-	selectedSnippetGroup: 0,
-	selectedSnippet: 0
-};
+ */

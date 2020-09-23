@@ -3,17 +3,13 @@ import SnippetListItem from "./snippet-list-item";
 import { useOvermind } from "../overmind";
 import { Snippet } from "../models/snippet";
 
-
-
 const SnippetList: FunctionComponent = () => {
 	const [snippets, setSnippets] = useState<Snippet[]>([]);
 	const { state: { selectedSnippet, selectedSnippetGroup }, actions: { setSelectedSnippet, getSnippetGroupsSnippets } } = useOvermind();
-	// const client = useApolloClient();
 
 	useEffect(() => {
 		const fetchSnippetGroupSnippets = async () => {
-			const snippets = await getSnippetGroupsSnippets(selectedSnippetGroup);
-			setSnippets(snippets);
+			setSnippets(await getSnippetGroupsSnippets(selectedSnippetGroup));
 		};
 		if (!!selectedSnippetGroup)
 			fetchSnippetGroupSnippets();
@@ -22,8 +18,7 @@ const SnippetList: FunctionComponent = () => {
 	}, [selectedSnippetGroup]);
 
 	const onSnippetClick = (e: MouseEvent, s: Snippet) => {
-		const toSelect = selectedSnippet === s.id ? 0 : s.id;
-		setSelectedSnippet(toSelect);
+		setSelectedSnippet(s.id);
 	};
 
 	return (<div className="snippet-list divide-y divide-gray-800 border-r border-gray-800 flex-1 flex flex-col">

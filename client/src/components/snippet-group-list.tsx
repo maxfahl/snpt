@@ -9,15 +9,13 @@ const SnippetGroupList: FunctionComponent = () => {
 
 	useEffect(() => {
 		const fetchSnippetGroups = async () => {
-			const snippetGroups = await getUserSnippetGroups(1);
-			setSnippetGroups(snippetGroups as SnippetGroup[]);
+			setSnippetGroups(await getUserSnippetGroups(1) as SnippetGroup[]);
 		};
 		fetchSnippetGroups();
 	});
 
 	const onGroupClick = (e: MouseEvent, sg: SnippetGroup) => {
-		const toSelect = selectedSnippetGroup === sg.id ? 0 : sg.id;
-		setSelectedSnippetGroup(toSelect);
+		setSelectedSnippetGroup(sg.id);
 	};
 
 	return (<div className="snippet-group-list divide-y divide-gray-800 border-r border-gray-800 flex-1 flex flex-col">

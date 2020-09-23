@@ -11,8 +11,9 @@ type Mutation {
 }
 
 type Query {
+    snippet(snippetId: Int!): Snippet!
     snippetGroup(snippetGroupId: Int!): SnippetGroup!
-    user(userId: Int!): User
+    user(userId: Int!): User!
     users: [User]
 }
 

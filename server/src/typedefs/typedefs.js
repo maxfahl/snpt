@@ -24,7 +24,7 @@ const typeDefs = `
 
 	type Query {
 		users: [User]
-		user(userId: Int!): User
+		user(userId: Int!): User!
 		snippetGroup(snippetGroupId: Int!): SnippetGroup!
 		snippet(snippetId: Int!): Snippet!
 	}

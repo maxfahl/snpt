@@ -8,21 +8,10 @@ const server = new ApolloServer({
 	resolvers,
 	context: ({ req }) => {
 		const auth = req.headers.authorization || '';
-		// console.log(auth);
 		return {
 			auth
 		};
 	}
 });
-
-// app.use(bodyParser.json());
-// app.use(bodyParser.urlencoded({
-// 	extended: true
-// }));
-// app.use(session({
-// 	secret: "maxIsBrilliant!2?_",
-// 	resave: true,
-// 	saveUninitialized: true
-// }));
 
 module.exports = server;

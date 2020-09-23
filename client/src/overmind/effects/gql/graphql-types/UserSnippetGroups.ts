@@ -17,7 +17,7 @@ export interface UserSnippetGroups_user {
 }
 
 export interface UserSnippetGroups {
-  user: UserSnippetGroups_user | null;
+  user: UserSnippetGroups_user;
 }
 
 export interface UserSnippetGroupsVariables {

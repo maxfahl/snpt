@@ -413,7 +413,10 @@ module.exports = {
 			'2': '2',
 		},
 		textColor: theme => theme('colors'),
-		textOpacity: theme => theme('opacity'),
+		textOpacity: theme => ({
+			'10': '0.1',
+			...theme('opacity'),
+		}),
 		width: theme => ({
 			auto: 'auto',
 			...theme('spacing'),

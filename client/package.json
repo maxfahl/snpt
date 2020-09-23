@@ -3,20 +3,25 @@
 	"version": "0.0.1",
 	"private": true,
 	"dependencies": {
-		"@apollo/client": "^3.2.0",
 		"@testing-library/jest-dom": "^4.2.4",
 		"@testing-library/react": "^9.3.2",
 		"@testing-library/user-event": "^7.1.2",
-		"graphql": "^15.3.0",
+		"apollo": "^2.31.0",
+		"graphql": "^14.0.0 || ^15.0.0",
+		"graphql-tag": "^2.11.0",
 		"overmind": "^25.0.2",
+		"overmind-graphql": "^5.0.2",
 		"overmind-react": "^26.0.2",
 		"prop-types": "^15.7.2",
 		"react": "^16.8.0",
 		"react-dom": "^16.8.0",
 		"react-scripts": "3.4.3",
-		"recoil": "^0.0.13"
+		"recoil": "^0.0.13",
+		"subscriptions-transport-ws": "^0.9.0"
 	},
 	"scripts": {
+		"schema": "apollo schema:download --endpoint=http://localhost:3001 graphql-schema.json && apollo codegen:generate --localSchemaFile=graphql-schema.json --target=typescript --includes=src/overmind/**/*.ts --tagName=gql --no-addTypename --globalTypesFile=src/overmind/graphql-global-types.ts graphql-types",
+		"schemaBU": "apollo schema:download --header='X-Hasura-Admin-Secret: password' --endpoint=http://some-endpoint.dev graphql-schema.json && apollo codegen:generate --localSchemaFile=graphql-schema.json --target=typescript --includes=src/overmind/**/*.ts --tagName=gql --no-addTypename --globalTypesFile=src/overmind/graphql-global-types.ts graphql-types",
 		"start": "parcel src/index.html",
 		"build": "npx parcel build src/index.html",
 		"test": "react-scripts test",

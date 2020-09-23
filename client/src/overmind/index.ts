@@ -2,11 +2,16 @@ import { state } from './state';
 import * as actions from './actions';
 import { IConfig } from 'overmind';
 import { createHook } from "overmind-react";
+import { gql } from "./effects/gql";
+import { onInitialize } from "./onInitialize";
 
 export const config = {
-	// onInitialize,
+	onInitialize,
 	state,
 	actions,
+	effects: {
+		gql
+	}
 	// effects,
 };
 

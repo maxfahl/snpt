@@ -1,36 +1,19 @@
 import React, { FunctionComponent, MouseEvent, useEffect, useState } from 'react'
-import { gql, useApolloClient } from "@apollo/client";
 import SnippetListItem from "./snippet-list-item";
 import { useOvermind } from "../overmind";
 import { Snippet } from "../models/snippet";
 
-const GET_SNIPPET_GROUP_SNIPPETS = gql`
-    query SnippetGroupSnippets($snippetGroupId: Int!) {
-		snippetGroup(snippetGroupId: $snippetGroupId) {
-			snippets {
-				id,
-				name
-			}
-		}
-    }
-`;
+
 
 const SnippetList: FunctionComponent = () => {
 	const [snippets, setSnippets] = useState<Snippet[]>([]);
-	const { state: { selectedSnippet, selectedSnippetGroup }, actions: { setSelectedSnippet } } = useOvermind();
-	const client = useApolloClient();
+	const { state: { selectedSnippet, selectedSnippetGroup }, actions: { setSelectedSnippet, getSnippetGroupsSnippets } } = useOvermind();
+	// const client = useApolloClient();
 
 	useEffect(() => {
 		const fetchSnippetGroupSnippets = async () => {
-			const response = await client.query(
-				{
-					query: GET_SNIPPET_GROUP_SNIPPETS,
-					variables: {
-						snippetGroupId: selectedSnippetGroup
-					}
-				}
-			);
-			setSnippets(response.data.snippetGroup.snippets as Snippet[]);
+			const snippets = await getSnippetGroupsSnippets(selectedSnippetGroup);
+			setSnippets(snippets);
 		};
 		if (!!selectedSnippetGroup)
 			fetchSnippetGroupSnippets();

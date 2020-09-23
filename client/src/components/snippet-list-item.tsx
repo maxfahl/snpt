@@ -13,9 +13,11 @@ const SnippetListItem: FunctionComponent<SnippetListItemProps> = ({ snippet, isS
 		'snippet-list-item',
 		'py-2',
 		'px-4',
+		'border-b',
+		'border-gray-700',
 		'cursor-pointer',
 		'transition-colors',
-		'duration-200',
+		'duration-100',
 		'flex'
 	];
 

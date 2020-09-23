@@ -21,7 +21,7 @@ const SnippetList: FunctionComponent = () => {
 		setSelectedSnippet(s.id);
 	};
 
-	return (<div className="snippet-list divide-y divide-gray-800 border-r border-gray-800 flex-1 flex flex-col">
+	return (<div className="snippet-list border-r border-gray-700 flex-1 flex flex-col">
 		{ snippets.map(s => (
 			<SnippetListItem isSelected={ selectedSnippet === s.id }
 							 onSelect={ onSnippetClick }

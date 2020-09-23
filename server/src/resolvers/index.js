@@ -1,9 +1,11 @@
 const userResolvers = require('./user');
 const snippetGroupResolvers = require('./snippet-group');
+const snippetResolvers = require('./snippet');
 module.exports = {
 	Query: {
 		...userResolvers.Query,
-		...snippetGroupResolvers.Query
+		...snippetGroupResolvers.Query,
+		...snippetResolvers.Query
 	},
 	Mutation: {
 		...userResolvers.Mutation

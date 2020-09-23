@@ -12,9 +12,11 @@ const SnippetGroupListItem: FunctionComponent<SnippetGroupListItemProps> = ({ sn
 		'snippet-group-list-item',
 		'py-2',
 		'px-4',
+		'border-b',
+		'border-gray-700',
 		'cursor-pointer',
 		'transition-colors',
-		'duration-200',
+		'duration-100',
 		'flex'
 	];
 

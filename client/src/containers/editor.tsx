@@ -1,10 +1,17 @@
-import React, { Component } from "react";
+import React, { FunctionComponent, useEffect } from "react";
+import { useOvermind } from "../overmind";
 
-export default class Editor extends Component {
+const Editor: FunctionComponent = () => {
 
-	render() {
-		return (<div id="editor" className="py-2 px-4 flex-1 flex-shrink-0">
+	const { state: { selectedSnippet } } = useOvermind();
 
-		</div>);
-	}
-}
+	useEffect(() => {
+
+	}, [selectedSnippet]);
+
+	return (<div id="editor" className="py-2 px-4 flex-1 flex-shrink-0">
+
+	</div>);
+};
+
+export default Editor;

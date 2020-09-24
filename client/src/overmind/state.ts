@@ -13,7 +13,7 @@ export type State = {
 
 export const state: State = {
 	auth: {
-		token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJtYXhAZmFobC5zZSIsImlhdCI6MTYwMDg2OTUzMSwiZXhwIjoxNjAwOTU1OTMxfQ.DOuB5ueAQJ3gDNtkI7vIeJAEeHZrK10wJVI0u2F1XWQ',
+		token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJtYXhAZmFobC5zZSIsImlhdCI6MTYwMDk2NjM1NywiZXhwIjoxNjAxMDUyNzU3fQ.jxGjM16SrkXOCiNay4jhB_dzueNbQRZR6R87VUTqZco',
 	},
 	selectedSnippetGroup: 0,
 	selectedSnippet: 0,

@@ -10,9 +10,11 @@ const SnippetGroupList: FunctionComponent = () => {
 	useEffect(() => {
 		const fetchSnippetGroups = async () => {
 			setSnippetGroups(await getUserSnippetGroups(1) as SnippetGroup[]);
+			// setSnippetGroups([Math.random()]);
+			// console.log('?');
 		};
 		fetchSnippetGroups();
-	});
+	}, []);
 
 	const onGroupClick = (e: MouseEvent, sg: SnippetGroup) => {
 		setSelectedSnippetGroup(sg.id);

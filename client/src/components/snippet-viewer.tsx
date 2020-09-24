@@ -1,18 +1,13 @@
 import React, { FunctionComponent } from 'react'
-import { Snippet } from "../models/snippet";
 import SnippetEditor from "./snippet-editor";
 import SnippetRunner from "./snippet-runner";
 
-type SnippetViewerProps = {
-	snippet: Snippet
-}
-
-const SnippetViewer: FunctionComponent<SnippetViewerProps> = ({ snippet }) => {
+const SnippetViewer: FunctionComponent = () => {
 	return (
-		<>
-			<SnippetEditor snippet={ snippet }/>
-			<SnippetRunner snippet={ snippet } />
-		</>
+		<div className="flex-1 flex flex-col">
+			<SnippetEditor/>
+			<SnippetRunner/>
+		</div>
 	);
 };
 

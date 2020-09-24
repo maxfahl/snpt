@@ -1,15 +1,10 @@
 import React, { FunctionComponent } from 'react'
-import { Snippet } from "../models/snippet";
 
-type SnippetRunnerProps = {
-	snippet: Snippet
-}
-
-const SnippetRunner: FunctionComponent<SnippetRunnerProps> = ({ snippet }) => {
+const SnippetRunner: FunctionComponent = () => {
 	return (
-		<>
+		<div  className="flex-1 flex-shrink-0">
 
-		</>
+		</div>
 	);
 };
 

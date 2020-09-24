@@ -18,7 +18,7 @@ const Main: FunctionComponent = () => {
 
 	let child;
 	if (editedSnippet)
-		child = <SnippetViewer snippet={ editedSnippet }/>;
+		child = <SnippetViewer />;
 	else
 		child = (
 			<div className="absolute inset-0 flex items-center justify-center">
@@ -27,7 +27,7 @@ const Main: FunctionComponent = () => {
 		);
 
 	return (
-		<div id="editor" className="relative py-2 px-4 flex-1 flex-shrink-0">
+		<div className="relative flex-1 flex-shrink-0 flex">
 			{ child }
 		</div>
 	);

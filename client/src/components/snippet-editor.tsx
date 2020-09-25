@@ -8,7 +8,16 @@ import { addVariableHighlight } from "../utils/ace";
 
 const SnippetEditor: FunctionComponent = () => {
 	const aceEditor: Ref<AceEditor> = useRef();
-	const { state: { editedSnippet }, actions: { setEditedSnippet, updateSnippet } } = useOvermind();
+	const {
+		state: {
+			editedSnippet
+		},
+		actions: {
+			setEditedSnippet,
+			updateSnippet,
+			setAvailableSnippetVariables
+		}
+	} = useOvermind();
 
 	const saveSnippetChanges = (snippet) => {
 		updateSnippet(
@@ -34,9 +43,16 @@ const SnippetEditor: FunctionComponent = () => {
 		saveSnippetChanges(newState);
 	};
 
-	const onBlur = () => {
-		console.log(matchAll(editedSnippet.content, /{{{\s*([A-z0-9_-]+)\s*}}}/g));
+	const updateAvailableSnipeptVariables = () => {
+		const variables = matchAll(editedSnippet.content, /{{{\s*([A-z0-9_-]+)\s*}}}/g);
+		setAvailableSnippetVariables(variables);
 	};
+
+	const onBlur = () => {
+		updateAvailableSnipeptVariables();
+	};
+
+	updateAvailableSnipeptVariables();
 
 	return (
 		<div className="flex-1 flex-shrink-0 border-b border-gray-700 flex">

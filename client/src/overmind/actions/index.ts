@@ -33,6 +33,10 @@ export const getSnippet: AsyncAction<number, Snippet> = async ({ effects }, snip
 	return snippet as Snippet;
 };
 
+export const setAvailableSnippetVariables: Action<string[]> = ({ state }, variables) => {
+	state.availableSnippetVariables = variables;
+};
+
 // Mutations
 
 export const updateSnippet: AsyncAction<any, Snippet> = async ({ effects }, { snippetId, fields }) => {

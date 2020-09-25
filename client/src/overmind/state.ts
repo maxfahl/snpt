@@ -8,7 +8,8 @@ export type State = {
 	auth: Auth
 	selectedSnippetGroup: number,
 	selectedSnippet: number,
-	editedSnippet: Snippet
+	editedSnippet: Snippet,
+	availableSnippetVariables: string[]
 };
 
 export const state: State = {
@@ -18,6 +19,7 @@ export const state: State = {
 	selectedSnippetGroup: 0,
 	selectedSnippet: 0,
 	editedSnippet: undefined,
+	availableSnippetVariables: []
 };
 
 /**

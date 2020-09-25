@@ -15,11 +15,24 @@ module.exports = (sequelize, DataTypes) => {
 				as: 'snippetGroup',
 				onDelete: 'CASCADE',
 			});
+			Snippet.hasMany(models.SnippetVariableSet, {
+				foreignKey: 'snippetId',
+				as: 'snippetVariableSets',
+				onDelete: 'CASCADE',
+			});
 		}
 	};
 	Snippet.init({
-		name: DataTypes.STRING,
+		name: {
+			type: DataTypes.STRING,
+			allowNull: false,
+		},
 		content: DataTypes.STRING,
+		language: {
+			type: DataTypes.STRING,
+			allowNull: false,
+			defaultValue: 'text'
+		},
 		userId: {
 			type: DataTypes.INTEGER,
 			allowNull: false,

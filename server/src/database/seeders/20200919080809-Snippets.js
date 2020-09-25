@@ -5,6 +5,14 @@ module.exports = {
 			[
 				{
 					userId: 1,
+					snippetGroupId: 1,
+					name: "JS Snippet",
+					content: "console.log({{{ whatToLog }}});",
+					createdAt: new Date(),
+					updatedAt: new Date()
+				},
+				{
+					userId: 1,
 					snippetGroupId: 2,
 					name: "HTML Boilerplate",
 					content: `

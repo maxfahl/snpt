@@ -1,27 +1,20 @@
 'use strict';
 module.exports = {
 	up: async (queryInterface, Sequelize) => {
-		await queryInterface.createTable('Snippets', {
+		await queryInterface.createTable('SnippetVariables', {
 			id: {
 				allowNull: false,
 				autoIncrement: true,
 				primaryKey: true,
 				type: Sequelize.INTEGER
 			},
-			name: {
+			key: {
 				type: Sequelize.STRING
 			},
-			content: {
-				type: Sequelize.TEXT('long')
-			},
-			language: {
+			value: {
 				type: Sequelize.STRING
 			},
-			userId: {
-				type: Sequelize.INTEGER,
-				allowNull: false,
-			},
-			snippetGroupId: {
+			snippetVariableSetId: {
 				type: Sequelize.INTEGER,
 				allowNull: false,
 			},
@@ -36,6 +29,6 @@ module.exports = {
 		});
 	},
 	down: async (queryInterface, Sequelize) => {
-		await queryInterface.dropTable('Snippets');
+		await queryInterface.dropTable('SnippetVariables');
 	}
 };

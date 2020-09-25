@@ -1,7 +1,7 @@
 import React, { FunctionComponent, MouseEvent, useEffect, useState } from 'react'
-import SnippetGroupListItem from "./snippet-group-list-item";
 import { useOvermind } from "../overmind";
 import { SnippetGroup } from "../models/snippet-group";
+import ListItem from "./list-item";
 
 const SnippetGroupList: FunctionComponent = () => {
 	const [snippetGroups, setSnippetGroups] = useState<SnippetGroup[]>([]);
@@ -22,10 +22,10 @@ const SnippetGroupList: FunctionComponent = () => {
 
 	return (<div className="snippet-group-list border-r border-gray-700 flex-1 flex flex-col">
 		{ snippetGroups.map((sg) => (
-			<SnippetGroupListItem onSelect={ onGroupClick }
-								  isSelected={ selectedSnippetGroup === sg.id }
-								  snippetGroup={ sg }
-								  key={ sg.id }/>
+			<ListItem onSelect={ onGroupClick }
+					  isSelected={ selectedSnippetGroup === sg.id }
+					  model={ sg }
+					  key={ sg.id }/>
 		)) }
 	</div>);
 };

@@ -1,8 +1,6 @@
 import React, { FunctionComponent, Ref, useEffect, useRef } from 'react'
 import { useOvermind } from "../overmind";
-import produce from "immer";
 import AceEditor from "react-ace";
-import { Snippet } from "../models/snippet";
 import { matchAll } from "../utils/regex";
 import { addVariableHighlight } from "../utils/ace";
 

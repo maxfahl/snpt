@@ -4,44 +4,34 @@ import produce from "immer";
 import AceEditor from "react-ace";
 import { Snippet } from "../models/snippet";
 import { matchAll } from "../utils/regex";
+import { addVariableHighlight } from "../utils/ace";
 
 const SnippetEditor: FunctionComponent = () => {
 	const aceEditor: Ref<AceEditor> = useRef();
 	const { state: { editedSnippet }, actions: { setEditedSnippet, updateSnippet } } = useOvermind();
 
-	useEffect(() => {
-		const currentSession = aceEditor.current.editor.getSession() as any;
-		const currentMode = currentSession.getMode() as any;
-
-		let rules = currentSession.$mode.$highlightRules.getRules();
-		for (let stateName in rules) {
-			if (Object.prototype.hasOwnProperty.call(rules, stateName)) {
-				rules[stateName].unshift({
-					token: 'variable.other',
-					regex: '\\{\\{\\{\\s*([A-z0-9_-]+)\\s*\\}\\}\\}',
-				});
-			}
-		}
-
-		currentMode.$tokenizer = null;
-		currentSession.bgTokenizer.setTokenizer(currentSession.$mode.getTokenizer());
-		currentSession.bgTokenizer.start(0);
-	}, [aceEditor]);
-
-	const onChange = code => {
-		const newState = produce<Snippet>(editedSnippet, draftState => {
-			draftState.content = code;
-		});
-		setEditedSnippet(newState);
+	const saveSnippetChanges = (snippet) => {
 		updateSnippet(
 			{
 				snippetId: editedSnippet.id,
 				fields: {
-					name: newState.name,
-					content: newState.content
+					name: snippet.name,
+					content: snippet.content,
 				},
 			},
 		);
+	};
+
+	useEffect(() => {
+		addVariableHighlight(aceEditor);
+	}, [aceEditor]);
+
+	const onEditorChange = code => {
+		const newState = produce<Snippet>(editedSnippet, draftState => {
+			draftState.content = code;
+		});
+		setEditedSnippet(newState);
+		saveSnippetChanges(newState);
 	};
 
 	const onBlur = () => {
@@ -59,7 +49,7 @@ const SnippetEditor: FunctionComponent = () => {
 				theme="solarized_dark"
 				fontSize={ 16 }
 				showPrintMargin={ false }
-				onChange={ onChange }
+				onChange={ onEditorChange }
 				onBlur={ onBlur }
 				name="editor"
 				editorProps={ { $blockScrolling: false } }

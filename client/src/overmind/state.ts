@@ -19,7 +19,8 @@ export const state: State = {
 	selectedSnippetGroup: 0,
 	selectedSnippet: 0,
 	editedSnippet: undefined,
-	availableSnippetVariables: []
+	availableSnippetVariables: [],
+
 };
 
 /**

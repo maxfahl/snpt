@@ -2,11 +2,11 @@ const models = require('../database/models');
 
 // noinspection JSUnusedGlobalSymbols
 const resolvers = {
-	Query: {
-		snippetVariableSets: async (parent, { snippetId }, { auth }) => {
-			return await models.SnippetVariableSet.findAll({ where: { snippetId: snippetId } });
-		}
-	},
+	// Query: {
+	// 	snippetVariableSets: async (parent, { snippetId }, { auth }) => {
+	// 		return await models.SnippetVariableSet.findAll({ where: { snippetId: snippetId } });
+	// 	}
+	// },
 	// Mutation: {
 	// 	updateSnippet: async (parent, { snippetId, fields: { name, content } }) => {
 	// 		const snippet = await models.Snippet.findOne({ where: { id: snippetId } });

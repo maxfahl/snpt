@@ -12,5 +12,6 @@ module.exports = {
 		...snippetResolvers.Mutation
 	},
 	User: userResolvers.User,
+	Snippet: snippetResolvers.Snippet,
 	SnippetGroup: snippetGroupResolvers.SnippetGroup
 };

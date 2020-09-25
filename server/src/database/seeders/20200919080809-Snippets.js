@@ -7,6 +7,7 @@ module.exports = {
 					userId: 1,
 					snippetGroupId: 1,
 					name: "JS Snippet",
+					language: "javascript",
 					content: "console.log({{{ whatToLog }}});",
 					createdAt: new Date(),
 					updatedAt: new Date()
@@ -15,6 +16,7 @@ module.exports = {
 					userId: 1,
 					snippetGroupId: 2,
 					name: "HTML Boilerplate",
+					language: "html",
 					content: `
 						<!doctype html>
 							<html lang="en">
@@ -41,6 +43,7 @@ module.exports = {
 					userId: 1,
 					snippetGroupId: 2,
 					name: "Hello world",
+					language: "text",
 					content: "Hello world",
 					createdAt: new Date(),
 					updatedAt: new Date()

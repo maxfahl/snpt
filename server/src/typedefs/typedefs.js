@@ -15,23 +15,19 @@ const typeDefs = `
 		id: Int!
 		name: String!
 		content: String!
-	}
-
-	type Query {
-		users: [User]
-		user(userId: Int!): User!
-		snippetGroup(snippetGroupId: Int!): SnippetGroup!
-		snippet(snippetId: Int!): Snippet!
-	}
-	
-	type SnippetVariable {
-		key: String!
-		value: String
+		snippetVariableSets: [SnippetVariableSet]
 	}
 	
 	type SnippetVariableSet {
+		id: Int!
 		name: String!
-		snippetVariables: [SnippetVariable!]
+		snippetVariables: [SnippetVariable]
+	}
+	
+	type SnippetVariable {
+		id: Int!
+		key: String!
+		value: String
 	}
 	
 	type UserCredentials {
@@ -42,6 +38,13 @@ const typeDefs = `
 	input UpdateSnippetInput {
 		name: String!
 		content: String!
+	}
+	
+	type Query {
+		users: [User]
+		user(userId: Int!): User!
+		snippetGroup(snippetGroupId: Int!): SnippetGroup!
+		snippet(snippetId: Int!): Snippet!
 	}
 	
 	type Mutation {

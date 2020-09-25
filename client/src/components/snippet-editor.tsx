@@ -36,9 +36,13 @@ const SnippetEditor: FunctionComponent = () => {
 	}, [aceEditor]);
 
 	const onEditorChange = code => {
-		const newState = produce<Snippet>(editedSnippet, draftState => {
-			draftState.content = code;
-		});
+		// const newState = produce<Snippet>(editedSnippet,draftState => {
+		// 	draftState.content = code;
+		// });
+		const newState = {
+			...editedSnippet,
+			content: code
+		};
 		setEditedSnippet(newState);
 		saveSnippetChanges(newState);
 	};
@@ -65,6 +69,7 @@ const SnippetEditor: FunctionComponent = () => {
 				theme="solarized_dark"
 				fontSize={ 16 }
 				showPrintMargin={ false }
+				debounceChangePeriod={ 500 }
 				onChange={ onEditorChange }
 				onBlur={ onBlur }
 				name="editor"

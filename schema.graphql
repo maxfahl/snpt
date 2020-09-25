@@ -17,10 +17,24 @@ type Query {
     users: [User]
 }
 
+type SnippetVariable {
+    id: String!
+    key: String!
+    value: String
+}
+
+type SnippetVariableSet {
+    id: String!
+    name: String!
+    snippetVariables: [SnippetVariable]
+}
+
 type Snippet {
     content: String!
     id: Int!
     name: String!
+    language: String!
+    snippetVariableSets: [SnippetVariableSet]
 }
 
 type SnippetGroup {

@@ -11,8 +11,8 @@ export const updateSnippet = gql`
 `;
 
 export const createMultipleSnippetVariables = gql`
-	mutation CreateMultipleSnippetVariables($snippetVariableSetId: Int!, $variablesObject: [CreateSnippetVariableInput]!) {
-        createMultipleSnippetVariables(snippetVariableSetId: $snippetVariableSetId, variablesObject: $variablesObject) {
+	mutation CreateMultipleSnippetVariables($snippetVariableSetId: Int!, $variablesArray: [CreateSnippetVariableInput]!) {
+        createMultipleSnippetVariables(snippetVariableSetId: $snippetVariableSetId, variablesArray: $variablesArray) {
 			id,
 			key,
 			value

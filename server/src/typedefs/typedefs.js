@@ -56,7 +56,7 @@ const typeDefs = `
 		loginUser(email: String!, password: String!): UserCredentials!
 		registerUser(email: String!, password: String!): UserCredentials!
 		updateSnippet(snippetId: Int!, fields: UpdateSnippetInput!): Snippet!
-		createMultipleSnippetVariables(snippetVariableSetId: Int!, variablesObject: [CreateSnippetVariableInput]!): [SnippetVariable!]
+		createMultipleSnippetVariables(snippetVariableSetId: Int!, variablesArray: [CreateSnippetVariableInput]!): [SnippetVariable!]
 	}
 `;
 

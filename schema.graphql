@@ -8,8 +8,8 @@ schema {
 type Mutation {
     LoginUser(email: String!, password: String!): UserCredentials!
     RegisterUser(email: String!, password: String!): UserCredentials!
-    UpdateSnippet(snippetId: Int!, fields: UpdateSnippetInput!): Snippet!
-    CreateMultipleSnippetVariables(snippetVariableSetId: Int!, variablesObject: [CreateSnippetVariableInput]!): [SnippetVariable!]
+    updateSnippet(snippetId: Int!, fields: UpdateSnippetInput!): Snippet!
+    createMultipleSnippetVariables(snippetVariableSetId: Int!, variablesArray: [CreateSnippetVariableInput]!): [SnippetVariable!]
 }
 
 type Query {

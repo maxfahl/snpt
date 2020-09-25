@@ -1,6 +1,7 @@
 import { Action, AsyncAction } from "overmind";
 import { Snippet } from "../../models/snippet";
 import { SnippetGroup } from "../../models/snippet-group";
+import { SnippetVariable } from "../../models/snippet-variable";
 
 // Queries
 
@@ -43,3 +44,10 @@ export const updateSnippet: AsyncAction<any, Snippet> = async ({ effects }, { sn
 	const { snippet } = await effects.gql.mutations.updateSnippet({ snippetId, fields });
 	return snippet as Snippet;
 };
+
+export const createMultipleSnippetVariables: AsyncAction<any, SnippetVariable[]> = async ({ effects }, { snippetVariableSetId, variablesArray }) => {
+	const { snippetsVariables } = await effects.gql.mutations.updateSnippet({ snippetVariableSetId, variablesArray });
+	return snippetsVariables as SnippetVariable[];
+};
+
+

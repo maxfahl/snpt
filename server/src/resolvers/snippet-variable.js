@@ -9,8 +9,12 @@ const resolvers = {
 		// }
 	},
 	Mutation: {
-		createMultipleSnippetVariables: async (_, { snippetVariableObjects }, { auth }) => {
-			console.log('Multiple created');
+		createMultipleSnippetVariables: async (_, { snippetVariableSetId, variablesArray }, { auth }) => {
+			const snippetVariableDataArray = variablesArray.map(item => {
+				item['snippetVariableSetId'] = snippetVariableSetId;
+				return item;
+			});
+			return await models.SnippetVariable.bulkCreate(snippetVariableDataArray);
 		}
 		// updateSnippet: async (parent, { snippetId, fields: { name, content } }) => {
 		// 	const snippet = await models.Snippet.findOne({ where: { id: snippetId } });

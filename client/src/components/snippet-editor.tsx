@@ -3,6 +3,7 @@ import { useOvermind } from "../overmind";
 import produce from "immer";
 import AceEditor from "react-ace";
 import { Snippet } from "../models/snippet";
+import { matchAll } from "../utils/regex";
 
 const SnippetEditor: FunctionComponent = () => {
 	const aceEditor: Ref<AceEditor> = useRef();
@@ -43,10 +44,9 @@ const SnippetEditor: FunctionComponent = () => {
 		);
 	};
 
-	// STUB
-	// const findVariables = () => {
-	// 	// \{\{\{\s*([A-z0-9_-]+)\s*\}\}\}
-	// };
+	const onBlur = () => {
+		console.log(matchAll(editedSnippet.content, /{{{\s*([A-z0-9_-]+)\s*}}}/g));
+	};
 
 	return (
 		<div className="flex-1 flex-shrink-0 border-b border-gray-700 flex">
@@ -60,6 +60,7 @@ const SnippetEditor: FunctionComponent = () => {
 				fontSize={ 16 }
 				showPrintMargin={ false }
 				onChange={ onChange }
+				onBlur={ onBlur }
 				name="editor"
 				editorProps={ { $blockScrolling: false } }
 				setOptions={ {

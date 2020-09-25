@@ -16,17 +16,27 @@ const typeDefs = `
 		name: String!
 		content: String!
 	}
-	
-	type UserCredentials {
-		user: User!
-		token: String!
-	}
 
 	type Query {
 		users: [User]
 		user(userId: Int!): User!
 		snippetGroup(snippetGroupId: Int!): SnippetGroup!
 		snippet(snippetId: Int!): Snippet!
+	}
+	
+	type SnippetVariable {
+		key: String!
+		value: String
+	}
+	
+	type SnippetVariableSet {
+		name: String!
+		snippetVariables: [SnippetVariable!]
+	}
+	
+	type UserCredentials {
+		user: User!
+		token: String!
 	}
 	
 	input UpdateSnippetInput {

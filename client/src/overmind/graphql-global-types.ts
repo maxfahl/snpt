@@ -7,6 +7,11 @@
 // START Enums and Input Objects
 //==============================================================
 
+export interface UpdateSnippetInput {
+  name: string;
+  content: string;
+}
+
 //==============================================================
 // END Enums and Input Objects
 //==============================================================

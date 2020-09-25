@@ -2,10 +2,11 @@ import React, { FunctionComponent, Ref, useEffect, useRef } from 'react'
 import { useOvermind } from "../overmind";
 import produce from "immer";
 import AceEditor from "react-ace";
+import { Snippet } from "../models/snippet";
 
 const SnippetEditor: FunctionComponent = () => {
 	const aceEditor: Ref<AceEditor> = useRef();
-	const { state: { editedSnippet }, actions: { setEditedSnippet } } = useOvermind();
+	const { state: { editedSnippet }, actions: { setEditedSnippet, updateSnippet } } = useOvermind();
 
 	useEffect(() => {
 		const currentSession = aceEditor.current.editor.getSession() as any;
@@ -16,7 +17,7 @@ const SnippetEditor: FunctionComponent = () => {
 			if (Object.prototype.hasOwnProperty.call(rules, stateName)) {
 				rules[stateName].unshift({
 					token: 'variable.other',
-					regex: '\\{\\{\\{\\s*([A-z0-9_-]+)\\s*\\}\\}\\}'
+					regex: '\\{\\{\\{\\s*([A-z0-9_-]+)\\s*\\}\\}\\}',
 				});
 			}
 		}
@@ -27,10 +28,19 @@ const SnippetEditor: FunctionComponent = () => {
 	}, [aceEditor]);
 
 	const onChange = code => {
-		setEditedSnippet(produce(editedSnippet, draftState => {
+		const newState = produce<Snippet>(editedSnippet, draftState => {
 			draftState.content = code;
-			console.log(draftState.content);
-		}));
+		});
+		setEditedSnippet(newState);
+		updateSnippet(
+			{
+				snippetId: editedSnippet.id,
+				fields: {
+					name: newState.name,
+					content: newState.content
+				},
+			},
+		);
 	};
 
 	// STUB

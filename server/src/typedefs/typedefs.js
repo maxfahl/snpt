@@ -5,11 +5,6 @@ const typeDefs = `
 		snippetGroups: [SnippetGroup!]
 	}
 	
-	type UserCredentials {
-		user: User!
-		token: String!
-	}
-	
 	type SnippetGroup {
 		id: Int!
 		name: String!
@@ -21,6 +16,11 @@ const typeDefs = `
 		name: String!
 		content: String!
 	}
+	
+	type UserCredentials {
+		user: User!
+		token: String!
+	}
 
 	type Query {
 		users: [User]
@@ -29,9 +29,15 @@ const typeDefs = `
 		snippet(snippetId: Int!): Snippet!
 	}
 	
+	input UpdateSnippetInput {
+		name: String!
+		content: String!
+	}
+	
 	type Mutation {
-		LoginUser(email: String!, password: String!): UserCredentials!
-		RegisterUser(email: String!, password: String!): UserCredentials!
+		loginUser(email: String!, password: String!): UserCredentials!
+		registerUser(email: String!, password: String!): UserCredentials!
+		updateSnippet(snippetId: Int!, fields: UpdateSnippetInput!): Snippet!
 	}
 `;
 

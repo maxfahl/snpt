@@ -8,7 +8,8 @@ module.exports = {
 		...snippetResolvers.Query
 	},
 	Mutation: {
-		...userResolvers.Mutation
+		...userResolvers.Mutation,
+		...snippetResolvers.Mutation
 	},
 	User: userResolvers.User,
 	SnippetGroup: snippetGroupResolvers.SnippetGroup

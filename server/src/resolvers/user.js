@@ -63,7 +63,7 @@ const resolvers = {
 	},
 
 	Mutation: {
-		async LoginUser(parent, { email, password }) {
+		async loginUser(parent, { email, password }) {
 			// validateLogin is a simple func that checks for empty fields
 			// and return valid = false if any.
 			const { errors, valid } = validateInput(email, password);
@@ -83,7 +83,7 @@ const resolvers = {
 			};
 		},
 
-		async RegisterUser(
+		async registerUser(
 			parent,
 			{ email, password }
 		) {

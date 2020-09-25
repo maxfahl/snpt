@@ -1,11 +1,11 @@
 import { gql } from 'overmind-graphql'
 
-export const createPost = gql`
-    mutation UpdateSnippet($snippetId: Int!, $fields) {
-        updateSnippet(snippetId: $snippetId) {
+export const updateSnippet = gql`
+    mutation UpdateSnippet($snippetId: Int!, $fields: UpdateSnippetInput!) {
+        updateSnippet(snippetId: $snippetId, fields: $fields) {
             id,
-			name,
-			content
+            name,
+            content
         }
     }
 `;

@@ -2,6 +2,8 @@ import { Action, AsyncAction } from "overmind";
 import { Snippet } from "../../models/snippet";
 import { SnippetGroup } from "../../models/snippet-group";
 
+// Queries
+
 export const setSelectedSnippetGroup: Action<number> = ({ state, actions }, selectedId: number) => {
 	const toSelect = state.selectedSnippetGroup === selectedId ? 0 : selectedId;
 	actions.setSelectedSnippet(0);
@@ -31,3 +33,9 @@ export const getSnippet: AsyncAction<number, Snippet> = async ({ effects }, snip
 	return snippet as Snippet;
 };
 
+// Mutations
+
+export const updateSnippet: AsyncAction<any, Snippet> = async ({ effects }, { snippetId, fields }) => {
+	const { snippet } = await effects.gql.mutations.updateSnippet({ snippetId, fields });
+	return snippet as Snippet;
+};

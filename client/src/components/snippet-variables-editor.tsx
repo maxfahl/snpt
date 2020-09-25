@@ -1,10 +1,16 @@
 import React, { FunctionComponent, useEffect } from 'react'
+import { useOvermind } from "../overmind";
 
 type SnippetVariablesEditorProps = {
 	selectedSnippetVariableSet: number,
 }
 
 const SnippetVariablesEditor: FunctionComponent<SnippetVariablesEditorProps> = ({ selectedSnippetVariableSet }) => {
+	const {
+		state: {
+			editedSnippet,
+		},
+	} = useOvermind();
 
 	useEffect(() => {
 		// console.log('selectedSnippetVariableSet change', selectedSnippetVariableSet);

@@ -40,6 +40,11 @@ const typeDefs = `
 		content: String!
 	}
 	
+	input CreateSnippetVariableInput {
+		key: String!
+		value: String!
+	}
+	
 	type Query {
 		users: [User]
 		user(userId: Int!): User!
@@ -51,6 +56,7 @@ const typeDefs = `
 		loginUser(email: String!, password: String!): UserCredentials!
 		registerUser(email: String!, password: String!): UserCredentials!
 		updateSnippet(snippetId: Int!, fields: UpdateSnippetInput!): Snippet!
+		createMultipleSnippetVariables(snippetVariableSetId: Int!, variablesObject: [CreateSnippetVariableInput]!): [SnippetVariable!]
 	}
 `;
 

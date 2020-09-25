@@ -9,3 +9,13 @@ export const updateSnippet = gql`
         }
     }
 `;
+
+export const createMultipleSnippetVariables = gql`
+	mutation CreateMultipleSnippetVariables($snippetVariableSetId: Int!, $variablesObject: [CreateSnippetVariableInput]!) {
+        createMultipleSnippetVariables(snippetVariableSetId: $snippetVariableSetId, variablesObject: $variablesObject) {
+			id,
+			key,
+			value
+		}
+    }
+`;

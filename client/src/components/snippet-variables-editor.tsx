@@ -1,6 +1,7 @@
 import React, { FunctionComponent, useEffect, useState } from 'react'
 import { useOvermind } from "../overmind";
 import * as _ from 'lodash';
+import SnippetVariableItem from "./snippet-variable-item";
 
 type SnippetVariablesEditorProps = {
 	selectedSnippetVariableSet: number,
@@ -43,7 +44,7 @@ const SnippetVariablesEditor: FunctionComponent<SnippetVariablesEditorProps> = (
 			const existingVariablesKeys = snippetVariables.map(sv => sv.key);
 			const variableKeysToCreate = _.without(availableSnippetVariables, ...existingVariablesKeys) as string[];
 			const variablesArray = variableKeysToCreate.map(varKey => {
-				return { key: varKey }
+				return { key: varKey, value: '' }
 			});
 			const addedSnippets = await createMultipleSnippetVariables({
 					snippetVariableSetId: selectedSnippetVariableSet,
@@ -67,9 +68,9 @@ const SnippetVariablesEditor: FunctionComponent<SnippetVariablesEditorProps> = (
 	}, [snippetVariables]);
 
 	return (
-		<div className="flex-1">
+		<div className="flex-1 flex flex-col">
 			{ listSnippetVariables && listSnippetVariables.map(sv => (
-				<div key={ sv.id }>{ sv.key }</div>
+				<SnippetVariableItem key={ sv.id } snippetVariable={sv}/>
 			)) }
 		</div>
 	);

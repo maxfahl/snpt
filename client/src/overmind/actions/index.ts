@@ -55,8 +55,8 @@ export const updateSnippet: AsyncAction<any, Snippet> = async ({ effects }, { sn
 };
 
 export const createMultipleSnippetVariables: AsyncAction<{ snippetVariableSetId: number, variablesArray: { key: string }[] }, SnippetVariable[]> = async ({ effects }, { snippetVariableSetId, variablesArray }) => {
-	const { snippetsVariables } = await effects.gql.mutations.updateSnippet({ snippetVariableSetId, variablesArray });
-	return snippetsVariables as SnippetVariable[];
+	const { createMultipleSnippetVariables: snippetVariables } = await effects.gql.mutations.createMultipleSnippetVariables({ snippetVariableSetId, variablesArray });
+	return snippetVariables as SnippetVariable[];
 };
 
 

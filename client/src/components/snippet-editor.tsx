@@ -42,24 +42,20 @@ const SnippetEditor: FunctionComponent = () => {
 	};
 
 	const updateAvailableSnippetVariables = () => {
-		// console.log('updateAvailableSnippetVariables');
 		const variables = matchAll(editedSnippet.content, /{{{\s*([A-z0-9_-]+)\s*}}}/g);
 		setAvailableSnippetVariables(_.uniq(variables));
 	};
 
 	const onBlur = () => {
-		// console.log('onBlur');
 		updateAvailableSnippetVariables();
 	};
 
 	useEffect(() => {
-		// console.log('SnippetEditor useEffect [aceEditor.current]');
 		addVariableHighlight(aceEditor);
 
 	}, [aceEditor.current]);
 
 	useEffect(() => {
-		// console.log('SnippetEditor useEffect [editedSnippet]');
 		updateAvailableSnippetVariables();
 	}, [editedSnippet.id]);
 

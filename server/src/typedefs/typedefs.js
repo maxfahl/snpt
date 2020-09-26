@@ -42,7 +42,7 @@ const typeDefs = `
 	
 	input CreateSnippetVariableInput {
 		key: String!
-		value: String!
+		value: String
 	}
 	
 	type Query {

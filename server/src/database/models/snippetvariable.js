@@ -22,7 +22,10 @@ module.exports = (sequelize, DataTypes) => {
 			type: DataTypes.STRING,
 			allowNull: false
 		},
-		value: DataTypes.STRING,
+		value: {
+			type: DataTypes.STRING,
+			defaultvalue: ""
+		},
 		snippetVariableSetId: {
 			type: DataTypes.INTEGER,
 			allowNull: false

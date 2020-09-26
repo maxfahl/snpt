@@ -3,6 +3,7 @@ import { useOvermind } from "../overmind";
 import AceEditor from "react-ace";
 import { matchAll } from "../utils/regex";
 import { addVariableHighlight } from "../utils/ace";
+import * as _ from 'lodash';
 
 const SnippetEditor: FunctionComponent = () => {
 	const aceEditor: Ref<AceEditor> = useRef();
@@ -43,7 +44,7 @@ const SnippetEditor: FunctionComponent = () => {
 	const updateAvailableSnippetVariables = () => {
 		// console.log('updateAvailableSnippetVariables');
 		const variables = matchAll(editedSnippet.content, /{{{\s*([A-z0-9_-]+)\s*}}}/g);
-		setAvailableSnippetVariables(variables);
+		setAvailableSnippetVariables(_.uniq(variables));
 	};
 
 	const onBlur = () => {

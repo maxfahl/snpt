@@ -8,22 +8,8 @@ type ListItemProps = {
 }
 
 const ListItem: FunctionComponent<ListItemProps> = ({ model, isSelected, onSelect }) => {
-	const myClasses = [
-		'py-2',
-		'px-4',
-		'border-b',
-		'border-gray-700',
-		'cursor-pointer',
-		'transition-colors',
-		'duration-100',
-		'flex',
-	];
-
-	if (isSelected)
-		myClasses.push('bg-gray-800');
-
 	return (
-		<div className={ myClasses.join(' ') }
+		<div className={ 'h-12 px-4 relative flex items-center border-b border-gray-700 cursor-pointer transition-colors duration-100 flex' + (isSelected ? ' bg-gray-800' : '') }
 			 onClick={ (e: MouseEvent) => onSelect(e, model) }>
 			<span className="md:text-md lg:text-lg flex-1 truncate">{ model.name }</span>
 		</div>

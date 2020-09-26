@@ -11,18 +11,21 @@ type SnippetVariablesEditorProps = {
 const SnippetVariablesEditor: FunctionComponent<SnippetVariablesEditorProps> = ({ selectedSnippetVariableSet }) => {
 	const {
 		state: {
+			editedSnippet,
 			availableSnippetVariables,
 		},
 		actions: {
 			getSnippetVariables,
 			createMultipleSnippetVariables,
 			updateSnippetVariable,
+			setSnippetRunnerContext,
 		},
 	} = useOvermind();
 
 	const [previousVariableSet, setPreviousVariableSet] = useState();
 	const [snippetVariables, setSnippetVariables] = useState();
 	const [listSnippetVariables, setListSnippetVariables] = useState();
+	const [runnableSnippetVariableKeys, setRunnableSnippetVariableKeys] = useState([]);
 
 	useEffect(() => {
 		const fetchSnippetVariables = async () => {
@@ -62,10 +65,31 @@ const SnippetVariablesEditor: FunctionComponent<SnippetVariablesEditorProps> = (
 	}, [availableSnippetVariables]);
 
 	useEffect(() => {
-		const buildListSnippetVariables = () => {
-			setListSnippetVariables(snippetVariables);
+		const buildListSnippetRunnerContext = () => {
+			if (snippetVariables) {
+				const runnableSnippetVariables = snippetVariables.filter(
+					sv => availableSnippetVariables.includes(sv.key),
+				);
+				const runnableSnippetVariableKeys = runnableSnippetVariables.map(sv => sv.key);
+				setRunnableSnippetVariableKeys(runnableSnippetVariableKeys);
+				setSnippetRunnerContext({
+					code: editedSnippet.content,
+					variables: runnableSnippetVariables,
+				});
+
+				const listSnippetVariables = snippetVariables
+					.slice(0)
+					.sort((a, b) => (a.key).localeCompare(b.key))
+					.sort((a, b) => {
+						const aIsViable = runnableSnippetVariableKeys.includes(a.key);
+						const bIsViable = runnableSnippetVariableKeys.includes(b.key);
+						return (aIsViable === bIsViable)? 0 : aIsViable ? -1 : 1;
+					});
+				setListSnippetVariables(listSnippetVariables);
+			} else
+				setListSnippetVariables(undefined);
 		};
-		buildListSnippetVariables();
+		buildListSnippetRunnerContext();
 	}, [snippetVariables]);
 
 	const onSnippetChange = async (snippetVariable: SnippetVariable, newValue: string) => {
@@ -90,7 +114,7 @@ const SnippetVariablesEditor: FunctionComponent<SnippetVariablesEditorProps> = (
 	return (
 		<div className="flex-1 flex flex-col">
 			{ listSnippetVariables && listSnippetVariables.map(sv => (
-				<SnippetVariableItem key={ sv.id } snippetVariable={ sv } onChange={ onSnippetChange }/>
+				<SnippetVariableItem key={ sv.id } snippetVariable={ sv } runnable={ runnableSnippetVariableKeys.includes(sv.key) } onChange={ onSnippetChange }/>
 			)) }
 		</div>
 	);

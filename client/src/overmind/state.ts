@@ -1,7 +1,13 @@
 import { Snippet } from "../models/snippet";
+import { SnippetVariable } from "../models/snippet-variable";
 
 export type Auth = {
 	token: string;
+}
+
+export type SnippetRunnerContext = {
+	code: string;
+	variables: SnippetVariable[];
 }
 
 export type State = {
@@ -9,7 +15,8 @@ export type State = {
 	selectedSnippetGroup: number,
 	selectedSnippet: number,
 	editedSnippet: Snippet,
-	availableSnippetVariables: string[]
+	availableSnippetVariables: string[],
+	snippetRunnerContext: SnippetRunnerContext;
 };
 
 export const state: State = {
@@ -20,7 +27,7 @@ export const state: State = {
 	selectedSnippet: 0,
 	editedSnippet: undefined,
 	availableSnippetVariables: [],
-
+	snippetRunnerContext: undefined
 };
 
 /**

@@ -31,6 +31,7 @@ export const snippet: Query<Snippet, any> = gql`
         snippet(snippetId: $snippetId) {
 			id,
 			name,
+            language,
 			content,
             snippetVariableSets {
 				id,

@@ -1,3 +1,16 @@
+import "ace-builds/src-noconflict/ext-language_tools.js";
+
+// import "ace-builds/src-noconflict/worker-base.js";
+// import "ace-builds/src-noconflict/worker-coffee.js";
+// import "ace-builds/src-noconflict/worker-css.js";
+// import "ace-builds/src-noconflict/worker-html.js";
+// import "ace-builds/src-noconflict/worker-javascript.js";
+// import "ace-builds/src-noconflict/worker-json.js";
+// import "ace-builds/src-noconflict/worker-lua.js";
+// import "ace-builds/src-noconflict/worker-php.js";
+// import "ace-builds/src-noconflict/worker-xml.js";
+// import "ace-builds/src-noconflict/worker-xquery.js";
+
 import "ace-builds/src-noconflict/mode-abap.js";
 import "ace-builds/src-noconflict/mode-abc.js";
 import "ace-builds/src-noconflict/mode-actionscript.js";

@@ -30,7 +30,6 @@ const SnippetVariablesEditor: FunctionComponent<SnippetVariablesEditorProps> = (
 
 		if (!!selectedSnippetVariableSet) {
 			if (previousVariableSet !== selectedSnippetVariableSet) {
-				console.log('Changed snippet variable set');
 				setListSnippetVariables(undefined);
 				setSnippetVariables(undefined);
 				fetchSnippetVariables();

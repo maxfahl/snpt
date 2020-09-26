@@ -1,4 +1,4 @@
-import React, { FunctionComponent, Ref, useEffect, useRef } from 'react'
+import React, { FunctionComponent, Ref, useEffect, useRef, useState } from 'react'
 import { useOvermind } from "../overmind";
 import AceEditor from "react-ace";
 import { matchAll } from "../utils/regex";
@@ -9,13 +9,13 @@ const SnippetEditor: FunctionComponent = () => {
 	const aceEditor: Ref<AceEditor> = useRef();
 	const {
 		state: {
-			editedSnippet
+			editedSnippet,
 		},
 		actions: {
 			setEditedSnippet,
 			updateSnippet,
-			setAvailableSnippetVariables
-		}
+			setAvailableSnippetVariables,
+		},
 	} = useOvermind();
 
 	const saveSnippetChanges = (snippet) => {
@@ -35,7 +35,7 @@ const SnippetEditor: FunctionComponent = () => {
 		// });
 		const newState = {
 			...editedSnippet,
-			content: code
+			content: code,
 		};
 		setEditedSnippet(newState);
 		saveSnippetChanges(newState);
@@ -52,7 +52,6 @@ const SnippetEditor: FunctionComponent = () => {
 
 	useEffect(() => {
 		addVariableHighlight(aceEditor);
-
 	}, [aceEditor.current]);
 
 	useEffect(() => {
@@ -66,7 +65,7 @@ const SnippetEditor: FunctionComponent = () => {
 				width="100%"
 				height="100%"
 				value={ editedSnippet.content }
-				mode="html"
+				mode={ editedSnippet.language }
 				theme="solarized_dark"
 				fontSize={ 16 }
 				showPrintMargin={ false }
@@ -75,13 +74,13 @@ const SnippetEditor: FunctionComponent = () => {
 				onBlur={ onBlur }
 				name="editor"
 				editorProps={ { $blockScrolling: false } }
-				setOptions={ {
+				setOptions={{
 					useWorker: false,
 					fontFamily: "Fira Code",
-					// 	enableBasicAutocompletion: true,
-					// 	enableLiveAutocompletion: true,
-					// 	enableSnippets: true,
-				} }
+					enableBasicAutocompletion: true,
+					enableLiveAutocompletion: true,
+					// enableSnippets: true,
+				}}
 			/>
 		</div>
 	);

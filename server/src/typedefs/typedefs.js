@@ -14,6 +14,7 @@ const typeDefs = `
 	type Snippet {
 		id: Int!
 		name: String!
+		language: String!
 		content: String!
 		snippetVariableSets: [SnippetVariableSet]
 	}

@@ -46,10 +46,11 @@ const typeDefs = `
 	}
 	
 	type Query {
-		users: [User]
-		user(userId: Int!): User!
-		snippetGroup(snippetGroupId: Int!): SnippetGroup!
 		snippet(snippetId: Int!): Snippet!
+		snippetGroup(snippetGroupId: Int!): SnippetGroup!
+		snippetVariables(snippetVariableSetId: Int!): [SnippetVariable]!
+		user(userId: Int!): User!
+		users: [User]
 	}
 	
 	type Mutation {

@@ -28,11 +28,6 @@ const SnippetEditor: FunctionComponent = () => {
 			},
 		);
 	};
-
-	useEffect(() => {
-		addVariableHighlight(aceEditor);
-	}, [aceEditor]);
-
 	const onEditorChange = code => {
 		// const newState = produce<Snippet>(editedSnippet,draftState => {
 		// 	draftState.content = code;
@@ -45,16 +40,27 @@ const SnippetEditor: FunctionComponent = () => {
 		saveSnippetChanges(newState);
 	};
 
-	const updateAvailableSnipeptVariables = () => {
+	const updateAvailableSnippetVariables = () => {
+		// console.log('updateAvailableSnippetVariables');
 		const variables = matchAll(editedSnippet.content, /{{{\s*([A-z0-9_-]+)\s*}}}/g);
 		setAvailableSnippetVariables(variables);
 	};
 
 	const onBlur = () => {
-		updateAvailableSnipeptVariables();
+		// console.log('onBlur');
+		updateAvailableSnippetVariables();
 	};
 
-	updateAvailableSnipeptVariables();
+	useEffect(() => {
+		// console.log('SnippetEditor useEffect [aceEditor.current]');
+		addVariableHighlight(aceEditor);
+
+	}, [aceEditor.current]);
+
+	useEffect(() => {
+		// console.log('SnippetEditor useEffect [editedSnippet]');
+		updateAvailableSnippetVariables();
+	}, [editedSnippet.id]);
 
 	return (
 		<div className="flex-1 flex-shrink-0 border-b border-gray-700 flex">

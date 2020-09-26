@@ -21,8 +21,6 @@
 		"express-session": "^1.17.1",
 		"graphql": "^15.3.0",
 		"jsonwebtoken": "^8.5.1",
-		"passport": "^0.4.1",
-		"passport-local": "^1.0.0",
 		"pg": "^8.3.3",
 		"pg-hstore": "^2.3.3",
 		"sequelize": "^6.3.5",

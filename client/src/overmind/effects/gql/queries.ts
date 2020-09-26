@@ -1,7 +1,8 @@
 import { gql, Query } from "overmind-graphql";
 import { UserSnippetGroups, UserSnippetGroupsVariables } from "./graphql-types/UserSnippetGroups";
 import { SnippetGroupSnippets, SnippetGroupSnippetsVariables } from "./graphql-types/SnippetGroupSnippets";
-import { Snippet, SnippetVariables } from "./graphql-types/Snippet";
+import { Snippet } from "./graphql-types/Snippet";
+import { SnippetVariables, SnippetVariablesVariables } from "./graphql-types/SnippetVariables";
 
 export const userSnippetGroups: Query<UserSnippetGroups, UserSnippetGroupsVariables> = gql`
     query UserSnippetGroups($userId: Int!) {
@@ -25,7 +26,7 @@ export const snippetGroupSnippets: Query<SnippetGroupSnippets, SnippetGroupSnipp
     }
 `;
 
-export const snippet: Query<Snippet, SnippetVariables> = gql`
+export const snippet: Query<Snippet, any> = gql`
     query Snippet($snippetId: Int!) {
         snippet(snippetId: $snippetId) {
 			id,
@@ -35,6 +36,16 @@ export const snippet: Query<Snippet, SnippetVariables> = gql`
 				id,
 				name
 			}
+        }
+    }
+`;
+
+export const snippetVariables: Query<SnippetVariables, SnippetVariablesVariables> = gql`
+    query SnippetVariables($snippetVariableSetId: Int!) {
+        snippetVariables(snippetVariableSetId: $snippetVariableSetId) {
+            id,
+            key,
+            value
         }
     }
 `;

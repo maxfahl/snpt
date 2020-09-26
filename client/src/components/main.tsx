@@ -7,7 +7,9 @@ const Main: FunctionComponent = () => {
 	const { state: { selectedSnippet, editedSnippet }, actions: { getSnippet, setEditedSnippet } } = useOvermind();
 
 	useEffect(() => {
+		// console.log('Main useEffect[selectedSnippet]', selectedSnippet);
 		const fetchSnippet = async () => {
+			// console.log('Main fetchSnippet');
 			setEditedSnippet(await getSnippet(selectedSnippet) as Snippet);
 		};
 		if (!!selectedSnippet)

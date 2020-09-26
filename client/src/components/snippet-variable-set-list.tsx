@@ -1,4 +1,4 @@
-import React, { FunctionComponent, MouseEvent } from 'react'
+import React, { FunctionComponent, MouseEvent, useEffect, useState } from 'react'
 import { useOvermind } from "../overmind";
 import ListItem from "./list-item";
 import { SnippetVariableSet } from "../models/snippet-variable-set";
@@ -14,10 +14,16 @@ const SnippetVariableSetList: FunctionComponent<SnippetVariableSetListProps> = (
 			editedSnippet,
 		},
 	} = useOvermind();
+	// const [currentEditedSnippet, setCurrentEditedSnippet] = useState();
 
 	const onVariableSetClick = (e: MouseEvent, svs: SnippetVariableSet) => {
 		onSelect(svs.id);
 	};
+
+	// useEffect(() => {
+	// 	console.log('SnippetVariableSetList useEffect[currentEditedSnippet]', editedSnippet);
+	// }, [currentEditedSnippet]);
+
 
 	return (
 		<div className="w-1/4 flex-shrink-0 border-r border-gray-700 flex flex-col">

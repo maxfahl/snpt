@@ -8,6 +8,7 @@ module.exports = {
 		...userResolvers.Query,
 		...snippetGroupResolvers.Query,
 		...snippetResolvers.Query,
+		...snippetVariableResolvers.Query
 	},
 	Mutation: {
 		...userResolvers.Mutation,

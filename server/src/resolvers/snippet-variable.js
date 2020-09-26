@@ -3,10 +3,9 @@ const models = require('../database/models');
 // noinspection JSUnusedGlobalSymbols
 const resolvers = {
 	Query: {
-
-		// snippetVariable: async (parent, { snippetId }, { auth }) => {
-		// 	return await models.SnippetVariableSet.findAll({ where: { snippetId: snippetId } });
-		// }
+		snippetVariables: async (parent, { snippetVariableSetId }, { auth }) => {
+			return await models.SnippetVariable.findAll({ where: { snippetVariableSetId: snippetVariableSetId } });
+		}
 	},
 	Mutation: {
 		createMultipleSnippetVariables: async (_, { snippetVariableSetId, variablesArray }, { auth }) => {

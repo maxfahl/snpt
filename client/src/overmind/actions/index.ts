@@ -3,7 +3,7 @@ import { Snippet } from "../../models/snippet";
 import { SnippetGroup } from "../../models/snippet-group";
 import { SnippetVariable } from "../../models/snippet-variable";
 
-// Queries
+// State management
 
 export const setSelectedSnippetGroup: Action<number> = ({ state, actions }, selectedId: number) => {
 	const toSelect = state.selectedSnippetGroup === selectedId ? 0 : selectedId;
@@ -18,6 +18,13 @@ export const setSelectedSnippet: Action<number> = ({ state }, selectedId: number
 export const setEditedSnippet: Action<Snippet> = ({ state }, snippet) => {
 	state.editedSnippet = snippet;
 };
+
+export const setAvailableSnippetVariables: Action<string[]> = ({ state }, variables) => {
+	state.availableSnippetVariables = variables;
+};
+
+
+// GraphQL queries
 
 export const getUserSnippetGroups: AsyncAction<number, SnippetGroup[]> = async ({ effects }, userId) => {
 	const { user: { snippetGroups } } = await effects.gql.queries.userSnippetGroups({ userId });
@@ -34,11 +41,13 @@ export const getSnippet: AsyncAction<number, Snippet> = async ({ effects }, snip
 	return snippet as Snippet;
 };
 
-export const setAvailableSnippetVariables: Action<string[]> = ({ state }, variables) => {
-	state.availableSnippetVariables = variables;
+export const getSnippetVariables: AsyncAction<number, SnippetVariable[]> = async ({ effects }, snippetVariableSetId) => {
+	const { snippetVariables } = await effects.gql.queries.snippetVariables({ snippetVariableSetId });
+	return snippetVariables as SnippetVariable[];
 };
 
-// Mutations
+
+// GraphQL mutations
 
 export const updateSnippet: AsyncAction<any, Snippet> = async ({ effects }, { snippetId, fields }) => {
 	const { snippet } = await effects.gql.mutations.updateSnippet({ snippetId, fields });

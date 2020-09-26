@@ -2,6 +2,7 @@ import React, { FunctionComponent, useEffect, useState } from 'react'
 import { useOvermind } from "../overmind";
 import * as _ from 'lodash';
 import SnippetVariableItem from "./snippet-variable-item";
+import { SnippetVariable } from "../models/snippet-variable";
 
 type SnippetVariablesEditorProps = {
 	selectedSnippetVariableSet: number,
@@ -10,12 +11,12 @@ type SnippetVariablesEditorProps = {
 const SnippetVariablesEditor: FunctionComponent<SnippetVariablesEditorProps> = ({ selectedSnippetVariableSet }) => {
 	const {
 		state: {
-			editedSnippet,
 			availableSnippetVariables,
 		},
 		actions: {
 			getSnippetVariables,
 			createMultipleSnippetVariables,
+			updateSnippetVariable,
 		},
 	} = useOvermind();
 
@@ -67,10 +68,29 @@ const SnippetVariablesEditor: FunctionComponent<SnippetVariablesEditorProps> = (
 		buildListSnippetVariables();
 	}, [snippetVariables]);
 
+	const onSnippetChange = async (snippetVariable: SnippetVariable, newValue: string) => {
+		const updatedSnippetVariable = await updateSnippetVariable(
+			{
+				snippetVariableId: snippetVariable.id,
+				fields: {
+					key: snippetVariable.key,
+					value: newValue,
+				},
+			},
+		);
+		setSnippetVariables((oldSnippetVariables) => {
+			return oldSnippetVariables.map(sv => {
+				if (sv.id === updatedSnippetVariable.id)
+					return updatedSnippetVariable;
+				return sv;
+			})
+		});
+	};
+
 	return (
 		<div className="flex-1 flex flex-col">
 			{ listSnippetVariables && listSnippetVariables.map(sv => (
-				<SnippetVariableItem key={ sv.id } snippetVariable={sv}/>
+				<SnippetVariableItem key={ sv.id } snippetVariable={ sv } onChange={ onSnippetChange }/>
 			)) }
 		</div>
 	);

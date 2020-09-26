@@ -1,15 +1,25 @@
 import React, { ChangeEvent, FunctionComponent, useState } from 'react'
 import { SnippetVariable } from "../models/snippet-variable";
+import { useOvermind } from "../overmind";
 
 type SnippetVariableItemProps = {
-	snippetVariable: SnippetVariable
+	snippetVariable: SnippetVariable,
+	onChange: (snippetVariable: SnippetVariable, newValue: string) => void;
 }
 
-const SnippetVariableItem: FunctionComponent<SnippetVariableItemProps> = ({ snippetVariable }) => {
+const SnippetVariableItem: FunctionComponent<SnippetVariableItemProps> = ({ snippetVariable, onChange }) => {
+	// const {
+	// 	actions: {
+	// 		updateSnippetVariable,
+	// 	},
+	// } = useOvermind();
+
 	const [inputValue, setInputValue] = useState(snippetVariable.value);
 
 	const onInputValueChange = (e: ChangeEvent<HTMLInputElement>) => {
-		setInputValue(e.target.value);
+		const value = e.target.value;
+		setInputValue(value);
+		onChange(snippetVariable, value);
 	};
 
 	return (

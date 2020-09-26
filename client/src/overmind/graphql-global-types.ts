@@ -9,12 +9,17 @@
 
 export interface CreateSnippetVariableInput {
   key: string;
-  value: string;
+  value?: string | null;
 }
 
 export interface UpdateSnippetInput {
   name: string;
   content: string;
+}
+
+export interface UpdateSnippetVariableInput {
+  key: string;
+  value: string;
 }
 
 //==============================================================

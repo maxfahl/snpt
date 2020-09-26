@@ -2,6 +2,7 @@ import React, { FunctionComponent, useEffect, useState } from 'react'
 import { useOvermind } from "../overmind";
 import SnippetVariableSetList from "./snippet-variable-set-list";
 import SnippetVariablesEditor from "./snippet-variables-editor";
+import SnippetRunner from "./snippet-runner";
 
 const SnippetFuwq: FunctionComponent = () => {
 	const {
@@ -19,7 +20,10 @@ const SnippetFuwq: FunctionComponent = () => {
 	return (
 		<div className="flex-1 flex-shrink-0 flex">
 			<SnippetVariableSetList onSelect={ setSelectedVariableSet } selected={ selectedVariableSet }/>
-			<SnippetVariablesEditor selectedSnippetVariableSet={ selectedVariableSet }/>
+			<div className="flex-1 flex flex-col">
+				<SnippetVariablesEditor selectedSnippetVariableSet={ selectedVariableSet }/>
+				<SnippetRunner />
+			</div>
 		</div>
 	);
 };

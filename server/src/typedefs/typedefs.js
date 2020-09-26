@@ -1,4 +1,35 @@
 const typeDefs = `
+	type Query {
+		snippet(snippetId: Int!): Snippet!
+		snippetGroup(snippetGroupId: Int!): SnippetGroup!
+		snippetVariables(snippetVariableSetId: Int!): [SnippetVariable]!
+		user(userId: Int!): User!
+		users: [User]
+	}
+	
+	type Mutation {
+		loginUser(email: String!, password: String!): UserCredentials!
+		registerUser(email: String!, password: String!): UserCredentials!
+		updateSnippet(snippetId: Int!, fields: UpdateSnippetInput!): Snippet!
+		updateSnippetVariable(snippetVariableId: Int!, fields: UpdateSnippetVariableInput!): SnippetVariable!
+		createMultipleSnippetVariables(snippetVariableSetId: Int!, variablesArray: [CreateSnippetVariableInput]!): [SnippetVariable!]
+	}
+	
+	input UpdateSnippetInput {
+		name: String!
+		content: String!
+	}
+	
+	input UpdateSnippetVariableInput {
+		key: String!
+		value: String!
+	}
+	
+	input CreateSnippetVariableInput {
+		key: String!
+		value: String
+	}
+
 	type User {
 		email: String!
 		snippets: [Snippet!]
@@ -34,31 +65,6 @@ const typeDefs = `
 	type UserCredentials {
 		user: User!
 		token: String!
-	}
-	
-	input UpdateSnippetInput {
-		name: String!
-		content: String!
-	}
-	
-	input CreateSnippetVariableInput {
-		key: String!
-		value: String
-	}
-	
-	type Query {
-		snippet(snippetId: Int!): Snippet!
-		snippetGroup(snippetGroupId: Int!): SnippetGroup!
-		snippetVariables(snippetVariableSetId: Int!): [SnippetVariable]!
-		user(userId: Int!): User!
-		users: [User]
-	}
-	
-	type Mutation {
-		loginUser(email: String!, password: String!): UserCredentials!
-		registerUser(email: String!, password: String!): UserCredentials!
-		updateSnippet(snippetId: Int!, fields: UpdateSnippetInput!): Snippet!
-		createMultipleSnippetVariables(snippetVariableSetId: Int!, variablesArray: [CreateSnippetVariableInput]!): [SnippetVariable!]
 	}
 `;
 

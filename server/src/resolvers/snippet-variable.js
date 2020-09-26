@@ -8,6 +8,11 @@ const resolvers = {
 		}
 	},
 	Mutation: {
+		updateSnippetVariable: async(_, { snippetVariableId, fields: { key, value } }, { auth }) => {
+			const snippetVariable = await models.SnippetVariable.findOne({ where: { id: snippetVariableId } });
+			snippetVariable.update({ key, value });
+			return snippetVariable;
+		},
 		createMultipleSnippetVariables: async (_, { snippetVariableSetId, variablesArray }, { auth }) => {
 			const snippetVariableDataArray = variablesArray.map(item => {
 				item['snippetVariableSetId'] = snippetVariableSetId;
@@ -15,13 +20,6 @@ const resolvers = {
 			});
 			return await models.SnippetVariable.bulkCreate(snippetVariableDataArray);
 		}
-		// updateSnippet: async (parent, { snippetId, fields: { name, content } }) => {
-		// 	const snippet = await models.Snippet.findOne({ where: { id: snippetId } });
-		// 	snippet.update({ name, content });
-		// 	// const updatedSnippet = await models.Snippet.update({ name, content }, { where: { id: snippetId } });
-		// 	console.log(snippet);
-		// 	return snippet;
-		// }
 	}
 };
 

@@ -2,6 +2,7 @@ import { Action, AsyncAction } from "overmind";
 import { Snippet } from "../../models/snippet";
 import { SnippetGroup } from "../../models/snippet-group";
 import { SnippetVariable } from "../../models/snippet-variable";
+import { UpdateSnippetVariableVariables } from "../effects/gql/graphql-types/UpdateSnippetVariable";
 
 // State management
 
@@ -52,6 +53,11 @@ export const getSnippetVariables: AsyncAction<number, SnippetVariable[]> = async
 export const updateSnippet: AsyncAction<any, Snippet> = async ({ effects }, { snippetId, fields }) => {
 	const { snippet } = await effects.gql.mutations.updateSnippet({ snippetId, fields });
 	return snippet as Snippet;
+};
+
+export const updateSnippetVariable: AsyncAction<UpdateSnippetVariableVariables, SnippetVariable> = async ({ effects }, { snippetVariableId, fields }) => {
+	const { updateSnippetVariable: snippetVariable } = await effects.gql.mutations.updateSnippetVariable({ snippetVariableId, fields });
+	return snippetVariable as SnippetVariable;
 };
 
 export const createMultipleSnippetVariables: AsyncAction<{ snippetVariableSetId: number, variablesArray: { key: string }[] }, SnippetVariable[]> = async ({ effects }, { snippetVariableSetId, variablesArray }) => {

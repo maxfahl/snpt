@@ -15,6 +15,7 @@ export interface Snippet_snippet_snippetVariableSets {
 export interface Snippet_snippet {
   id: number;
   name: string;
+  language: string;
   content: string;
   snippetVariableSets: (Snippet_snippet_snippetVariableSets | null)[] | null;
 }

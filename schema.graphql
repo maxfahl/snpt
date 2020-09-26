@@ -9,6 +9,7 @@ type Mutation {
     LoginUser(email: String!, password: String!): UserCredentials!
     RegisterUser(email: String!, password: String!): UserCredentials!
     updateSnippet(snippetId: Int!, fields: UpdateSnippetInput!): Snippet!
+    updateSnippetVariable(snippetVariableId: Int!, fields: UpdateSnippetVariableInput!): SnippetVariable!
     createMultipleSnippetVariables(snippetVariableSetId: Int!, variablesArray: [CreateSnippetVariableInput]!): [SnippetVariable!]
 }
 
@@ -23,6 +24,11 @@ type Query {
 input UpdateSnippetInput {
     name: String!
     content: String!
+}
+
+input UpdateSnippetVariableInput {
+    key: String!
+    value: String!
 }
 
 input CreateSnippetVariableInput {

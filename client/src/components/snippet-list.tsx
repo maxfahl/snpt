@@ -3,6 +3,7 @@ import { useOvermind } from "../overmind";
 import { Snippet } from "../models/snippet";
 import ListItem from "./list-item";
 import SimpleButton from "./simple-button";
+import { ContentEditableEvent } from "react-contenteditable";
 
 const SnippetList: FunctionComponent = () => {
 	const [snippets, setSnippets] = useState<Snippet[]>([]);
@@ -22,6 +23,11 @@ const SnippetList: FunctionComponent = () => {
 		setSelectedSnippet(s.id);
 	};
 
+
+	const renameSnippet = (snippet: Snippet, newName: string) => {
+		console.log('Rename snippet', snippet, 'to', newName);
+	};
+
 	const createSnippet = (e: MouseEvent) => {
 
 	};
@@ -35,6 +41,7 @@ const SnippetList: FunctionComponent = () => {
 			{ snippets.map(s => (
 				<ListItem isSelected={ selectedSnippet === s.id }
 						  onSelect={ onSnippetClick }
+						  onTextChange={ renameSnippet }
 						  model={ s }
 						  key={ s.id }/>
 			)) }

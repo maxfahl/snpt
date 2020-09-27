@@ -8,13 +8,15 @@ import { SnippetRunnerContext } from "../state";
 // State management
 
 export const setSelectedSnippetGroup: Action<number> = ({ state, actions }, selectedId: number) => {
-	const toSelect = state.selectedSnippetGroup === selectedId ? 0 : selectedId;
-	actions.setSelectedSnippet(0);
-	state.selectedSnippetGroup = toSelect;
+	if (state.selectedSnippetGroup !== selectedId) {
+		actions.setSelectedSnippet(0);
+		state.selectedSnippetGroup = selectedId;
+	}
 };
 
 export const setSelectedSnippet: Action<number> = ({ state }, selectedId: number) => {
-	state.selectedSnippet = state.selectedSnippet === selectedId ? 0 : selectedId;
+	if (state.selectedSnippet !== selectedId)
+		state.selectedSnippet = selectedId;
 };
 
 export const setEditedSnippet: Action<Snippet> = ({ state }, snippet) => {

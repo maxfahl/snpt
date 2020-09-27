@@ -16,8 +16,8 @@ const typeDefs = `
 	}
 	
 	input UpdateSnippetInput {
-		name: String!
-		content: String!
+		name: String
+		content: String
 	}
 	
 	input UpdateSnippetVariableInput {

@@ -7,7 +7,7 @@ import { ContentEditableEvent } from "react-contenteditable";
 
 const SnippetList: FunctionComponent = () => {
 	const [snippets, setSnippets] = useState<Snippet[]>([]);
-	const { state: { selectedSnippet, selectedSnippetGroup }, actions: { setSelectedSnippet, getSnippetGroupsSnippets } } = useOvermind();
+	const { state: { selectedSnippet, selectedSnippetGroup }, actions: { setSelectedSnippet, getSnippetGroupsSnippets, updateSnippet } } = useOvermind();
 
 	useEffect(() => {
 		const fetchSnippetGroupSnippets = async () => {
@@ -23,9 +23,13 @@ const SnippetList: FunctionComponent = () => {
 		setSelectedSnippet(s.id);
 	};
 
+	const renameSnippet = async (snippet: Snippet, newName: string) => {
+		await updateSnippet({ snippetId: snippet.id, fields: { name: newName }});
 
-	const renameSnippet = (snippet: Snippet, newName: string) => {
-		console.log('Rename snippet', snippet, 'to', newName);
+		let newSnippets = snippets.slice(0);
+		let snippetPos = snippets.indexOf(snippet);
+		newSnippets[snippetPos].name = newName;
+		setSnippets(newSnippets);
 	};
 
 	const createSnippet = (e: MouseEvent) => {

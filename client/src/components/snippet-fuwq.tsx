@@ -18,7 +18,7 @@ const SnippetFuwq: FunctionComponent = () => {
 	}, [editedSnippet]);
 
 	return (
-		<div className="flex-1 flex-shrink-0 flex">
+		<div className="flex h-64">
 			<SnippetVariableSetList onSelect={ setSelectedVariableSet } selected={ selectedVariableSet }/>
 			<div className="flex-1 flex flex-col">
 				<SnippetVariablesEditor selectedSnippetVariableSet={ selectedVariableSet }/>

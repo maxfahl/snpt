@@ -112,7 +112,7 @@ const SnippetVariablesEditor: FunctionComponent<SnippetVariablesEditorProps> = (
 	};
 
 	return (
-		<div className="flex-1 flex flex-col">
+		<div className="flex-1 flex flex-col overflow-auto" style={{ }}>
 			{ listSnippetVariables && listSnippetVariables.map(sv => (
 				<SnippetVariableItem key={ sv.id } snippetVariable={ sv } runnable={ runnableSnippetVariableKeys.includes(sv.key) } onChange={ onSnippetChange }/>
 			)) }

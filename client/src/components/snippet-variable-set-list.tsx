@@ -26,7 +26,7 @@ const SnippetVariableSetList: FunctionComponent<SnippetVariableSetListProps> = (
 
 
 	return (
-		<div className="w-1/4 flex-shrink-0 border-r border-gray-700 flex flex-col">
+		<div className="w-56 border-r border-gray-700 flex flex-col">
 			{ editedSnippet.snippetVariableSets.map((svs) => (
 				<ListItem onSelect={ onVariableSetClick }
 						  isSelected={ selected === svs.id }

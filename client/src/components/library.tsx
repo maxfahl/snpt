@@ -4,11 +4,11 @@ import SnippetList from "./snippet-list";
 
 const Editor: FunctionComponent = () => {
 
-	return (<div id="library" className="w-1/3 flex-shrink-0" style={ { display: 'flex' } }>
-		<div className="snippet-group-list-container flex flex-col" style={ { flex: '1 0 50%', width: '50%' } }>
+	return (<div id="library" className="" style={ { display: 'flex' } }>
+		<div className="snippet-group-list-container w-56 flex flex-col">
 			<SnippetGroupList/>
 		</div>
-		<div className="snippet-list-container flex flex-col" style={ { flex: '1 0 50%', width: '50%' } }>
+		<div className="snippet-list-container w-56 flex flex-col">
 			<SnippetList/>
 		</div>
 	</div>);

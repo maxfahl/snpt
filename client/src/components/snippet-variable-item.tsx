@@ -1,6 +1,5 @@
 import React, { ChangeEvent, FunctionComponent, useState } from 'react'
 import { SnippetVariable } from "../models/snippet-variable";
-import { useOvermind } from "../overmind";
 
 type SnippetVariableItemProps = {
 	snippetVariable: SnippetVariable,
@@ -18,14 +17,14 @@ const SnippetVariableItem: FunctionComponent<SnippetVariableItemProps> = ({ snip
 	};
 
 	return (
-		<div className={ 'h-12 pl-4 relative flex items-center border-b border-gray-700 cursor-pointer transition-colors duration-100 flex' + (runnable ? '' : ' opacity-25') }>
-			<div className="w-1/4">
-				<span className="md:text-md lg:text-lg truncate">
+		<div className={ 'h-10 relative flex items-center border-b border-gray-700 cursor-pointer transition-colors duration-100 flex' + (runnable ? '' : ' opacity-25') }>
+			<div className="w-56 h-full px-4 flex items-center border-r border-gray-700">
+				<span className="md:text-sm lg:text-base truncate">
 					{ snippetVariable.key }
 				</span>
 			</div>
 			<div className="flex-1 h-full">
-				<input className="md:text-md lg:text-lg px-4 h-full w-full bg-gray-800 outline-none" type="text"
+				<input className="md:text-sm lg:text-base px-4 h-full w-full outline-none bg-gray-900" type="text"
 					   defaultValue={ inputValue } onInput={ onInputValueChange }/>
 			</div>
 		</div>

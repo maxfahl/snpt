@@ -59,7 +59,7 @@ const SnippetEditor: FunctionComponent = () => {
 	}, [editedSnippet.id]);
 
 	return (
-		<div className="flex-1 flex-shrink-0 border-b border-gray-700 flex">
+		<div className="border-b border-gray-700 flex" style={{ flex: '1 0 60%' }}>
 			<AceEditor
 				ref={ aceEditor }
 				width="100%"

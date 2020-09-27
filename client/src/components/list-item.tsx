@@ -1,9 +1,10 @@
-import React, { FunctionComponent, MouseEvent, RefObject, useState } from 'react'
+import React, { FunctionComponent, MouseEvent, RefObject, useEffect, useState } from 'react'
 import { NamedModel } from "../models/model";
 import ContentEditable, { ContentEditableEvent } from 'react-contenteditable'
 import * as _ from 'lodash';
 
-const noop = () => {};
+const noop = () => {
+};
 
 type ListItemProps = {
 	model: NamedModel,
@@ -21,7 +22,50 @@ const ListItem: FunctionComponent<ListItemProps> = (
 	},
 ) => {
 	const [disabled, setDisabled] = useState(true);
+	// const [editedText, setEditedText] = useState(model.name);
+	const [text, setText] = useState(model.name);
+
 	const contentEditable: RefObject<HTMLSpanElement> = React.createRef();
+
+	useEffect(() => {
+		if (!disabled && contentEditable && contentEditable.current) {
+			const element = contentEditable.current;
+			const onKey = (e: KeyboardEvent) => {
+				const code = e.code;
+				if(code === 'Enter') {
+					e.preventDefault();
+					contentEditable.current.blur();
+				}
+			};
+			element.addEventListener('keypress', onKey);
+			return () => {
+				element.removeEventListener('keypress', onKey);
+			}
+		}
+	});
+
+	// useEffect(() => {
+	// 	console.log('Set caret pos to', caretPos);
+	// 	if (caretPos !== 0) {
+	// 		setTimeout(() => positionCaret(caretPos));
+	// 	}
+	// }, [text]);
+	//
+	// const getCurrentCaretPos = () => {
+	// 	if (contentEditable && contentEditable.current) {
+	// 		let _range = document.getSelection().getRangeAt(0);
+	// 		let range = _range.cloneRange();
+	// 		range.selectNodeContents(contentEditable.current);
+	// 		range.setEnd(_range.endContainer, _range.endOffset);
+	// 		return range.toString().length;
+	// 	}
+	// 	return 0;
+	// };
+	//
+	// const positionCaret = (pos) => {
+	// 	if (contentEditable && contentEditable.current)
+	// 		document.getSelection().collapse(contentEditable.current, pos);
+	// };
 
 	const doClick = (e: MouseEvent) => {
 		if (doubleClick) {
@@ -29,7 +73,7 @@ const ListItem: FunctionComponent<ListItemProps> = (
 			const contentEditableCurrent = contentEditable.current;
 			setTimeout(() => {
 				contentEditableCurrent.focus();
-				document.execCommand('selectAll',false,null)
+				document.execCommand('selectAll', false, null);
 			}, 10)
 		} else
 			onSelect(e, model);
@@ -51,8 +95,18 @@ const ListItem: FunctionComponent<ListItemProps> = (
 		}
 	};
 
+	let editedText = model.name; // Component will not re-render during typing.
+	const intOnTextChange = (e: ContentEditableEvent) => {
+		editedText = e.target.value;
+	};
+
 	const onBlur = () => {
 		setDisabled(true);
+		if (name !== editedText) {
+			const newName =  editedText.substr(0).replace(/&nbsp;/gi, '').trim();
+			setText(newName);
+			onTextChange(model, newName);
+		}
 	};
 
 	return (
@@ -61,14 +115,13 @@ const ListItem: FunctionComponent<ListItemProps> = (
 			onClick={ onClick }>
 			<ContentEditable
 				innerRef={ contentEditable }
-				html={ model.name } // innerHTML of the editable div
-				disabled={ disabled }       // use true to disable editing
-				onChange={ (e: ContentEditableEvent) => onTextChange(model, e.target.value.trim()) } // handle innerHTML change
-				onBlur={onBlur}
-				tagName="span" // Use a custom HTML tag (uses a div by default)
+				html={ text }
+				disabled={ disabled }
+				onChange={ intOnTextChange }
+				onBlur={ onBlur }
+				tagName="span"
 				className="flex-1 truncate"
 			/>
-			{/*<div className="absolute w-8 h-8 bg-gray-800">O</div>*/}
 		</div>
 	);
 };

@@ -21,7 +21,7 @@ export type State = {
 
 export const state: State = {
 	auth: {
-		token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJtYXhAZmFobC5zZSIsImlhdCI6MTYwMTE0ODEyNywiZXhwIjoxNjAxMjM0NTI3fQ.2zr2nvn9w3LkT6NnujYt5jAgM6rbLan52MAu5gXprn4',
+		token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJtYXhAZmFobC5zZSIsImlhdCI6MTYwMTIzNDYwOSwiZXhwIjoxNjAxMzIxMDA5fQ.C1BIUOL1-FsMTNMX53RnGo086xgzFXI6RacjP3wQIcY',
 	},
 	selectedSnippetGroup: 0,
 	selectedSnippet: 0,

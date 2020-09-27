@@ -2,6 +2,7 @@ import React, { FunctionComponent, MouseEvent, useEffect, useState } from 'react
 import { useOvermind } from "../overmind";
 import { SnippetGroup } from "../models/snippet-group";
 import ListItem from "./list-item";
+import SimpleButton from "./simple-button";
 
 const SnippetGroupList: FunctionComponent = () => {
 	const [snippetGroups, setSnippetGroups] = useState<SnippetGroup[]>([]);
@@ -20,14 +21,28 @@ const SnippetGroupList: FunctionComponent = () => {
 		setSelectedSnippetGroup(sg.id);
 	};
 
-	return (<div className="snippet-group-list border-r border-gray-700 flex-1 flex flex-col">
-		{ snippetGroups.map((sg) => (
-			<ListItem onSelect={ onGroupClick }
-					  isSelected={ selectedSnippetGroup === sg.id }
-					  model={ sg }
-					  key={ sg.id }/>
-		)) }
-	</div>);
+	const createGroup = () => {
+
+	};
+
+	const deleteSelectedGroup = () => {
+		console.log('Deleting', selectedSnippetGroup);
+	};
+
+	return <div className="border-r border-gray-700 flex-1 flex flex-col">
+		<div className="flex-1 flex flex-col overflow-auto">
+			{ snippetGroups.map((sg) => (
+				<ListItem onSelect={ onGroupClick }
+						  isSelected={ selectedSnippetGroup === sg.id }
+						  model={ sg }
+						  key={ sg.id }/>
+			)) }
+		</div>
+		<div className="h-10 relative flex">
+			<SimpleButton onClick={ createGroup } className="bg-blue-800"><span>+</span></SimpleButton>
+			<SimpleButton onClick={ deleteSelectedGroup } className="bg-blue-800"><span>-</span></SimpleButton>
+		</div>
+	</div>;
 };
 
 export default SnippetGroupList;

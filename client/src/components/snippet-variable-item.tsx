@@ -24,7 +24,7 @@ const SnippetVariableItem: FunctionComponent<SnippetVariableItemProps> = ({ snip
 				</span>
 			</div>
 			<div className="flex-1 h-full">
-				<input className="md:text-sm lg:text-base px-4 h-full w-full outline-none bg-gray-900" type="text"
+				<input className="px-4 h-full w-full outline-none bg-gray-900" type="text"
 					   defaultValue={ inputValue } onInput={ onInputValueChange }/>
 			</div>
 		</div>

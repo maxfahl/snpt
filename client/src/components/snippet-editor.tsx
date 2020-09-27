@@ -59,7 +59,7 @@ const SnippetEditor: FunctionComponent = () => {
 	}, [editedSnippet.id]);
 
 	return (
-		<div className="border-b border-gray-700 flex" style={{ flex: '1 0 60%' }}>
+		<div className="border-b border-gray-700 flex" style={{ flex: '1 0 auto' }}>
 			<AceEditor
 				ref={ aceEditor }
 				width="100%"
@@ -79,7 +79,6 @@ const SnippetEditor: FunctionComponent = () => {
 					fontFamily: "Fira Code",
 					enableBasicAutocompletion: true,
 					enableLiveAutocompletion: true,
-					// enableSnippets: true,
 				}}
 			/>
 		</div>

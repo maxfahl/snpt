@@ -2,6 +2,7 @@ import React, { FunctionComponent, MouseEvent, useEffect, useState } from 'react
 import { useOvermind } from "../overmind";
 import { Snippet } from "../models/snippet";
 import ListItem from "./list-item";
+import SimpleButton from "./simple-button";
 
 const SnippetList: FunctionComponent = () => {
 	const [snippets, setSnippets] = useState<Snippet[]>([]);
@@ -21,13 +22,27 @@ const SnippetList: FunctionComponent = () => {
 		setSelectedSnippet(s.id);
 	};
 
+	const createSnippet = (e: MouseEvent) => {
+
+	};
+
+	const deleteSelectedSnippet = (e: MouseEvent) => {
+
+	};
+
 	return (<div className="snippet-list border-r border-gray-700 flex-1 flex flex-col">
-		{ snippets.map(s => (
-			<ListItem isSelected={ selectedSnippet === s.id }
-							 onSelect={ onSnippetClick }
-							 model={ s }
-							 key={ s.id }/>
-		)) }
+		<div className="flex-1 flex flex-col overflow-auto">
+			{ snippets.map(s => (
+				<ListItem isSelected={ selectedSnippet === s.id }
+						  onSelect={ onSnippetClick }
+						  model={ s }
+						  key={ s.id }/>
+			)) }
+		</div>
+		<div className="h-10 relative flex">
+			<SimpleButton onClick={ createSnippet } className="bg-blue-800"><span>+</span></SimpleButton>
+			<SimpleButton onClick={ deleteSelectedSnippet } className="bg-blue-800"><span>-</span></SimpleButton>
+		</div>
 	</div>);
 };
 

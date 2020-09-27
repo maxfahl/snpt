@@ -11,7 +11,7 @@ const ListItem: FunctionComponent<ListItemProps> = ({ model, isSelected, onSelec
 	return (
 		<div className={ 'h-10 px-4 relative flex items-center border-b border-gray-700 cursor-pointer transition-colors duration-100 flex' + (isSelected ? ' bg-gray-800' : '') }
 			 onClick={ (e: MouseEvent) => onSelect(e, model) }>
-			<span className="md:text-sm lg:text-base flex-1 truncate">{ model.name }</span>
+			<span className="flex-1 truncate">{ model.name }</span>
 		</div>
 	);
 };

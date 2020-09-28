@@ -10,14 +10,14 @@ import { CreateSnippetVariableSetInput } from "./../../../graphql-global-types";
 // ====================================================
 
 export interface CreateSnippetVariableSet_createSnippetVariableSet {
-  id: number;
-  name: string;
+    id: number;
+    name: string;
 }
 
 export interface CreateSnippetVariableSet {
-  createSnippetVariableSet: CreateSnippetVariableSet_createSnippetVariableSet;
+    createSnippetVariableSet: CreateSnippetVariableSet_createSnippetVariableSet;
 }
 
 export interface CreateSnippetVariableSetVariables {
-  fields: CreateSnippetVariableSetInput;
+    fields: CreateSnippetVariableSetInput;
 }

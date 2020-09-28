@@ -10,14 +10,14 @@ import { CreateSnippetGroupInput } from "./../../../graphql-global-types";
 // ====================================================
 
 export interface CreateSnippetGroup_createSnippetGroup {
-  id: number;
-  name: string;
+    id: number;
+    name: string;
 }
 
 export interface CreateSnippetGroup {
-  createSnippetGroup: CreateSnippetGroup_createSnippetGroup;
+    createSnippetGroup: CreateSnippetGroup_createSnippetGroup;
 }
 
 export interface CreateSnippetGroupVariables {
-  fields: CreateSnippetGroupInput;
+    fields: CreateSnippetGroupInput;
 }

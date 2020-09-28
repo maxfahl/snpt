@@ -1,7 +1,7 @@
 export interface Model {
-	id: number;
+    id: number;
 }
 
 export interface NamedModel extends Model {
-	name: string;
+    name: string;
 }

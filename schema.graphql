@@ -6,16 +6,30 @@ schema {
 }
 
 type Mutation {
-    createMultipleSnippetVariables(snippetVariableSetId: Int!, variablesArray: [CreateSnippetVariableInput]!): [SnippetVariable!]
+    createMultipleSnippetVariables(
+        snippetVariableSetId: Int!
+        variablesArray: [CreateSnippetVariableInput]!
+    ): [SnippetVariable!]
     createSnippet(fields: CreateSnippetInput!): Snippet!
     createSnippetGroup(fields: CreateSnippetGroupInput!): SnippetGroup!
-    createSnippetVariableSet(fields: CreateSnippetVariableSetInput!): SnippetVariableSet!
+    createSnippetVariableSet(
+        fields: CreateSnippetVariableSetInput!
+    ): SnippetVariableSet!
     loginUser(email: String!, password: String!): UserCredentials!
     registerUser(email: String!, password: String!): UserCredentials!
     updateSnippet(fields: UpdateSnippetInput!, snippetId: Int!): Snippet!
-    updateSnippetGroup(fields: UpdateSnippetGroupInput!, snippetGroupId: Int!): SnippetGroup!
-    updateSnippetVariable(fields: UpdateSnippetVariableInput!, snippetVariableId: Int!): SnippetVariable!
-    updateSnippetVariableSet(fields: UpdateSnippetVariableSetInput!, snippetVariableSetId: Int!): SnippetVariableSet!
+    updateSnippetGroup(
+        fields: UpdateSnippetGroupInput!
+        snippetGroupId: Int!
+    ): SnippetGroup!
+    updateSnippetVariable(
+        fields: UpdateSnippetVariableInput!
+        snippetVariableId: Int!
+    ): SnippetVariable!
+    updateSnippetVariableSet(
+        fields: UpdateSnippetVariableSetInput!
+        snippetVariableSetId: Int!
+    ): SnippetVariableSet!
 }
 
 type Query {
@@ -103,7 +117,6 @@ input UpdateSnippetVariableInput {
 input UpdateSnippetVariableSetInput {
     name: String
 }
-
 
 "The `Upload` scalar type represents a file upload."
 scalar Upload

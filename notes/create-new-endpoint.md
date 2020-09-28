@@ -6,7 +6,6 @@
 4. Add resolver to serversrc/resolvers/index.js
 5. Generate GraphQL Schema from intelliJ
 
-
 ## Client:
 
 1. Add query/mutation to client/src/overmind/effects/queries.js|mutations.js

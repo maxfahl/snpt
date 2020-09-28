@@ -1,4 +1,4 @@
-import { gql } from 'overmind-graphql'
+import { gql } from "overmind-graphql";
 
 // export const onPostAdded = gql`
 //     subscription PostAdded() {

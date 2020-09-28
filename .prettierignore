@@ -1,2 +1,4 @@
 # Ignore artifacts:
 client/dist
+client/.cache
+server/database/migrations

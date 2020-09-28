@@ -1,12 +1,12 @@
 {
-	"name": "snpt",
-	"version": "0.0.1",
-	"description": "Server and client for snpt app.",
-	"main": "server.js",
-	"author": "Max Fahl",
-	"license": "MIT",
-	"devDependencies": {
-		"concurrency": "^0.1.4",
-		"prettier": "^2.1.2"
-	}
+    "name": "snpt",
+    "version": "0.0.1",
+    "description": "Server and client for snpt app.",
+    "main": "server.js",
+    "author": "Max Fahl",
+    "license": "MIT",
+    "devDependencies": {
+        "concurrency": "^0.1.4",
+        "prettier": "^2.1.2"
+    }
 }

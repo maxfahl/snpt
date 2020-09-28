@@ -10,15 +10,15 @@
 import { CreateSnippetInput } from "../../../graphql-global-types";
 
 export interface CreateSnippet_createSnippet {
-  id: number;
-  name: string;
-  content: string;
+    id: number;
+    name: string;
+    content: string;
 }
 
 export interface CreateSnippet {
-  createSnippet: CreateSnippet_createSnippet;
+    createSnippet: CreateSnippet_createSnippet;
 }
 
 export interface CreateSnippetVariables {
-  fields: CreateSnippetInput;
+    fields: CreateSnippetInput;
 }

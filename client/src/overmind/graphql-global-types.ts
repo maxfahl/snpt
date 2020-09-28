@@ -8,39 +8,39 @@
 //==============================================================
 
 export interface CreateSnippetGroupInput {
-  name: string;
+    name: string;
 }
 
 export interface CreateSnippetInput {
-  name: string;
-  content: string;
+    name: string;
+    content: string;
 }
 
 export interface CreateSnippetVariableInput {
-  key: string;
-  value?: string | null;
+    key: string;
+    value?: string | null;
 }
 
 export interface CreateSnippetVariableSetInput {
-  name: string;
+    name: string;
 }
 
 export interface UpdateSnippetGroupInput {
-  name: string;
+    name: string;
 }
 
 export interface UpdateSnippetInput {
-  name?: string | null;
-  content?: string | null;
+    name?: string | null;
+    content?: string | null;
 }
 
 export interface UpdateSnippetVariableInput {
-  key: string;
-  value: string;
+    key: string;
+    value: string;
 }
 
 export interface UpdateSnippetVariableSetInput {
-  name?: string | null;
+    name?: string | null;
 }
 
 //==============================================================

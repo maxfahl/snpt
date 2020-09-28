@@ -1,69 +1,70 @@
 {
-	"name": "snpt-client",
-	"version": "0.0.1",
-	"private": true,
-	"dependencies": {
-		"@testing-library/jest-dom": "^4.2.4",
-		"@testing-library/react": "^9.3.2",
-		"@testing-library/user-event": "^7.1.2",
-		"ace": "^1.3.0",
-		"ace-builds": "^1.4.12",
-		"apollo": "^2.31.0",
-		"graphql": "^14.0.0 || ^15.0.0",
-		"graphql-tag": "^2.11.0",
-		"immer": "^7.0.9",
-		"lodash": "^4.17.20",
-		"overmind": "^25.0.2",
-		"overmind-graphql": "^5.0.2",
-		"overmind-react": "^26.0.2",
-		"prismjs": "^1.21.0",
-		"prop-types": "^15.7.2",
-		"react": "^16.8.0",
-		"react-ace": "^9.1.4",
-		"react-contenteditable": "^3.3.5",
-		"react-dom": "^16.8.0",
-		"react-error-boundary": "^3.0.2",
-		"react-scripts": "3.4.3",
-		"react-spring": "^8.0.27",
-		"recoil": "^0.0.13",
-		"subscriptions-transport-ws": "^0.9.0"
-	},
-	"scripts": {
-		"schema": "apollo schema:download --endpoint=http://localhost:3001 graphql-schema.json && apollo codegen:generate --localSchemaFile=graphql-schema.json --target=typescript --includes=src/overmind/**/*.ts --tagName=gql --no-addTypename --globalTypesFile=src/overmind/graphql-global-types.ts graphql-types",
-		"schemaBU": "apollo schema:download --header='X-Hasura-Admin-Secret: password' --endpoint=http://some-endpoint.dev graphql-schema.json && apollo codegen:generate --localSchemaFile=graphql-schema.json --target=typescript --includes=src/overmind/**/*.ts --tagName=gql --no-addTypename --globalTypesFile=src/overmind/graphql-global-types.ts graphql-types",
-		"start": "parcel src/index.html",
-		"build": "npx parcel build src/index.html",
-		"test": "react-scripts test",
-		"eject": "react-scripts eject",
-		"build:css": "postcss src/assets/tailwind.css -o src/assets/main.css",
-		"watch:css": "postcss src/assets/tailwind.css -o src/assets/main.css"
-	},
-	"eslintConfig": {
-		"extends": "react-app"
-	},
-	"browserslist": {
-		"production": [
-			">0.2%",
-			"not dead",
-			"not op_mini all"
-		],
-		"development": [
-			"last 1 chrome version",
-			"last 1 firefox version",
-			"last 1 safari version"
-		]
-	},
-	"devDependencies": {
-		"@babel/core": "^7.11.6",
-		"@babel/preset-env": "^7.11.5",
-		"@babel/preset-react": "^7.10.4",
-		"@fullhuman/postcss-purgecss": "^3.0.0",
-		"@types/prop-types": "^15.7.3",
-		"autoprefixer": "^9.8.6",
-		"parcel-bundler": "^1.12.4",
-		"postcss": "^8.0.6",
-		"postcss-cli": "^7.1.2",
-		"tailwindcss": "^1.8.10",
-		"tailwindcss-dark-mode": "^1.1.6"
-	}
+    "name": "snpt-client",
+    "version": "0.0.1",
+    "private": true,
+    "dependencies": {
+        "@testing-library/jest-dom": "^4.2.4",
+        "@testing-library/react": "^9.3.2",
+        "@testing-library/user-event": "^7.1.2",
+        "ace": "^1.3.0",
+        "ace-builds": "^1.4.12",
+        "apollo": "^2.31.0",
+        "graphql": "^14.0.0 || ^15.0.0",
+        "graphql-tag": "^2.11.0",
+        "immer": "^7.0.9",
+        "lodash": "^4.17.20",
+        "overmind": "^25.0.2",
+        "overmind-graphql": "^5.0.2",
+        "overmind-react": "^26.0.2",
+        "prismjs": "^1.21.0",
+        "prop-types": "^15.7.2",
+        "react": "^16.8.0",
+        "react-ace": "^9.1.4",
+        "react-contenteditable": "^3.3.5",
+        "react-dom": "^16.8.0",
+        "react-error-boundary": "^3.0.2",
+        "react-scripts": "3.4.3",
+        "react-spring": "^8.0.27",
+        "recoil": "^0.0.13",
+        "subscriptions-transport-ws": "^0.9.0"
+    },
+    "scripts": {
+        "schema": "apollo schema:download --endpoint=http://localhost:3001 graphql-schema.json && apollo codegen:generate --localSchemaFile=graphql-schema.json --target=typescript --includes=src/overmind/**/*.ts --tagName=gql --no-addTypename --globalTypesFile=src/overmind/graphql-global-types.ts graphql-types",
+        "schemaBU": "apollo schema:download --header='X-Hasura-Admin-Secret: password' --endpoint=http://some-endpoint.dev graphql-schema.json && apollo codegen:generate --localSchemaFile=graphql-schema.json --target=typescript --includes=src/overmind/**/*.ts --tagName=gql --no-addTypename --globalTypesFile=src/overmind/graphql-global-types.ts graphql-types",
+        "start": "parcel src/index.html",
+        "build": "npx parcel build src/index.html",
+        "test": "react-scripts test",
+        "eject": "react-scripts eject",
+        "build:css": "postcss src/assets/tailwind.css -o src/assets/main.css",
+        "watch:css": "postcss src/assets/tailwind.css -o src/assets/main.css"
+    },
+    "eslintConfig": {
+        "extends": "react-app"
+    },
+    "browserslist": {
+        "production": [
+            ">0.2%",
+            "not dead",
+            "not op_mini all"
+        ],
+        "development": [
+            "last 1 chrome version",
+            "last 1 firefox version",
+            "last 1 safari version"
+        ]
+    },
+    "devDependencies": {
+        "@babel/core": "^7.11.6",
+        "@babel/preset-env": "^7.11.5",
+        "@babel/preset-react": "^7.10.4",
+        "@fullhuman/postcss-purgecss": "^3.0.0",
+        "@types/prop-types": "^15.7.3",
+        "autoprefixer": "^9.8.6",
+        "parcel-bundler": "^1.12.4",
+        "postcss": "^8.0.6",
+        "postcss-cli": "^7.1.2",
+        "tailwindcss": "^1.8.10",
+        "tailwindcss-dark-mode": "^1.1.6",
+        "typescript": "^4.0.3"
+    }
 }

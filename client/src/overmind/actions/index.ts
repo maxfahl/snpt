@@ -4,6 +4,12 @@ import { SnippetGroup } from "../../models/snippet-group";
 import { SnippetVariable } from "../../models/snippet-variable";
 import { UpdateSnippetVariableVariables } from "../effects/gql/graphql-types/UpdateSnippetVariable";
 import { SnippetRunnerContext } from "../state";
+import { CreateSnippetVariables } from "../effects/gql/graphql-types/CreateSnippet";
+import { CreateSnippetGroupVariables } from "../effects/gql/graphql-types/CreateSnippetGroup";
+import { UpdateSnippetGroupVariables } from "../effects/gql/graphql-types/UpdateSnippetGroup";
+import { CreateSnippetVariableSetVariables } from "../effects/gql/graphql-types/CreateSnippetVariableSet";
+import { SnippetVariableSet } from "../../models/snippet-variable-set";
+import { UpdateSnippetVariableSetVariables } from "../effects/gql/graphql-types/UpdateSnippetVariableSet";
 
 // State management
 
@@ -58,9 +64,34 @@ export const getSnippetVariables: AsyncAction<number, SnippetVariable[]> = async
 
 // GraphQL mutations
 
+export const createSnippetGroup: AsyncAction<CreateSnippetGroupVariables, SnippetGroup> = async ({ effects }, { fields }) => {
+	const { snippetGroup } = await effects.gql.mutations.createSnippetGroup({ fields });
+	return snippetGroup as SnippetGroup;
+};
+
+export const updateSnippetGroup: AsyncAction<UpdateSnippetGroupVariables, SnippetGroup> = async ({ effects }, { snippetGroupId, fields }) => {
+	const { snippetGroup } = await effects.gql.mutations.updateSnippetGroup({ snippetGroupId, fields });
+	return snippetGroup as SnippetGroup;
+};
+
+export const createSnippet: AsyncAction<CreateSnippetVariables, Snippet> = async ({ effects }, { fields }) => {
+	const { snippet } = await effects.gql.mutations.createSnippet({ fields });
+	return snippet as Snippet;
+};
+
 export const updateSnippet: AsyncAction<any, Snippet> = async ({ effects }, { snippetId, fields }) => {
 	const { snippet } = await effects.gql.mutations.updateSnippet({ snippetId, fields });
 	return snippet as Snippet;
+};
+
+export const createSnippetVariableSet: AsyncAction<CreateSnippetVariableSetVariables, SnippetVariableSet> = async ({ effects }, { fields }) => {
+	const { snippetVariableSet } = await effects.gql.mutations.createSnippetVariableSet({ fields });
+	return snippetVariableSet as SnippetVariableSet;
+};
+
+export const updateSnippetVariableSet: AsyncAction<UpdateSnippetVariableSetVariables, SnippetVariableSet> = async ({ effects }, { snippetVariableSetId, fields }) => {
+	const { snippetVariableSet } = await effects.gql.mutations.updateSnippetVariableSet({ snippetVariableSetId, fields });
+	return snippetVariableSet as SnippetVariableSet;
 };
 
 export const updateSnippetVariable: AsyncAction<UpdateSnippetVariableVariables, SnippetVariable> = async (

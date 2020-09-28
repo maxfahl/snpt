@@ -3,11 +3,11 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { CreateSnippetInput } from "./../../../graphql-global-types";
-
 // ====================================================
 // GraphQL mutation operation: CreateSnippet
 // ====================================================
+
+import { CreateSnippetInput } from "../../../graphql-global-types";
 
 export interface CreateSnippet_createSnippet {
   id: number;

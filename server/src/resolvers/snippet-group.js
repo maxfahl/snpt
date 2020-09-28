@@ -11,9 +11,9 @@ const resolvers = {
     },
     Mutation: {
         createSnippetGroup: async (parent, { fields }) => {
-            return await models.SnippetGroup.create(fields);
+            return models.SnippetGroup.create(fields);
         },
-        updateSnippet: async (parent, { snippetGroupId, fields: { name } }) => {
+        updateSnippetGroup: async (parent, { snippetGroupId, fields: { name } }) => {
             const snippetGroup = await models.SnippetGroup.findOne({
                 where: { id: snippetGroupId },
             });

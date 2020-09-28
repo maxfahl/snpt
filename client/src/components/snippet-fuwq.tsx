@@ -8,7 +8,7 @@ const SnippetFuwq: FunctionComponent = () => {
     const {
         state: { editedSnippet },
     } = useOvermind();
-    const [selectedVariableSet, setSelectedVariableSet] = useState();
+    const [selectedVariableSet, setSelectedVariableSet] = useState<number>();
 
     useEffect(() => {
         if (editedSnippet.snippetVariableSets.length)

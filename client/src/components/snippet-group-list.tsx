@@ -1,14 +1,8 @@
-import React, {
-    FunctionComponent,
-    MouseEvent,
-    useEffect,
-    useState,
-} from "react";
+import React, { FunctionComponent, MouseEvent, useEffect, useState } from "react";
 import { useOvermind } from "../overmind";
 import { SnippetGroup } from "../models/snippet-group";
 import ListItem from "./list-item";
 import SimpleButton from "./simple-button";
-import { Snippet } from "../models/snippet";
 
 const SnippetGroupList: FunctionComponent = () => {
     const [snippetGroups, setSnippetGroups] = useState<SnippetGroup[]>([]);
@@ -56,8 +50,9 @@ const SnippetGroupList: FunctionComponent = () => {
             <div className="flex-1 flex flex-col overflow-auto">
                 {snippetGroups.map((sg) => (
                     <ListItem
-                        onSelect={onGroupClick}
                         isSelected={selectedSnippetGroup === sg.id}
+                        onSelect={onGroupClick}
+                        onTextChange={renameSnippetGroup}
                         model={sg}
                         key={sg.id}
                     />

@@ -1,14 +1,8 @@
-import React, {
-    FunctionComponent,
-    MouseEvent,
-    useEffect,
-    useState,
-} from "react";
+import React, { FunctionComponent, MouseEvent, useEffect, useState } from "react";
 import { useOvermind } from "../overmind";
 import { Snippet } from "../models/snippet";
 import ListItem from "./list-item";
 import SimpleButton from "./simple-button";
-import { ContentEditableEvent } from "react-contenteditable";
 
 const SnippetList: FunctionComponent = () => {
     const [snippets, setSnippets] = useState<Snippet[]>([]);

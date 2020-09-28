@@ -1,9 +1,4 @@
-import React, {
-    FunctionComponent,
-    MouseEvent,
-    useEffect,
-    useState,
-} from "react";
+import React, { FunctionComponent, MouseEvent } from "react";
 import { useOvermind } from "../overmind";
 import ListItem from "./list-item";
 import { SnippetVariableSet } from "../models/snippet-variable-set";
@@ -16,32 +11,45 @@ type SnippetVariableSetListProps = {
 
 const SnippetVariableSetList: FunctionComponent<SnippetVariableSetListProps> = ({
     onSelect,
-    selected,
+    selected
 }) => {
     const {
         state: { editedSnippet },
+        actions: { updateSnippetVariableSet },
     } = useOvermind();
-    // const [currentEditedSnippet, setCurrentEditedSnippet] = useState();
 
     const onVariableSetClick = (e: MouseEvent, svs: SnippetVariableSet) => {
         onSelect(svs.id);
+    };
+
+    const renameSnippetVariableSet = async (
+        snippetVariableSet: SnippetVariableSet,
+        newName: string
+    ) => {
+        // await updateSnippetVariableSet({
+        //     snippetVariableSetId: snippetVariableSet.id,
+        //     fields: { name: newName },
+        // });
+        //
+        // editedSnippet.snippetVariableSets
+        // let newSnippetGroups = snippetGroups.slice(0);
+        // let snippetGroupPos = snippetGroups.indexOf(snippetGroup);
+        // newSnippetGroups[snippetGroupPos].name = newName;
+        // setSnippetGroups(newSnippetGroups);
     };
 
     const createVariable = (e: MouseEvent) => {};
 
     const deleteSelectedVariable = (e: MouseEvent) => {};
 
-    // useEffect(() => {
-    // 	console.log('SnippetVariableSetList useEffect[currentEditedSnippet]', editedSnippet);
-    // }, [currentEditedSnippet]);
-
     return (
         <div className="w-56 border-r border-gray-700 flex flex-col">
             <div className="flex-1 flex flex-col overflow-auto">
                 {editedSnippet.snippetVariableSets.map((svs) => (
                     <ListItem
-                        onSelect={onVariableSetClick}
                         isSelected={selected === svs.id}
+                        onSelect={onVariableSetClick}
+                        onTextChange={renameSnippetVariableSet}
                         model={svs}
                         key={svs.id}
                     />

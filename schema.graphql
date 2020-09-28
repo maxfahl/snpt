@@ -6,11 +6,16 @@ schema {
 }
 
 type Mutation {
-    LoginUser(email: String!, password: String!): UserCredentials!
-    RegisterUser(email: String!, password: String!): UserCredentials!
-    updateSnippet(snippetId: Int!, fields: UpdateSnippetInput!): Snippet!
-    updateSnippetVariable(snippetVariableId: Int!, fields: UpdateSnippetVariableInput!): SnippetVariable!
     createMultipleSnippetVariables(snippetVariableSetId: Int!, variablesArray: [CreateSnippetVariableInput]!): [SnippetVariable!]
+    createSnippet(fields: CreateSnippetInput!): Snippet!
+    createSnippetGroup(fields: CreateSnippetGroupInput!): SnippetGroup!
+    createSnippetVariableSet(fields: CreateSnippetVariableSetInput!): SnippetVariableSet!
+    loginUser(email: String!, password: String!): UserCredentials!
+    registerUser(email: String!, password: String!): UserCredentials!
+    updateSnippet(fields: UpdateSnippetInput!, snippetId: Int!): Snippet!
+    updateSnippetGroup(fields: UpdateSnippetGroupInput!, snippetGroupId: Int!): SnippetGroup!
+    updateSnippetVariable(fields: UpdateSnippetVariableInput!, snippetVariableId: Int!): SnippetVariable!
+    updateSnippetVariableSet(fields: UpdateSnippetVariableSetInput!, snippetVariableSetId: Int!): SnippetVariableSet!
 }
 
 type Query {
@@ -21,38 +26,11 @@ type Query {
     users: [User]
 }
 
-input UpdateSnippetInput {
-    name: String!
-    content: String!
-}
-
-input UpdateSnippetVariableInput {
-    key: String!
-    value: String!
-}
-
-input CreateSnippetVariableInput {
-    key: String!
-    value: String!
-}
-
-type SnippetVariable {
-    id: String!
-    key: String!
-    value: String
-}
-
-type SnippetVariableSet {
-    id: String!
-    name: String!
-    snippetVariables: [SnippetVariable]
-}
-
 type Snippet {
     content: String!
     id: Int!
-    name: String!
     language: String!
+    name: String!
     snippetVariableSets: [SnippetVariableSet]
 }
 
@@ -60,6 +38,18 @@ type SnippetGroup {
     id: Int!
     name: String!
     snippets: [Snippet!]
+}
+
+type SnippetVariable {
+    id: Int!
+    key: String!
+    value: String
+}
+
+type SnippetVariableSet {
+    id: Int!
+    name: String!
+    snippetVariables: [SnippetVariable]
 }
 
 type User {
@@ -76,6 +66,42 @@ type UserCredentials {
 enum CacheControlScope {
     PRIVATE
     PUBLIC
+}
+
+input CreateSnippetGroupInput {
+    name: String!
+}
+
+input CreateSnippetInput {
+    content: String!
+    name: String!
+}
+
+input CreateSnippetVariableInput {
+    key: String!
+    value: String
+}
+
+input CreateSnippetVariableSetInput {
+    name: String!
+}
+
+input UpdateSnippetGroupInput {
+    name: String!
+}
+
+input UpdateSnippetInput {
+    content: String
+    name: String
+}
+
+input UpdateSnippetVariableInput {
+    key: String!
+    value: String!
+}
+
+input UpdateSnippetVariableSetInput {
+    name: String
 }
 
 

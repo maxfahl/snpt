@@ -4,6 +4,7 @@
 2. Add to server/src/typedefs/typedefs.js
 3. Add resolver
 4. Add resolver to serversrc/resolvers/index.js
+5. Generate GraphQL Schema from intelliJ
 
 
 ## Client:

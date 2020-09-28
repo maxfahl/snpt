@@ -7,15 +7,16 @@ const resolvers = {
 	// 		return await models.SnippetVariableSet.findAll({ where: { snippetId: snippetId } });
 	// 	}
 	// },
-	// Mutation: {
-	// 	updateSnippet: async (parent, { snippetId, fields: { name, content } }) => {
-	// 		const snippet = await models.Snippet.findOne({ where: { id: snippetId } });
-	// 		snippet.update({ name, content });
-	// 		// const updatedSnippet = await models.Snippet.update({ name, content }, { where: { id: snippetId } });
-	// 		console.log(snippet);
-	// 		return snippet;
-	// 	}
-	// }
+	Mutation: {
+		createSnippetVariableSet: async (parent, { fields }) => {
+			return await models.SnippetVariableSet.create(fields);
+		},
+		updateSnippetVariableSet: async (parent, { snippetVariableSetId, fields: { name } }) => {
+			const snippetVariableSet = await models.SnippetVariableSet.findOne({ where: { id: snippetVariableSetId } });
+			snippetVariableSet.update({ name, content });
+			return snippetVariableSet;
+		}
+	}
 };
 
 module.exports = resolvers;

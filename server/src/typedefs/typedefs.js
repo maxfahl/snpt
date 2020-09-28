@@ -10,24 +10,18 @@ const typeDefs = `
 	type Mutation {
 		loginUser(email: String!, password: String!): UserCredentials!
 		registerUser(email: String!, password: String!): UserCredentials!
+		
+		createSnippetGroup(fields: CreateSnippetGroupInput!): SnippetGroup!
+		updateSnippetGroup(snippetGroupId: Int!, fields: UpdateSnippetGroupInput!): SnippetGroup!
+		
+		createSnippet(fields: CreateSnippetInput!): Snippet!
 		updateSnippet(snippetId: Int!, fields: UpdateSnippetInput!): Snippet!
+		
+		createSnippetVariableSet(fields: CreateSnippetVariableSetInput!): SnippetVariableSet!
+		updateSnippetVariableSet(snippetVariableSetId: Int!, fields: UpdateSnippetVariableSetInput!): SnippetVariableSet!
+		
 		updateSnippetVariable(snippetVariableId: Int!, fields: UpdateSnippetVariableInput!): SnippetVariable!
 		createMultipleSnippetVariables(snippetVariableSetId: Int!, variablesArray: [CreateSnippetVariableInput]!): [SnippetVariable!]
-	}
-	
-	input UpdateSnippetInput {
-		name: String
-		content: String
-	}
-	
-	input UpdateSnippetVariableInput {
-		key: String!
-		value: String!
-	}
-	
-	input CreateSnippetVariableInput {
-		key: String!
-		value: String
 	}
 
 	type User {
@@ -65,6 +59,42 @@ const typeDefs = `
 	type UserCredentials {
 		user: User!
 		token: String!
+	}
+	
+	input CreateSnippetGroupInput {
+		name: String!
+	}
+	
+	input UpdateSnippetGroupInput {
+		name: String!
+	}
+	
+	input CreateSnippetInput {
+		name: String!
+		content: String!
+	}
+	
+	input UpdateSnippetInput {
+		name: String
+		content: String
+	}
+	
+	input CreateSnippetVariableSetInput {
+		name: String!
+	}
+	
+	input UpdateSnippetVariableSetInput {
+		name: String
+	}
+	
+	input CreateSnippetVariableInput {
+		key: String!
+		value: String
+	}
+	
+	input UpdateSnippetVariableInput {
+		key: String!
+		value: String!
 	}
 `;
 

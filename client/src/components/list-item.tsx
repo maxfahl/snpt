@@ -22,7 +22,6 @@ const ListItem: FunctionComponent<ListItemProps> = (
 	},
 ) => {
 	const [disabled, setDisabled] = useState(true);
-	// const [editedText, setEditedText] = useState(model.name);
 	const [text, setText] = useState(model.name);
 
 	const contentEditable: RefObject<HTMLSpanElement> = React.createRef();
@@ -43,29 +42,6 @@ const ListItem: FunctionComponent<ListItemProps> = (
 			}
 		}
 	});
-
-	// useEffect(() => {
-	// 	console.log('Set caret pos to', caretPos);
-	// 	if (caretPos !== 0) {
-	// 		setTimeout(() => positionCaret(caretPos));
-	// 	}
-	// }, [text]);
-	//
-	// const getCurrentCaretPos = () => {
-	// 	if (contentEditable && contentEditable.current) {
-	// 		let _range = document.getSelection().getRangeAt(0);
-	// 		let range = _range.cloneRange();
-	// 		range.selectNodeContents(contentEditable.current);
-	// 		range.setEnd(_range.endContainer, _range.endOffset);
-	// 		return range.toString().length;
-	// 	}
-	// 	return 0;
-	// };
-	//
-	// const positionCaret = (pos) => {
-	// 	if (contentEditable && contentEditable.current)
-	// 		document.getSelection().collapse(contentEditable.current, pos);
-	// };
 
 	const doClick = (e: MouseEvent) => {
 		if (doubleClick) {

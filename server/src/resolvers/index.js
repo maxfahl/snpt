@@ -12,7 +12,9 @@ module.exports = {
 	},
 	Mutation: {
 		...userResolvers.Mutation,
+		...snippetGroupResolvers.Mutation,
 		...snippetResolvers.Mutation,
+		...snippetVariableSetResolvers.Mutation,
 		...snippetVariableResolvers.Mutation
 	},
 	User: userResolvers.User,

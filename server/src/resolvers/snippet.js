@@ -15,6 +15,9 @@ const resolvers = {
 	},
 
 	Mutation: {
+		createSnippet: async (parent, { fields: fields }) => {
+			return await models.Snippet.create(fields);
+		},
 		updateSnippet: async (parent, { snippetId, fields: { name, content } }) => {
 			const snippet = await models.Snippet.findOne({ where: { id: snippetId } });
 			snippet.update({ name, content });

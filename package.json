@@ -6,6 +6,7 @@
 	"author": "Max Fahl",
 	"license": "MIT",
 	"devDependencies": {
-		"concurrency": "^0.1.4"
+		"concurrency": "^0.1.4",
+		"prettier": "^2.1.2"
 	}
 }

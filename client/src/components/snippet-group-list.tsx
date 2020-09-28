@@ -3,16 +3,15 @@ import { useOvermind } from "../overmind";
 import { SnippetGroup } from "../models/snippet-group";
 import ListItem from "./list-item";
 import SimpleButton from "./simple-button";
+import { Snippet } from "../models/snippet";
 
 const SnippetGroupList: FunctionComponent = () => {
 	const [snippetGroups, setSnippetGroups] = useState<SnippetGroup[]>([]);
-	const { state: { selectedSnippetGroup }, actions: { setSelectedSnippetGroup, getUserSnippetGroups } } = useOvermind();
+	const { state: { selectedSnippetGroup }, actions: { setSelectedSnippetGroup, getUserSnippetGroups, updateSnippetGroup } } = useOvermind();
 
 	useEffect(() => {
 		const fetchSnippetGroups = async () => {
 			setSnippetGroups(await getUserSnippetGroups(1) as SnippetGroup[]);
-			// setSnippetGroups([Math.random()]);
-			// console.log('?');
 		};
 		fetchSnippetGroups();
 	}, []);
@@ -21,12 +20,21 @@ const SnippetGroupList: FunctionComponent = () => {
 		setSelectedSnippetGroup(sg.id);
 	};
 
+	const renameSnippetGroup = async (snippetGroup: SnippetGroup, newName: string) => {
+		await updateSnippetGroup({ snippetId: snippetGroup.id, fields: { name: newName } });
+
+		let newSnippetGroups = snippetGroups.slice(0);
+		let snippetGroupPos = snippetGroups.indexOf(snippetGroup);
+		newSnippetGroups[snippetGroupPos].name = newName;
+		setSnippetGroups(newSnippetGroups);
+	};
+
 	const createGroup = () => {
 
 	};
 
 	const deleteSelectedGroup = () => {
-		console.log('Deleting', selectedSnippetGroup);
+
 	};
 
 	return <div className="border-r border-gray-700 flex-1 flex flex-col">

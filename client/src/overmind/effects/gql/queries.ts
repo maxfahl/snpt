@@ -12,6 +12,11 @@ import {
     SnippetVariables,
     SnippetVariablesVariables,
 } from "./graphql-types/SnippetVariables";
+import {
+    SnippetVariableSets_snippetVariableSets,
+    SnippetVariableSetsVariables
+} from "./graphql-types/SnippetVariableSets";
+import { SnippetVariableSet } from "../../../models/snippet-variable-set";
 
 export const userSnippetGroups: Query<
     UserSnippetGroups,
@@ -48,10 +53,6 @@ export const snippet: Query<Snippet, any> = gql`
             name
             language
             content
-            snippetVariableSets {
-                id
-                name
-            }
         }
     }
 `;
@@ -65,6 +66,18 @@ export const snippetVariables: Query<
             id
             key
             value
+        }
+    }
+`;
+
+export const snippetVariableSets: Query<
+    SnippetVariableSet[],
+    SnippetVariableSetsVariables
+> = gql`
+    query SnippetVariableSets($snippetId: Int!) {
+        snippetVariableSets(snippetId: $snippetId) {
+            id,
+            name
         }
     }
 `;

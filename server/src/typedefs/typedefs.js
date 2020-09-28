@@ -2,6 +2,7 @@ const typeDefs = `
 	type Query {
 		snippet(snippetId: Int!): Snippet!
 		snippetGroup(snippetGroupId: Int!): SnippetGroup!
+		snippetVariableSets(snippetId: Int!): [SnippetVariableSet]!
 		snippetVariables(snippetVariableSetId: Int!): [SnippetVariable]!
 		user(userId: Int!): User!
 		users: [User]

@@ -8,15 +8,15 @@
 // ====================================================
 
 export interface SnippetVariables_snippetVariables {
-    id: number;
-    key: string;
-    value: string | null;
+  id: number;
+  key: string;
+  value: string | null;
 }
 
 export interface SnippetVariables {
-    snippetVariables: (SnippetVariables_snippetVariables | null)[];
+  snippetVariables: (SnippetVariables_snippetVariables | null)[];
 }
 
 export interface SnippetVariablesVariables {
-    snippetVariableSetId: number;
+  snippetVariableSetId: number;
 }

@@ -10,16 +10,16 @@ import { UpdateSnippetVariableInput } from "./../../../graphql-global-types";
 // ====================================================
 
 export interface UpdateSnippetVariable_updateSnippetVariable {
-    id: number;
-    key: string;
-    value: string | null;
+  id: number;
+  key: string;
+  value: string | null;
 }
 
 export interface UpdateSnippetVariable {
-    updateSnippetVariable: UpdateSnippetVariable_updateSnippetVariable;
+  updateSnippetVariable: UpdateSnippetVariable_updateSnippetVariable;
 }
 
 export interface UpdateSnippetVariableVariables {
-    snippetVariableId: number;
-    fields: UpdateSnippetVariableInput;
+  snippetVariableId: number;
+  fields: UpdateSnippetVariableInput;
 }

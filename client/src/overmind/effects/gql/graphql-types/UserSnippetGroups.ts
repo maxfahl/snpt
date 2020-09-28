@@ -8,18 +8,18 @@
 // ====================================================
 
 export interface UserSnippetGroups_user_snippetGroups {
-    id: number;
-    name: string;
+  id: number;
+  name: string;
 }
 
 export interface UserSnippetGroups_user {
-    snippetGroups: UserSnippetGroups_user_snippetGroups[] | null;
+  snippetGroups: UserSnippetGroups_user_snippetGroups[] | null;
 }
 
 export interface UserSnippetGroups {
-    user: UserSnippetGroups_user;
+  user: UserSnippetGroups_user;
 }
 
 export interface UserSnippetGroupsVariables {
-    userId: number;
+  userId: number;
 }

@@ -5,7 +5,6 @@ import ListItem from "./list-item";
 import SimpleButton from "./simple-button";
 
 const SnippetGroupList: FunctionComponent = () => {
-    const [snippetGroups, setSnippetGroups] = useState<SnippetGroup[]>([]);
     const {
         state: { selectedSnippetGroup },
         actions: {
@@ -14,6 +13,7 @@ const SnippetGroupList: FunctionComponent = () => {
             updateSnippetGroup,
         },
     } = useOvermind();
+    const [snippetGroups, setSnippetGroups] = useState<SnippetGroup[]>([]);
 
     useEffect(() => {
         const fetchSnippetGroups = async () => {

@@ -10,18 +10,16 @@ import { CreateSnippetVariableInput } from "./../../../graphql-global-types";
 // ====================================================
 
 export interface CreateMultipleSnippetVariables_createMultipleSnippetVariables {
-    id: number;
-    key: string;
-    value: string | null;
+  id: number;
+  key: string;
+  value: string | null;
 }
 
 export interface CreateMultipleSnippetVariables {
-    createMultipleSnippetVariables:
-        | CreateMultipleSnippetVariables_createMultipleSnippetVariables[]
-        | null;
+  createMultipleSnippetVariables: CreateMultipleSnippetVariables_createMultipleSnippetVariables[] | null;
 }
 
 export interface CreateMultipleSnippetVariablesVariables {
-    snippetVariableSetId: number;
-    variablesArray: (CreateSnippetVariableInput | null)[];
+  snippetVariableSetId: number;
+  variablesArray: (CreateSnippetVariableInput | null)[];
 }

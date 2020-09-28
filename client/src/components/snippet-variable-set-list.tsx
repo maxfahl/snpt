@@ -1,8 +1,9 @@
-import React, { FunctionComponent, MouseEvent } from "react";
+import React, { FunctionComponent, MouseEvent, useEffect, useState } from "react";
 import { useOvermind } from "../overmind";
 import ListItem from "./list-item";
 import { SnippetVariableSet } from "../models/snippet-variable-set";
 import SimpleButton from "./simple-button";
+import { SnippetGroup } from "../models/snippet-group";
 
 type SnippetVariableSetListProps = {
     onSelect: (id: number) => void;
@@ -15,8 +16,18 @@ const SnippetVariableSetList: FunctionComponent<SnippetVariableSetListProps> = (
 }) => {
     const {
         state: { editedSnippet },
-        actions: { updateSnippetVariableSet },
+        actions: { getSnippetVariableSets, updateSnippetVariableSet },
     } = useOvermind();
+    const [snippetVariableSets, setSnippetVariableSets] = useState<SnippetVariableSet[]>([]);
+
+    useEffect(() => {
+        const fetchSnippetVariableSets = async () => {
+            const sets = await getSnippetVariableSets(editedSnippet.id);
+            setSnippetVariableSets((sets) as SnippetVariableSet[]);
+            onSelect(sets[0].id)
+        };
+        fetchSnippetVariableSets();
+    }, [editedSnippet.id]);
 
     const onVariableSetClick = (e: MouseEvent, svs: SnippetVariableSet) => {
         onSelect(svs.id);
@@ -45,7 +56,7 @@ const SnippetVariableSetList: FunctionComponent<SnippetVariableSetListProps> = (
     return (
         <div className="w-56 border-r border-gray-700 flex flex-col">
             <div className="flex-1 flex flex-col overflow-auto">
-                {editedSnippet.snippetVariableSets.map((svs) => (
+                {snippetVariableSets.map((svs) => (
                     <ListItem
                         isSelected={selected === svs.id}
                         onSelect={onVariableSetClick}

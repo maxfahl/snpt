@@ -7,23 +7,17 @@
 // GraphQL query operation: Snippet
 // ====================================================
 
-export interface Snippet_snippet_snippetVariableSets {
-    id: number;
-    name: string;
-}
-
 export interface Snippet_snippet {
-    id: number;
-    name: string;
-    language: string;
-    content: string;
-    snippetVariableSets: (Snippet_snippet_snippetVariableSets | null)[] | null;
+  id: number;
+  name: string;
+  language: string;
+  content: string;
 }
 
 export interface Snippet {
-    snippet: Snippet_snippet;
+  snippet: Snippet_snippet;
 }
 
 export interface SnippetVariables {
-    snippetId: number;
+  snippetId: number;
 }

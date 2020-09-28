@@ -23,7 +23,7 @@ const SnippetVariableItem: FunctionComponent<SnippetVariableItemProps> = ({
     return (
         <div
             className={
-                "h-10 relative flex items-center border-b border-gray-700 cursor-pointer transition-colors duration-100 flex" +
+                "h-10 relative flex items-center border-b border-gray-700 transition-colors duration-100 flex" +
                 (runnable ? "" : " opacity-25")
             }
         >

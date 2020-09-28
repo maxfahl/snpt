@@ -18,7 +18,7 @@ const resolvers = {
             const snippetVariableSet = await models.SnippetVariableSet.findOne({
                 where: { id: snippetVariableSetId },
             });
-            snippetVariableSet.update({ name, content });
+            snippetVariableSet.update({ name });
             return snippetVariableSet;
         },
     },

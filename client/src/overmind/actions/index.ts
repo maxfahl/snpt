@@ -86,7 +86,7 @@ export const getSnippetVariableSets: AsyncAction<
     const { snippetVariableSets } = await effects.gql.queries.snippetVariableSets({
         snippetId,
     });
-    return snippetVariableSets as SnippetVariable[];
+    return snippetVariableSets as SnippetVariableSet[];
 };
 
 export const getSnippetVariables: AsyncAction<

@@ -37,16 +37,15 @@ const SnippetVariableSetList: FunctionComponent<SnippetVariableSetListProps> = (
         snippetVariableSet: SnippetVariableSet,
         newName: string
     ) => {
-        // await updateSnippetVariableSet({
-        //     snippetVariableSetId: snippetVariableSet.id,
-        //     fields: { name: newName },
-        // });
-        //
-        // editedSnippet.snippetVariableSets
-        // let newSnippetGroups = snippetGroups.slice(0);
-        // let snippetGroupPos = snippetGroups.indexOf(snippetGroup);
-        // newSnippetGroups[snippetGroupPos].name = newName;
-        // setSnippetGroups(newSnippetGroups);
+        await updateSnippetVariableSet({
+            snippetVariableSetId: snippetVariableSet.id,
+            fields: { name: newName },
+        });
+
+        let newSnippetVariableSets = snippetVariableSets.slice(0);
+        let snippetVariableSetPos = snippetVariableSets.indexOf(snippetVariableSet);
+        newSnippetVariableSets[snippetVariableSetPos].name = newName;
+        setSnippetVariableSets(newSnippetVariableSets);
     };
 
     const createVariable = (e: MouseEvent) => {};

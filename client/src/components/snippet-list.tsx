@@ -8,9 +8,11 @@ import { useOvermind } from "../overmind";
 import { Snippet } from "../models/snippet";
 import ListItem from "./list-item";
 import SimpleButton from "./simple-button";
+import { sortByStringProp } from "../utils/array";
 
 const SnippetList: FunctionComponent = () => {
     const [snippets, setSnippets] = useState<Snippet[]>([]);
+    const [localSelectedSnippet, setLocalSelectedSnippet] = useState<Snippet>();
     const {
         state: {
             auth: {
@@ -24,6 +26,7 @@ const SnippetList: FunctionComponent = () => {
             getSnippetGroupsSnippets,
             createSnippet,
             updateSnippet,
+            deleteSnippet
         },
     } = useOvermind();
 
@@ -36,6 +39,7 @@ const SnippetList: FunctionComponent = () => {
     }, [selectedSnippetGroup]);
 
     const onSnippetClick = (e: MouseEvent, s: Snippet) => {
+        setLocalSelectedSnippet(s);
         setSelectedSnippet(s.id);
     };
 
@@ -48,7 +52,7 @@ const SnippetList: FunctionComponent = () => {
         let newSnippets = snippets.slice(0);
         let snippetPos = snippets.indexOf(snippet);
         newSnippets[snippetPos].name = newName;
-        setSnippets(sortSnippetsByName(newSnippets));
+        setSnippets(sortByStringProp(newSnippets, 'name'));
     };
 
     const doCreateSnippet = async (e: MouseEvent) => {
@@ -65,14 +69,23 @@ const SnippetList: FunctionComponent = () => {
         let newSnippets = snippets.slice(0);
         newSnippets.push(newSnippet);
         setSnippets(newSnippets);
+        setLocalSelectedSnippet(newSnippet);
         setSelectedSnippet(newSnippet.id);
     };
 
-    const sortSnippetsByName = (snippets: Snippet[]) => {
-        return snippets.sort((a, b) => a.name.localeCompare(b.name));
-    };
+    const doDeleteSelectedSnippet = async (e: MouseEvent) => {
+        if (localSelectedSnippet !== undefined) {
+            await deleteSnippet({ snippetId: localSelectedSnippet.id });
 
-    const deleteSelectedSnippet = (e: MouseEvent) => {};
+            let snippetPos = snippets.indexOf(localSelectedSnippet);
+            let newSnippets = snippets.slice(0);
+            newSnippets.splice(snippetPos, 1);
+
+            setSnippets(newSnippets);
+            setLocalSelectedSnippet(undefined);
+            setSelectedSnippet(undefined);
+        }
+    };
 
     return (
         <div className="snippet-list border-r border-gray-700 flex-1 flex flex-col">
@@ -92,7 +105,7 @@ const SnippetList: FunctionComponent = () => {
                     <span>+</span>
                 </SimpleButton>
                 <SimpleButton
-                    onClick={deleteSelectedSnippet}
+                    onClick={doDeleteSelectedSnippet}
                     className="bg-blue-800"
                 >
                     <span>-</span>

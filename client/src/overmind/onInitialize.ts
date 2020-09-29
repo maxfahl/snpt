@@ -13,19 +13,31 @@ export const onInitialize = ({ state, effects }, instance) => {
 
     instance.reaction(
         ({ selectedSnippetGroup }) => selectedSnippetGroup,
-        (selectedSnippetGroup) =>
-            localStorage.setItem(
-                "selectedSnippetGroup",
-                selectedSnippetGroup.toString()
-            ),
+        (selectedSnippetGroup) => {
+            if (selectedSnippetGroup) {
+                localStorage.setItem(
+                    "selectedSnippetGroup",
+                    selectedSnippetGroup.toString()
+                );
+                localStorage.removeItem("selectedSnippet");
+            } else {
+                localStorage.removeItem("selectedSnippetGroup");
+            }
+        },
         {
             nested: false,
         }
     );
     instance.reaction(
         ({ selectedSnippet }) => selectedSnippet,
-        (selectedSnippet) =>
-            localStorage.setItem("selectedSnippet", selectedSnippet.toString()),
+        (selectedSnippet) => {
+            if (selectedSnippet)
+                localStorage.setItem(
+                    "selectedSnippet",
+                    selectedSnippet.toString()
+                );
+            else localStorage.removeItem("selectedSnippet");
+        },
         {
             nested: false,
         }

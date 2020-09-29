@@ -21,6 +21,12 @@ export const updateSnippetGroup = gql`
     }
 `;
 
+export const deleteSnippetGroup = gql`
+    mutation DeleteSnippetGroup($snippetGroupId: Int!) {
+        deleteSnippetGroup(snippetGroupId: $snippetGroupId)
+    }
+`;
+
 export const createSnippet = gql`
     mutation CreateSnippet($fields: CreateSnippetInput!) {
         createSnippet(fields: $fields) {
@@ -39,6 +45,12 @@ export const updateSnippet = gql`
             name
             content
         }
+    }
+`;
+
+export const deleteSnippet = gql`
+    mutation DeleteSnippet($snippetId: Int!) {
+        deleteSnippet(snippetId: $snippetId)
     }
 `;
 
@@ -63,6 +75,12 @@ export const updateSnippetVariableSet = gql`
             id
             name
         }
+    }
+`;
+
+export const deleteSnippetVariableSet = gql`
+    mutation DeleteSnippetVariableSet($snippetVariableSetId: Int!) {
+        deleteSnippetVariableSet(snippetVariableSetId: $snippetVariableSetId)
     }
 `;
 

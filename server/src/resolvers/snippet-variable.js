@@ -14,17 +14,6 @@ const resolvers = {
         },
     },
     Mutation: {
-        updateSnippetVariable: async (
-            _,
-            { snippetVariableId, fields: { key, value } },
-            { auth }
-        ) => {
-            const snippetVariable = await models.SnippetVariable.findOne({
-                where: { id: snippetVariableId },
-            });
-            await snippetVariable.update({ key, value });
-            return snippetVariable;
-        },
         createMultipleSnippetVariables: async (
             _,
             { snippetVariableSetId, variablesArray },
@@ -37,6 +26,25 @@ const resolvers = {
             return await models.SnippetVariable.bulkCreate(
                 snippetVariableDataArray
             );
+        },
+        updateSnippetVariable: async (
+            _,
+            { snippetVariableId, fields: { key, value } },
+            { auth }
+        ) => {
+            const snippetVariable = await models.SnippetVariable.findOne({
+                where: { id: snippetVariableId },
+            });
+            await snippetVariable.update({ key, value });
+            return snippetVariable;
+        },
+        deleteSnippetVariable: async (
+            parent,
+            { snippetVariableId }
+        ) => {
+            return await models.SnippetVariable.destroy({
+                where: { id: snippetVariableId },
+            });
         },
     },
 };

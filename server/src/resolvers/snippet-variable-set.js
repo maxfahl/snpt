@@ -21,6 +21,14 @@ const resolvers = {
             await snippetVariableSet.update({ name });
             return snippetVariableSet;
         },
+        deleteSnippetVariableSet: async (
+            parent,
+            { snippetVariableSetId }
+        ) => {
+            return await models.SnippetVariableSet.destroy({
+                where: { id: snippetVariableSetId },
+            });
+        },
     },
 };
 

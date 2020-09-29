@@ -83,7 +83,9 @@ export const getSnippetVariableSets: AsyncAction<
     number,
     SnippetVariableSet[]
 > = async ({ effects }, snippetId) => {
-    const { snippetVariableSets } = await effects.gql.queries.snippetVariableSets({
+    const {
+        snippetVariableSets,
+    } = await effects.gql.queries.snippetVariableSets({
         snippetId,
     });
     return snippetVariableSets as SnippetVariableSet[];
@@ -105,7 +107,9 @@ export const createSnippetGroup: AsyncAction<
     CreateSnippetGroupVariables,
     SnippetGroup
 > = async ({ effects }, { fields }) => {
-    const { createSnippetGroup: snippetGroup } = await effects.gql.mutations.createSnippetGroup({
+    const {
+        createSnippetGroup: snippetGroup,
+    } = await effects.gql.mutations.createSnippetGroup({
         fields,
     });
     return snippetGroup as SnippetGroup;
@@ -115,18 +119,30 @@ export const updateSnippetGroup: AsyncAction<
     UpdateSnippetGroupVariables,
     SnippetGroup
 > = async ({ effects }, { snippetGroupId, fields }) => {
-    const { snippetGroup } = await effects.gql.mutations.updateSnippetGroup({
+    const { updateSnippetGroup: snippetGroup } = await effects.gql.mutations.updateSnippetGroup({
         snippetGroupId,
         fields,
     });
     return snippetGroup as SnippetGroup;
 };
 
+export const deleteSnippetGroup: AsyncAction<
+    any,
+    number
+> = async ({ effects }, { snippetGroupId }) => {
+    const { deleteSnippetGroup } = await effects.gql.mutations.deleteSnippetGroup({
+        snippetGroupId
+    });
+    return deleteSnippetGroup as number;
+};
+
 export const createSnippet: AsyncAction<
     CreateSnippetVariables,
     Snippet
 > = async ({ effects }, { fields }) => {
-    const { createSnippet: snippet } = await effects.gql.mutations.createSnippet({ fields });
+    const {
+        createSnippet: snippet,
+    } = await effects.gql.mutations.createSnippet({ fields });
     return snippet as Snippet;
 };
 
@@ -139,6 +155,16 @@ export const updateSnippet: AsyncAction<any, Snippet> = async (
         fields,
     });
     return snippet as Snippet;
+};
+
+export const deleteSnippet: AsyncAction<
+    any,
+    number
+    > = async ({ effects }, { snippetId }) => {
+    const { deleteSnippet } = await effects.gql.mutations.deleteSnippet({
+        snippetId
+    });
+    return deleteSnippet as number;
 };
 
 export const createSnippetVariableSet: AsyncAction<
@@ -162,6 +188,16 @@ export const updateSnippetVariableSet: AsyncAction<
         fields,
     });
     return snippetVariableSet as SnippetVariableSet;
+};
+
+export const deleteSnippetVariableSet: AsyncAction<
+    any,
+    number
+    > = async ({ effects }, { snippetVariableSetId }) => {
+    const { deleteSnippetVariableSet } = await effects.gql.mutations.deleteSnippetVariableSet({
+        snippetVariableSetId
+    });
+    return deleteSnippetVariableSet as number;
 };
 
 export const updateSnippetVariable: AsyncAction<

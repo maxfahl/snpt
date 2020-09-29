@@ -20,6 +20,14 @@ const resolvers = {
             await snippetGroup.update({ name });
             return snippetGroup;
         },
+        deleteSnippetGroup: async (
+            parent,
+            { snippetGroupId }
+        ) => {
+            return await models.SnippetGroup.destroy({
+                where: { id: snippetGroupId },
+            });
+        },
     },
     SnippetGroup: {
         snippets: async (parent) => {

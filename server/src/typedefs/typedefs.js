@@ -14,15 +14,19 @@ const typeDefs = `
 		
 		createSnippetGroup(fields: CreateSnippetGroupInput!): SnippetGroup!
 		updateSnippetGroup(snippetGroupId: Int!, fields: UpdateSnippetGroupInput!): SnippetGroup!
+		deleteSnippetGroup(snippetGroupId: Int!): Int!
 		
 		createSnippet(fields: CreateSnippetInput!): Snippet!
 		updateSnippet(snippetId: Int!, fields: UpdateSnippetInput!): Snippet!
+		deleteSnippet(snippetId: Int!): Int!
 		
 		createSnippetVariableSet(fields: CreateSnippetVariableSetInput!): SnippetVariableSet!
 		updateSnippetVariableSet(snippetVariableSetId: Int!, fields: UpdateSnippetVariableSetInput!): SnippetVariableSet!
+		deleteSnippetVariableSet(snippetVariableSetId: Int!): Int!
 		
-		updateSnippetVariable(snippetVariableId: Int!, fields: UpdateSnippetVariableInput!): SnippetVariable!
 		createMultipleSnippetVariables(snippetVariableSetId: Int!, variablesArray: [CreateSnippetVariableInput]!): [SnippetVariable!]
+		updateSnippetVariable(snippetVariableId: Int!, fields: UpdateSnippetVariableInput!): SnippetVariable!
+		deleteSnippetVariable(snippetVariableId: Int!): Int!
 	}
 
 	type User {

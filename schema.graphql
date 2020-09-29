@@ -10,6 +10,10 @@ type Mutation {
     createSnippet(fields: CreateSnippetInput!): Snippet!
     createSnippetGroup(fields: CreateSnippetGroupInput!): SnippetGroup!
     createSnippetVariableSet(fields: CreateSnippetVariableSetInput!): SnippetVariableSet!
+    deleteSnippet(snippetId: Int!): Int!
+    deleteSnippetGroup(snippetGroupId: Int!): Int!
+    deleteSnippetVariable(snippetVariableId: Int!): Int!
+    deleteSnippetVariableSet(snippetVariableSetId: Int!): Int!
     loginUser(email: String!, password: String!): UserCredentials!
     registerUser(email: String!, password: String!): UserCredentials!
     updateSnippet(fields: UpdateSnippetInput!, snippetId: Int!): Snippet!

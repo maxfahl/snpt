@@ -17,17 +17,20 @@ const resolvers = {
     },
 
     Mutation: {
-        createSnippet: async (parent, { fields: fields }) => {
+        createSnippet: (parent, { fields: fields }) => {
             return models.Snippet.create(fields);
+            // const newSnippet = await models.Snippet.create(fields);
+            // console.log(newSnippet);
+            // return newSnippet.dataValues;
         },
         updateSnippet: async (
             parent,
-            { snippetId, fields: { name, content } }
+            { snippetId, fields: { userId, snippetGroupId, name, content } }
         ) => {
             const snippet = await models.Snippet.findOne({
                 where: { id: snippetId },
             });
-            await snippet.update({ name, content });
+            await snippet.update({ userId, snippetGroupId, name, content });
             return snippet;
         },
     },

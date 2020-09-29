@@ -8,10 +8,14 @@
 //==============================================================
 
 export interface CreateSnippetGroupInput {
+  userId: number;
   name: string;
 }
 
 export interface CreateSnippetInput {
+  userId: number;
+  snippetGroupId: number;
+  language: string;
   name: string;
   content: string;
 }

@@ -1,4 +1,9 @@
-import React, { FunctionComponent, MouseEvent, useEffect, useState } from "react";
+import React, {
+    FunctionComponent,
+    MouseEvent,
+    useEffect,
+    useState,
+} from "react";
 import { useOvermind } from "../overmind";
 import { Snippet } from "../models/snippet";
 import ListItem from "./list-item";
@@ -7,10 +12,17 @@ import SimpleButton from "./simple-button";
 const SnippetList: FunctionComponent = () => {
     const [snippets, setSnippets] = useState<Snippet[]>([]);
     const {
-        state: { selectedSnippet, selectedSnippetGroup },
+        state: {
+            auth: {
+                user: { id: userId },
+            },
+            selectedSnippet,
+            selectedSnippetGroup,
+        },
         actions: {
             setSelectedSnippet,
             getSnippetGroupsSnippets,
+            createSnippet,
             updateSnippet,
         },
     } = useOvermind();
@@ -36,10 +48,29 @@ const SnippetList: FunctionComponent = () => {
         let newSnippets = snippets.slice(0);
         let snippetPos = snippets.indexOf(snippet);
         newSnippets[snippetPos].name = newName;
-        setSnippets(newSnippets);
+        setSnippets(sortSnippetsByName(newSnippets));
     };
 
-    const createSnippet = (e: MouseEvent) => {};
+    const doCreateSnippet = async (e: MouseEvent) => {
+        const newSnippet = await createSnippet({
+            fields: {
+                userId: userId,
+                snippetGroupId: selectedSnippetGroup,
+                language: "text",
+                name: "New snippet",
+                content: "",
+            },
+        });
+
+        let newSnippets = snippets.slice(0);
+        newSnippets.push(newSnippet);
+        setSnippets(newSnippets);
+        setSelectedSnippet(newSnippet.id);
+    };
+
+    const sortSnippetsByName = (snippets: Snippet[]) => {
+        return snippets.sort((a, b) => a.name.localeCompare(b.name));
+    };
 
     const deleteSelectedSnippet = (e: MouseEvent) => {};
 
@@ -57,7 +88,7 @@ const SnippetList: FunctionComponent = () => {
                 ))}
             </div>
             <div className="h-10 relative flex">
-                <SimpleButton onClick={createSnippet} className="bg-blue-800">
+                <SimpleButton onClick={doCreateSnippet} className="bg-blue-800">
                     <span>+</span>
                 </SimpleButton>
                 <SimpleButton

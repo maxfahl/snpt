@@ -36,5 +36,8 @@ module.exports = (sequelize, DataTypes) => {
             modelName: "SnippetVariableSet",
         }
     );
+    SnippetVariableSet.addScope('defaultScope', {
+        order: [['name', 'ASC']],
+    }, { override: true })
     return SnippetVariableSet;
 };

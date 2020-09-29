@@ -40,11 +40,24 @@ module.exports = (sequelize, DataTypes) => {
                 type: DataTypes.INTEGER,
                 allowNull: false,
             },
+        }, {
+            hooks: {
+                afterCreate: async (snippet, options) => {
+                    await sequelize.models.SnippetVariableSet.create({
+                        snippetId: snippet.id,
+                        name: 'Default'
+                    });
+                },
+            },
+            sequelize
         },
         {
             sequelize,
             modelName: "Snippet",
         }
     );
+    Snippet.addScope('defaultScope', {
+        order: [['name', 'ASC']],
+    }, { override: true })
     return Snippet;
 };

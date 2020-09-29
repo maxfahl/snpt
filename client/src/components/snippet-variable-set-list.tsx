@@ -24,7 +24,8 @@ const SnippetVariableSetList: FunctionComponent<SnippetVariableSetListProps> = (
         const fetchSnippetVariableSets = async () => {
             const sets = await getSnippetVariableSets(editedSnippet.id);
             setSnippetVariableSets((sets) as SnippetVariableSet[]);
-            onSelect(sets[0].id)
+            if (sets.length)
+                onSelect(sets[0].id)
         };
         fetchSnippetVariableSets();
     }, [editedSnippet.id]);

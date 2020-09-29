@@ -46,6 +46,10 @@ const ListItem: FunctionComponent<ListItemProps> = ({
         }
     });
 
+    const startEditText = () => {
+
+    };
+
     const doClick = (e: MouseEvent) => {
         if (doubleClick) {
             setDisabled(!disabled);

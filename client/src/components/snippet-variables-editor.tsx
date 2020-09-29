@@ -21,9 +21,9 @@ const SnippetVariablesEditor: FunctionComponent<SnippetVariablesEditorProps> = (
         },
     } = useOvermind();
 
-    const [previousVariableSet, setPreviousVariableSet] = useState();
-    const [snippetVariables, setSnippetVariables] = useState();
-    const [listSnippetVariables, setListSnippetVariables] = useState();
+    const [previousVariableSet, setPreviousVariableSet] = useState<number>();
+    const [snippetVariables, setSnippetVariables] = useState<SnippetVariable[]>([]);
+    const [listSnippetVariables, setListSnippetVariables] = useState<SnippetVariable[]>();
     const [
         runnableSnippetVariableKeys,
         setRunnableSnippetVariableKeys,

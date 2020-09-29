@@ -30,5 +30,8 @@ module.exports = (sequelize, DataTypes) => {
             modelName: "SnippetGroup",
         }
     );
+    SnippetGroup.addScope('defaultScope', {
+        order: [['name', 'ASC']],
+    }, { override: true })
     return SnippetGroup;
 };

@@ -3,6 +3,9 @@ import { SnippetVariable } from "../models/snippet-variable";
 
 export type Auth = {
     token: string;
+    user: {
+        id: number;
+    }
 };
 
 export type SnippetRunnerContext = {
@@ -21,8 +24,10 @@ export type State = {
 
 export const state: State = {
     auth: {
-        token:
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJtYXhAZmFobC5zZSIsImlhdCI6MTYwMTIzNDYwOSwiZXhwIjoxNjAxMzIxMDA5fQ.C1BIUOL1-FsMTNMX53RnGo086xgzFXI6RacjP3wQIcY",
+        token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJtYXhAZmFobC5zZSIsImlhdCI6MTYwMTM2MzAxNSwiZXhwIjoxNjAxNDQ5NDE1fQ.ZVfPOvMBNC5eRF1S6lD7aejiL5sMNMIeQoZW9RiXBHc",
+        user: {
+            id: 1
+        }
     },
     selectedSnippetGroup: 0,
     selectedSnippet: 0,

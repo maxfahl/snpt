@@ -71,11 +71,15 @@ enum CacheControlScope {
 
 input CreateSnippetGroupInput {
     name: String!
+    userId: Int!
 }
 
 input CreateSnippetInput {
     content: String!
+    language: String!
     name: String!
+    snippetGroupId: Int!
+    userId: Int!
 }
 
 input CreateSnippetVariableInput {

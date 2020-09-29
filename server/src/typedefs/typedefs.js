@@ -63,6 +63,7 @@ const typeDefs = `
 	}
 	
 	input CreateSnippetGroupInput {
+	    userId: Int!
 		name: String!
 	}
 	
@@ -71,6 +72,9 @@ const typeDefs = `
 	}
 	
 	input CreateSnippetInput {
+	    userId: Int!
+	    snippetGroupId: Int!
+	    language: String!
 		name: String!
 		content: String!
 	}

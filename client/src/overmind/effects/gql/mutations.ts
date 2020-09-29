@@ -25,6 +25,7 @@ export const createSnippet = gql`
     mutation CreateSnippet($fields: CreateSnippetInput!) {
         createSnippet(fields: $fields) {
             id
+            language
             name
             content
         }

@@ -28,7 +28,7 @@ const SnippetEditor: FunctionComponent = () => {
     const aceEditor: Ref<AceEditor> = useRef();
     const delayedSaveSnippetChanges = useCallback(
         _.debounce((q) => saveSnippetChanges(q), 500),
-        []
+        [editedSnippet.id]
     );
 
     const saveSnippetChanges = (snippet) => {

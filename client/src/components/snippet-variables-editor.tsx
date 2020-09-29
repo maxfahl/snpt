@@ -86,7 +86,6 @@ const SnippetVariablesEditor: FunctionComponent<SnippetVariablesEditorProps> = (
 
     useEffect(() => {
         const buildListSnippetRunnerContext = () => {
-            console.log('buildListSnippetRunnerContext');
             if (snippetVariables) {
                 const runnableSnippetVariables = snippetVariables.filter((sv) =>
                     availableSnippetVariables.includes(sv.key)
@@ -112,8 +111,11 @@ const SnippetVariablesEditor: FunctionComponent<SnippetVariablesEditorProps> = (
                         );
                         return aIsViable === bIsViable ? 0 : aIsViable ? -1 : 1;
                     });
+
                 setListSnippetVariables(listSnippetVariables);
-            } else setListSnippetVariables(undefined);
+            } else {
+                setListSnippetVariables(undefined);
+            }
         };
         buildListSnippetRunnerContext();
     }, [snippetVariables, availableSnippetVariables]);

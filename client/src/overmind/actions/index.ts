@@ -105,7 +105,7 @@ export const createSnippetGroup: AsyncAction<
     CreateSnippetGroupVariables,
     SnippetGroup
 > = async ({ effects }, { fields }) => {
-    const { snippetGroup } = await effects.gql.mutations.createSnippetGroup({
+    const { createSnippetGroup: snippetGroup } = await effects.gql.mutations.createSnippetGroup({
         fields,
     });
     return snippetGroup as SnippetGroup;

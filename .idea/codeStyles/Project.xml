@@ -19,6 +19,7 @@
       <option name="INNER_CLASSES_ORDER_WEIGHT" value="6" />
     </GroovyCodeStyleSettings>
     <HTMLCodeStyleSettings>
+      <option name="HTML_SPACE_INSIDE_EMPTY_TAG" value="true" />
       <option name="HTML_DO_NOT_INDENT_CHILDREN_OF" value="html,thead,tbody,tfoot" />
     </HTMLCodeStyleSettings>
     <JSCodeStyleSettings version="0">
@@ -64,9 +65,9 @@
       </indentOptions>
     </codeStyleSettings>
     <codeStyleSettings language="HTML">
+      <option name="SOFT_MARGINS" value="80" />
       <indentOptions>
         <option name="CONTINUATION_INDENT_SIZE" value="4" />
-        <option name="USE_TAB_CHARACTER" value="true" />
       </indentOptions>
     </codeStyleSettings>
     <codeStyleSettings language="JAVA">

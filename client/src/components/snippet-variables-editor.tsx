@@ -21,9 +21,16 @@ const SnippetVariablesEditor: FunctionComponent<SnippetVariablesEditorProps> = (
         },
     } = useOvermind();
 
-    const [previousVariableSet, setPreviousVariableSet] = useState<number>();
-    const [snippetVariables, setSnippetVariables] = useState<SnippetVariable[]>([]);
-    const [listSnippetVariables, setListSnippetVariables] = useState<SnippetVariable[]>();
+    const [
+        triedToFillVariablesForSnippet,
+        setTriedToFillVariablesForSnippet,
+    ] = useState<number>();
+    const [snippetVariables, setSnippetVariables] = useState<
+        SnippetVariable[]
+    >();
+    const [listSnippetVariables, setListSnippetVariables] = useState<
+        SnippetVariable[]
+    >();
     const [
         runnableSnippetVariableKeys,
         setRunnableSnippetVariableKeys,
@@ -31,19 +38,16 @@ const SnippetVariablesEditor: FunctionComponent<SnippetVariablesEditorProps> = (
 
     useEffect(() => {
         const fetchSnippetVariables = async () => {
-            const snippetVariables = await getSnippetVariables(
+            const fetchedSnippetVariables = await getSnippetVariables(
                 selectedSnippetVariableSet
             );
-            setSnippetVariables(snippetVariables);
+            setSnippetVariables(fetchedSnippetVariables);
         };
 
         if (!!selectedSnippetVariableSet) {
-            if (previousVariableSet !== selectedSnippetVariableSet) {
-                setListSnippetVariables(undefined);
-                setSnippetVariables(undefined);
-                fetchSnippetVariables();
-                setPreviousVariableSet(selectedSnippetVariableSet);
-            }
+            setListSnippetVariables(undefined);
+            setSnippetVariables(undefined);
+            fetchSnippetVariables();
         }
     }, [selectedSnippetVariableSet]);
 
@@ -54,24 +58,35 @@ const SnippetVariablesEditor: FunctionComponent<SnippetVariablesEditorProps> = (
                 availableSnippetVariables,
                 ...existingVariablesKeys
             ) as string[];
-            const variablesArray = variableKeysToCreate.map((varKey) => {
-                return { key: varKey, value: "" };
-            });
-            const addedSnippets = await createMultipleSnippetVariables({
-                snippetVariableSetId: selectedSnippetVariableSet,
-                variablesArray,
-            });
-            setSnippetVariables([...snippetVariables, ...addedSnippets]);
+            if (variableKeysToCreate.length) {
+                console.log("Creating variables:", variableKeysToCreate);
+                const variablesArray = variableKeysToCreate.map((varKey) => {
+                    return { key: varKey, value: "" };
+                });
+                const addedSnippets = await createMultipleSnippetVariables({
+                    snippetVariableSetId: selectedSnippetVariableSet,
+                    variablesArray,
+                });
+                setSnippetVariables([...snippetVariables, ...addedSnippets]);
+            }
         };
+
+        /**
+         * Only fill snippet variables the second time this is called with
+         * the same edited snippet.
+         */
         if (
             !!snippetVariables &&
-            previousVariableSet === selectedSnippetVariableSet
-        )
+            triedToFillVariablesForSnippet === editedSnippet.id
+        ) {
             createAndFillSnippetVariables();
+        }
+        setTriedToFillVariablesForSnippet(editedSnippet.id);
     }, [availableSnippetVariables]);
 
     useEffect(() => {
         const buildListSnippetRunnerContext = () => {
+            console.log('buildListSnippetRunnerContext');
             if (snippetVariables) {
                 const runnableSnippetVariables = snippetVariables.filter((sv) =>
                     availableSnippetVariables.includes(sv.key)
@@ -101,7 +116,7 @@ const SnippetVariablesEditor: FunctionComponent<SnippetVariablesEditorProps> = (
             } else setListSnippetVariables(undefined);
         };
         buildListSnippetRunnerContext();
-    }, [snippetVariables]);
+    }, [snippetVariables, availableSnippetVariables]);
 
     const onSnippetChange = async (
         snippetVariable: SnippetVariable,

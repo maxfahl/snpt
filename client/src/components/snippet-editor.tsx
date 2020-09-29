@@ -1,7 +1,9 @@
 import React, {
     FunctionComponent,
     Ref,
+    useCallback,
     useEffect,
+    useMemo,
     useRef,
     useState,
 } from "react";
@@ -10,9 +12,11 @@ import AceEditor from "react-ace";
 import { matchAll } from "../utils/regex";
 import { addVariableHighlight } from "../utils/ace";
 import * as _ from "lodash";
+import useDebounce from "../hooks/use-debounce";
+import produce from "immer";
+import { Snippet } from "../models/snippet";
 
 const SnippetEditor: FunctionComponent = () => {
-    const aceEditor: Ref<AceEditor> = useRef();
     const {
         state: { editedSnippet },
         actions: {
@@ -21,6 +25,11 @@ const SnippetEditor: FunctionComponent = () => {
             setAvailableSnippetVariables,
         },
     } = useOvermind();
+    const aceEditor: Ref<AceEditor> = useRef();
+    const delayedSaveSnippetChanges = useCallback(
+        _.debounce((q) => saveSnippetChanges(q), 500),
+        []
+    );
 
     const saveSnippetChanges = (snippet) => {
         updateSnippet({
@@ -31,16 +40,13 @@ const SnippetEditor: FunctionComponent = () => {
             },
         });
     };
+
     const onEditorChange = (code) => {
-        // const newState = produce<Snippet>(editedSnippet,draftState => {
-        // 	draftState.content = code;
-        // });
-        const newState = {
-            ...editedSnippet,
-            content: code,
-        };
+        const newState = produce<Snippet>(editedSnippet, (draftState) => {
+            draftState.content = code;
+        });
         setEditedSnippet(newState);
-        saveSnippetChanges(newState);
+        delayedSaveSnippetChanges(newState);
     };
 
     const updateAvailableSnippetVariables = () => {
@@ -77,7 +83,6 @@ const SnippetEditor: FunctionComponent = () => {
                 theme="solarized_dark"
                 fontSize={16}
                 showPrintMargin={false}
-                debounceChangePeriod={500}
                 onChange={onEditorChange}
                 onBlur={onBlur}
                 name="editor"

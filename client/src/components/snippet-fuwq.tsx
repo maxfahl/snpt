@@ -10,11 +10,6 @@ const SnippetFuwq: FunctionComponent = () => {
     } = useOvermind();
     const [selectedVariableSet, setSelectedVariableSet] = useState<number>();
 
-    // useEffect(() => {
-    //     if (editedSnippet.snippetVariableSets.length)
-    //         setSelectedVariableSet(editedSnippet.snippetVariableSets[0].id);
-    // }, [editedSnippet]);
-
     return (
         <div className="flex h-64">
             <SnippetVariableSetList

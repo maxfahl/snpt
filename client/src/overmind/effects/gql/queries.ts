@@ -64,6 +64,7 @@ export const snippetVariables: Query<
 > = gql`
     query SnippetVariables($snippetVariableSetId: Int!) {
         snippetVariables(snippetVariableSetId: $snippetVariableSetId) {
+            snippetVariableSetId
             id
             key
             value

@@ -19,9 +19,6 @@ const resolvers = {
     Mutation: {
         createSnippet: (parent, { fields: fields }) => {
             return models.Snippet.create(fields);
-            // const newSnippet = await models.Snippet.create(fields);
-            // console.log(newSnippet);
-            // return newSnippet.dataValues;
         },
         updateSnippet: async (
             parent,

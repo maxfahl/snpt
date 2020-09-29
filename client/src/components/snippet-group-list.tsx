@@ -1,4 +1,9 @@
-import React, { FunctionComponent, MouseEvent, useEffect, useState } from "react";
+import React, {
+    FunctionComponent,
+    MouseEvent,
+    useEffect,
+    useState,
+} from "react";
 import { useOvermind } from "../overmind";
 import { SnippetGroup } from "../models/snippet-group";
 import ListItem from "./list-item";
@@ -6,10 +11,16 @@ import SimpleButton from "./simple-button";
 
 const SnippetGroupList: FunctionComponent = () => {
     const {
-        state: { selectedSnippetGroup },
+        state: {
+            selectedSnippetGroup,
+            auth: {
+                user: { id: userId },
+            },
+        },
         actions: {
             setSelectedSnippetGroup,
             getUserSnippetGroups,
+            createSnippetGroup,
             updateSnippetGroup,
         },
     } = useOvermind();
@@ -41,7 +52,19 @@ const SnippetGroupList: FunctionComponent = () => {
         setSnippetGroups(newSnippetGroups);
     };
 
-    const createGroup = () => {};
+    const doCreateSnippetGroup = async () => {
+        const newSnippetGroup = await createSnippetGroup({
+            fields: {
+                userId: userId,
+                name: "New group",
+            },
+        });
+
+        let newSnippetGroups = snippetGroups.slice(0);
+        newSnippetGroups.push(newSnippetGroup);
+        setSnippetGroups(newSnippetGroups);
+        setSelectedSnippetGroup(newSnippetGroup.id);
+    };
 
     const deleteSelectedGroup = () => {};
 
@@ -59,7 +82,10 @@ const SnippetGroupList: FunctionComponent = () => {
                 ))}
             </div>
             <div className="h-10 relative flex">
-                <SimpleButton onClick={createGroup} className="bg-blue-800">
+                <SimpleButton
+                    onClick={doCreateSnippetGroup}
+                    className="bg-blue-800"
+                >
                     <span>+</span>
                 </SimpleButton>
                 <SimpleButton

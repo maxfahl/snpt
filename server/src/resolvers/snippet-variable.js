@@ -22,7 +22,7 @@ const resolvers = {
             const snippetVariable = await models.SnippetVariable.findOne({
                 where: { id: snippetVariableId },
             });
-            snippetVariable.update({ key, value });
+            await snippetVariable.update({ key, value });
             return snippetVariable;
         },
         createMultipleSnippetVariables: async (

@@ -9,7 +9,7 @@ const resolvers = {
     },
     Mutation: {
         createSnippetVariableSet: async (parent, { fields }) => {
-            return await models.SnippetVariableSet.create(fields);
+            return models.SnippetVariableSet.create(fields);
         },
         updateSnippetVariableSet: async (
             parent,
@@ -18,7 +18,7 @@ const resolvers = {
             const snippetVariableSet = await models.SnippetVariableSet.findOne({
                 where: { id: snippetVariableSetId },
             });
-            snippetVariableSet.update({ name });
+            await snippetVariableSet.update({ name });
             return snippetVariableSet;
         },
     },

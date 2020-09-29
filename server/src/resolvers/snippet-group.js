@@ -17,7 +17,7 @@ const resolvers = {
             const snippetGroup = await models.SnippetGroup.findOne({
                 where: { id: snippetGroupId },
             });
-            snippetGroup.update({ name });
+            await snippetGroup.update({ name });
             return snippetGroup;
         },
     },

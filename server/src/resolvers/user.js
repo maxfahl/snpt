@@ -42,12 +42,12 @@ const resolvers = {
             return await models.User.findAll();
         },
         user: async (parent, { userId }, { auth }) => {
-            const user = await getUser(auth);
-            if (user && user.id === userId) {
+            // const user = await getUser(auth);
+            // if (user && user.id === userId) {
                 return await models.User.findByPk(userId);
-            } else {
-                throw new AuthenticationError("Not authorized!");
-            }
+            // } else {
+            //     throw new AuthenticationError("Not authorized!");
+            // }
         },
     },
 

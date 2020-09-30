@@ -4,6 +4,7 @@ import SnippetList from "./snippet-list";
 
 const Editor: FunctionComponent = () => {
     return (
+        // <div></div>
         <div id="library" className="" style={{ display: "flex" }}>
             <div className="snippet-group-list-container w-56 flex flex-col">
                 <SnippetGroupList />

@@ -3,6 +3,11 @@ const models = require("../database/models");
 // noinspection JSUnusedGlobalSymbols
 const resolvers = {
     Query: {
+        snippetGroups: async (parent, { userId }, { auth }) => {
+            return await models.SnippetGroup.findAll({
+                where: { userId: userId },
+            });
+        },
         snippetGroup: async (parent, { snippetGroupId }, { auth }) => {
             return await models.SnippetGroup.findOne({
                 where: { id: snippetGroupId },
@@ -24,9 +29,6 @@ const resolvers = {
             parent,
             { snippetGroupId }
         ) => {
-            // const sg = await models.SnippetGroup.findOne({ where: { id: snippetGroupId } })
-            // await sg.destroy();
-
             return await models.SnippetGroup.destroy({
                 where: { id: snippetGroupId },
                 individualHooks: true

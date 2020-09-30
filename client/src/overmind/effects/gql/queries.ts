@@ -14,10 +14,8 @@ import {
 } from "./graphql-types/SnippetVariables";
 import {
     SnippetVariableSets,
-    SnippetVariableSets_snippetVariableSets,
     SnippetVariableSetsVariables,
 } from "./graphql-types/SnippetVariableSets";
-import { SnippetVariableSet } from "../../../models/snippet-variable-set";
 
 export const userSnippetGroups: Query<
     UserSnippetGroups,

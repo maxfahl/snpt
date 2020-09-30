@@ -38,11 +38,7 @@ module.exports = (sequelize, DataTypes) => {
             // },
             sequelize,
             modelName: "SnippetGroup",
-        },
-        // {
-        //     sequelize,
-        //     modelName: "SnippetGroup"
-        // }
+        }
     );
     SnippetGroup.addScope(
         "defaultScope",

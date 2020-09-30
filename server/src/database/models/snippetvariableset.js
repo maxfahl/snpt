@@ -40,9 +40,6 @@ module.exports = (sequelize, DataTypes) => {
                 },
             },
             sequelize,
-        },
-        {
-            sequelize,
             modelName: "SnippetVariableSet",
         }
     );

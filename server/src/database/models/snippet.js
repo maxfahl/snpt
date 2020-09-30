@@ -51,17 +51,14 @@ module.exports = (sequelize, DataTypes) => {
                 },
                 beforeDestroy: async (snippet, options) => {
                     await sequelize.models.SnippetVariableSet.destroy({
-                        where: { snippedId: snippet.id },
+                        where: { snippetId: snippet.id },
+                        individualHooks: true
                     });
                 },
             },
             sequelize,
             modelName: "Snippet",
-        },
-        // {
-        //     sequelize,
-        //     modelName: "Snippet",
-        // }
+        }
     );
     Snippet.addScope(
         "defaultScope",

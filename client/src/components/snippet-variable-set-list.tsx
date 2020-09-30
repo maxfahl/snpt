@@ -15,6 +15,11 @@ type SnippetVariableSetListProps = {
     selected: number;
 };
 
+enum FetchSnippetVariablesReason {
+    Delete,
+    Initial
+}
+
 const SnippetVariableSetList: FunctionComponent<SnippetVariableSetListProps> = ({
     onSelect,
     selected,
@@ -32,11 +37,24 @@ const SnippetVariableSetList: FunctionComponent<SnippetVariableSetListProps> = (
         SnippetVariableSet[]
     >([]);
 
-    const fetchSnippetVariableSets = useCallback(async () => {
-        const sets = await getSnippetVariableSets(editedSnippet.id);
-        setSnippetVariableSets(sets as SnippetVariableSet[]);
-        if (sets.length) onSelect(sets[0].id);
-    }, [editedSnippet.id]);
+    const fetchSnippetVariableSets = useCallback(
+        async (reason: FetchSnippetVariablesReason = FetchSnippetVariablesReason.Initial) => {
+            const oldIx: number = selected !== undefined ? snippetVariableSets.findIndex(svs => svs.id === selected) : 0;
+            const sets = await getSnippetVariableSets(editedSnippet.id);
+            setSnippetVariableSets(sets as SnippetVariableSet[]);
+            if (sets.length) {
+                if (reason === FetchSnippetVariablesReason.Initial) {
+                    onSelect(sets[0].id);
+                }
+                else if (reason === FetchSnippetVariablesReason.Delete) {
+                    onSelect(sets[oldIx === 0 ? oldIx : oldIx - 1].id);
+                }
+            } else {
+                onSelect(undefined);
+            }
+        },
+        [editedSnippet.id, snippetVariableSets, selected]
+    );
 
     useEffect(() => {
         fetchSnippetVariableSets();
@@ -78,25 +96,26 @@ const SnippetVariableSetList: FunctionComponent<SnippetVariableSetListProps> = (
     };
 
     const doDeleteSelectedVariableSet = async (e) => {
-        if (selected !== undefined) {
+        if (selected !== undefined && snippetVariableSets.length > 1) {
             await deleteSnippetVariableSet({ snippetVariableSetId: selected });
-            // onSelect(undefined);
-            await fetchSnippetVariableSets();
+            await fetchSnippetVariableSets(FetchSnippetVariablesReason.Delete);
         }
     };
 
     return (
         <div className="w-56 border-r border-gray-700 flex flex-col">
-            <div className="flex-1 flex flex-col overflow-auto">
-                {snippetVariableSets.map((svs) => (
-                    <ListItem
-                        isSelected={selected === svs.id}
-                        onSelect={onVariableSetClick}
-                        onTextChange={renameSnippetVariableSet}
-                        model={svs}
-                        key={svs.id}
-                    />
-                ))}
+            <div className="flex-1 overflow-auto">
+                <div>
+                    {snippetVariableSets.map((svs) => (
+                        <ListItem
+                            isSelected={selected === svs.id}
+                            onSelect={onVariableSetClick}
+                            onTextChange={renameSnippetVariableSet}
+                            model={svs}
+                            key={svs.id}
+                        />
+                    ))}
+                </div>
             </div>
             <div className="h-10 relative flex">
                 <SimpleButton

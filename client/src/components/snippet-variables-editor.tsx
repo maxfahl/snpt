@@ -1,8 +1,9 @@
-import React, { FunctionComponent, useEffect, useState } from "react";
+import React, { FunctionComponent, useCallback, useEffect, useState } from "react";
 import { useOvermind } from "../overmind";
 import * as _ from "lodash";
 import SnippetVariableItem from "./snippet-variable-item";
 import { SnippetVariable } from "../models/snippet-variable";
+import { SnippetVariableSet } from "../models/snippet-variable-set";
 
 type SnippetVariablesEditorProps = {
     selectedSnippetVariableSet: number;
@@ -36,41 +37,45 @@ const SnippetVariablesEditor: FunctionComponent<SnippetVariablesEditorProps> = (
         setRunnableSnippetVariableKeys,
     ] = useState([]);
 
+    const createAndFillSnippetVariables = useCallback(
+        async (existingVariables = snippetVariables) => {
+                const existingVariablesKeys = existingVariables.map((sv) => sv.key);
+                const variableKeysToCreate = _.without(
+                    availableSnippetVariables,
+                    ...existingVariablesKeys
+                ) as string[];
+
+                if (variableKeysToCreate.length) {
+                    const variablesArray = variableKeysToCreate.map((varKey) => {
+                        return { key: varKey, value: "" };
+                    });
+                    const addedSnippets = await createMultipleSnippetVariables({
+                        snippetVariableSetId: selectedSnippetVariableSet,
+                        variablesArray,
+                    });
+                    setSnippetVariables([...existingVariables, ...addedSnippets]);
+                }
+        },
+        [availableSnippetVariables, selectedSnippetVariableSet]
+    );
+
     useEffect(() => {
         const fetchSnippetVariables = async () => {
             const fetchedSnippetVariables = await getSnippetVariables(
                 selectedSnippetVariableSet
             );
-            setSnippetVariables(fetchedSnippetVariables);
+
+            await setSnippetVariables(fetchedSnippetVariables);
+            await createAndFillSnippetVariables(fetchedSnippetVariables);
         };
 
         if (!!selectedSnippetVariableSet) {
             setListSnippetVariables(undefined);
-            setSnippetVariables(undefined);
             fetchSnippetVariables();
         }
     }, [selectedSnippetVariableSet]);
 
     useEffect(() => {
-        const createAndFillSnippetVariables = async () => {
-            const existingVariablesKeys = snippetVariables.map((sv) => sv.key);
-            const variableKeysToCreate = _.without(
-                availableSnippetVariables,
-                ...existingVariablesKeys
-            ) as string[];
-            if (variableKeysToCreate.length) {
-                console.log("Creating variables:", variableKeysToCreate);
-                const variablesArray = variableKeysToCreate.map((varKey) => {
-                    return { key: varKey, value: "" };
-                });
-                const addedSnippets = await createMultipleSnippetVariables({
-                    snippetVariableSetId: selectedSnippetVariableSet,
-                    variablesArray,
-                });
-                setSnippetVariables([...snippetVariables, ...addedSnippets]);
-            }
-        };
-
         /**
          * Only fill snippet variables the second time this is called with
          * the same edited snippet.
@@ -141,16 +146,18 @@ const SnippetVariablesEditor: FunctionComponent<SnippetVariablesEditorProps> = (
     };
 
     return (
-        <div className="flex-1 flex flex-col overflow-auto" style={{}}>
-            {listSnippetVariables &&
-                listSnippetVariables.map((sv) => (
-                    <SnippetVariableItem
-                        key={sv.id}
-                        snippetVariable={sv}
-                        runnable={runnableSnippetVariableKeys.includes(sv.key)}
-                        onChange={onSnippetChange}
-                    />
-                ))}
+        <div className="flex-1 overflow-auto" style={{}}>
+            <div>
+                {listSnippetVariables &&
+                    listSnippetVariables.map((sv) => (
+                        <SnippetVariableItem
+                            key={sv.id}
+                            snippetVariable={sv}
+                            runnable={runnableSnippetVariableKeys.includes(sv.key)}
+                            onChange={onSnippetChange}
+                        />
+                    ))}
+            </div>
         </div>
     );
 };

@@ -6,20 +6,20 @@ module.exports = (sequelize, DataTypes) => {
             Snippet.belongsTo(models.User, {
                 foreignKey: "userId",
                 as: "user",
-                onDelete: "CASCADE",
             });
             Snippet.belongsTo(models.SnippetGroup, {
                 foreignKey: "snippetGroupId",
                 as: "snippetGroup",
-                onDelete: "CASCADE",
             });
             Snippet.hasMany(models.SnippetVariableSet, {
                 foreignKey: "snippetId",
                 as: "snippetVariableSets",
                 onDelete: "CASCADE",
+                hooks: true,
             });
         }
     }
+
     Snippet.init(
         {
             name: {
@@ -40,24 +40,35 @@ module.exports = (sequelize, DataTypes) => {
                 type: DataTypes.INTEGER,
                 allowNull: false,
             },
-        }, {
+        },
+        {
             hooks: {
                 afterCreate: async (snippet, options) => {
                     await sequelize.models.SnippetVariableSet.create({
                         snippetId: snippet.id,
-                        name: 'Default'
+                        name: "Default",
+                    });
+                },
+                beforeDestroy: async (snippet, options) => {
+                    await sequelize.models.SnippetVariableSet.destroy({
+                        where: { snippedId: snippet.id },
                     });
                 },
             },
-            sequelize
-        },
-        {
             sequelize,
             modelName: "Snippet",
-        }
+        },
+        // {
+        //     sequelize,
+        //     modelName: "Snippet",
+        // }
     );
-    Snippet.addScope('defaultScope', {
-        order: [['name', 'ASC']],
-    }, { override: true })
+    Snippet.addScope(
+        "defaultScope",
+        {
+            order: [["name", "ASC"]],
+        },
+        { override: true }
+    );
     return Snippet;
 };

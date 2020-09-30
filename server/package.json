@@ -8,7 +8,8 @@
     "scripts": {
         "start": "nodemon -e js,graphql index.js",
 		"migrate": "npx sequelize-cli db:migrate",
-		"seed": "npx sequelize-cli db:seed:all"
+		"seed": "npx sequelize-cli db:seed:all",
+		"reset-db": "dropdb snpt-dev && createdb snpt-dev && npm run migrate && npm run seed"
     },
     "devDependencies": {
         "dotenv": "^8.2.0",

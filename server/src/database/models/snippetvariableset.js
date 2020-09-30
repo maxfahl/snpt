@@ -11,12 +11,12 @@ module.exports = (sequelize, DataTypes) => {
             SnippetVariableSet.belongsTo(models.Snippet, {
                 foreignKey: "snippetId",
                 as: "snippetGroup",
-                onDelete: "CASCADE",
             });
             SnippetVariableSet.hasMany(models.SnippetVariable, {
                 foreignKey: "snippetVariableSetId",
                 as: "snippetVariables",
                 onDelete: "CASCADE",
+                hooks: true,
             });
         }
     }
@@ -32,12 +32,26 @@ module.exports = (sequelize, DataTypes) => {
             },
         },
         {
+            hooks: {
+                beforeDestroy: async (snippetVariableSet, options) => {
+                    await sequelize.models.SnippetVariable.destroy({
+                        where: { snippetVariableSetId: snippetVariableSet.id },
+                    });
+                },
+            },
+            sequelize,
+        },
+        {
             sequelize,
             modelName: "SnippetVariableSet",
         }
     );
-    SnippetVariableSet.addScope('defaultScope', {
-        order: [['name', 'ASC']],
-    }, { override: true })
+    SnippetVariableSet.addScope(
+        "defaultScope",
+        {
+            order: [["name", "ASC"]],
+        },
+        { override: true }
+    );
     return SnippetVariableSet;
 };

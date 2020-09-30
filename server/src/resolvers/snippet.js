@@ -34,8 +34,12 @@ const resolvers = {
             parent,
             { snippetId }
         ) => {
+            // const s = await models.Snippet.findOne({ where: { id: snippetId } })
+            // await s.destroy();
+
             return await models.Snippet.destroy({
                 where: { id: snippetId },
+                individualHooks: true
             });
         },
     },

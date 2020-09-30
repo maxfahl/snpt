@@ -24,8 +24,12 @@ const resolvers = {
             parent,
             { snippetGroupId }
         ) => {
+            // const sg = await models.SnippetGroup.findOne({ where: { id: snippetGroupId } })
+            // await sg.destroy();
+
             return await models.SnippetGroup.destroy({
                 where: { id: snippetGroupId },
+                individualHooks: true
             });
         },
     },

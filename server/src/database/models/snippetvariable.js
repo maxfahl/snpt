@@ -11,7 +11,6 @@ module.exports = (sequelize, DataTypes) => {
             SnippetVariable.belongsTo(models.SnippetVariableSet, {
                 foreignKey: "snippetVariableSetId",
                 as: "snippetVariableSet",
-                onDelete: "CASCADE",
             });
         }
     }
@@ -34,6 +33,13 @@ module.exports = (sequelize, DataTypes) => {
             sequelize,
             modelName: "SnippetVariable",
         }
+    );
+    SnippetVariable.addScope(
+        "defaultScope",
+        {
+            order: [["key", "ASC"]]
+        },
+        { override: true }
     );
     return SnippetVariable;
 };

@@ -25,8 +25,12 @@ const resolvers = {
             parent,
             { snippetVariableSetId }
         ) => {
+            // const svs = await models.SnippetVariableSet.findOne({ where: { id: snippetVariableSetId } })
+            // await svs.destroy();
+
             return await models.SnippetVariableSet.destroy({
                 where: { id: snippetVariableSetId },
+                individualHooks: true
             });
         },
     },

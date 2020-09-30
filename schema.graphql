@@ -48,7 +48,6 @@ type SnippetGroup {
 type SnippetVariable {
     id: Int!
     key: String!
-    snippetVariableSetId: Int!
     value: String
 }
 

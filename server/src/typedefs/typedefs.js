@@ -56,7 +56,6 @@ const typeDefs = `
 	}
 	
 	type SnippetVariable {
-	    snippetVariableSetId: Int!
 		id: Int!
 		key: String!
 		value: String

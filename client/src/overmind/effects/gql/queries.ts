@@ -58,20 +58,6 @@ export const snippet: Query<Snippet, any> = gql`
     }
 `;
 
-export const snippetVariables: Query<
-    SnippetVariables,
-    SnippetVariablesVariables
-> = gql`
-    query SnippetVariables($snippetVariableSetId: Int!) {
-        snippetVariables(snippetVariableSetId: $snippetVariableSetId) {
-            snippetVariableSetId
-            id
-            key
-            value
-        }
-    }
-`;
-
 export const snippetVariableSets: Query<
     SnippetVariableSets,
     SnippetVariableSetsVariables
@@ -80,6 +66,19 @@ export const snippetVariableSets: Query<
         snippetVariableSets(snippetId: $snippetId) {
             id,
             name
+        }
+    }
+`;
+
+export const snippetVariables: Query<
+    SnippetVariables,
+    SnippetVariablesVariables
+    > = gql`
+    query SnippetVariables($snippetVariableSetId: Int!) {
+        snippetVariables(snippetVariableSetId: $snippetVariableSetId) {
+            id
+            key
+            value
         }
     }
 `;

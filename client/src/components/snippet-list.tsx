@@ -71,11 +71,23 @@ const SnippetList: FunctionComponent = () => {
         setSelectedSnippet(newSnippet.id);
     };
 
-    const doDeleteSelectedSnippet = async (e: MouseEvent) => {
+    const doDeleteSelectedSnippet = async () => {
         if (selectedSnippet !== undefined) {
             await deleteSnippet({ snippetId: selectedSnippet });
-            setSelectedSnippet(undefined);
-            await fetchSnippets();
+
+            const oldIx: number = !!selectedSnippet
+                ? snippets.findIndex((s) => s.id === selectedSnippet)
+                : 0;
+            let newSnippets = snippets.slice();
+            newSnippets.splice(oldIx, 1);
+            if (newSnippets.length) {
+                setSelectedSnippet(
+                    newSnippets[oldIx === 0 ? oldIx : oldIx - 1].id
+                );
+            } else {
+                setSelectedSnippet(undefined);
+            }
+            setSnippets(newSnippets);
         }
     };
 

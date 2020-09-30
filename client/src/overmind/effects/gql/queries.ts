@@ -15,7 +15,7 @@ import {
 import {
     SnippetVariableSets,
     SnippetVariableSets_snippetVariableSets,
-    SnippetVariableSetsVariables
+    SnippetVariableSetsVariables,
 } from "./graphql-types/SnippetVariableSets";
 import { SnippetVariableSet } from "../../../models/snippet-variable-set";
 
@@ -64,7 +64,7 @@ export const snippetVariableSets: Query<
 > = gql`
     query SnippetVariableSets($snippetId: Int!) {
         snippetVariableSets(snippetId: $snippetId) {
-            id,
+            id
             name
         }
     }
@@ -73,7 +73,7 @@ export const snippetVariableSets: Query<
 export const snippetVariables: Query<
     SnippetVariables,
     SnippetVariablesVariables
-    > = gql`
+> = gql`
     query SnippetVariables($snippetVariableSetId: Int!) {
         snippetVariables(snippetVariableSetId: $snippetVariableSetId) {
             id

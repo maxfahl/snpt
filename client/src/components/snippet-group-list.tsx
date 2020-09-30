@@ -1,8 +1,9 @@
 import React, {
     FunctionComponent,
-    MouseEvent, useCallback,
+    MouseEvent,
+    useCallback,
     useEffect,
-    useState
+    useState,
 } from "react";
 import { useOvermind } from "../overmind";
 import { SnippetGroup } from "../models/snippet-group";
@@ -24,7 +25,7 @@ const SnippetGroupList: FunctionComponent = () => {
             getUserSnippetGroups,
             createSnippetGroup,
             updateSnippetGroup,
-            deleteSnippetGroup
+            deleteSnippetGroup,
         },
     } = useOvermind();
     const [snippetGroups, setSnippetGroups] = useState<SnippetGroup[]>([]);
@@ -52,7 +53,7 @@ const SnippetGroupList: FunctionComponent = () => {
         let newSnippetGroups = snippetGroups.slice(0);
         let snippetGroupPos = snippetGroups.indexOf(snippetGroup);
         newSnippetGroups[snippetGroupPos].name = newName;
-        setSnippetGroups(sortByStringProp(newSnippetGroups, 'name'));
+        setSnippetGroups(sortByStringProp(newSnippetGroups, "name"));
     };
 
     const doCreateSnippetGroup = async () => {
@@ -72,8 +73,22 @@ const SnippetGroupList: FunctionComponent = () => {
     const deleteSelectedGroup = async () => {
         if (selectedSnippetGroup !== undefined) {
             await deleteSnippetGroup({ snippetGroupId: selectedSnippetGroup });
-            setSelectedSnippetGroup(undefined);
-            await fetchSnippetGroups();
+
+            const oldIx: number = !!selectedSnippetGroup
+                ? snippetGroups.findIndex(
+                      (sg) => sg.id === selectedSnippetGroup
+                  )
+                : 0;
+            let newSnippetGroups = snippetGroups.slice();
+            newSnippetGroups.splice(oldIx, 1);
+            if (newSnippetGroups.length) {
+                setSelectedSnippetGroup(
+                    newSnippetGroups[oldIx === 0 ? oldIx : oldIx - 1].id
+                );
+            } else {
+                setSelectedSnippetGroup(undefined);
+            }
+            setSnippetGroups(newSnippetGroups);
         }
     };
 

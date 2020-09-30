@@ -9,6 +9,7 @@ import { useOvermind } from "../overmind";
 import ListItem from "./list-item";
 import { SnippetVariableSet } from "../models/snippet-variable-set";
 import SimpleButton from "./simple-button";
+import { sortByStringProp } from "../utils/array";
 
 type SnippetVariableSetListProps = {
     onSelect: (id: number) => void;
@@ -17,12 +18,12 @@ type SnippetVariableSetListProps = {
 
 enum FetchSnippetVariablesReason {
     Delete,
-    Initial
+    Initial,
 }
 
 const SnippetVariableSetList: FunctionComponent<SnippetVariableSetListProps> = ({
-    onSelect,
-    selected,
+    onSelect: setSelectedSnippetVariableSet,
+    selected: selectedSnippetVariableSet,
 }) => {
     const {
         state: { editedSnippet },
@@ -38,22 +39,30 @@ const SnippetVariableSetList: FunctionComponent<SnippetVariableSetListProps> = (
     >([]);
 
     const fetchSnippetVariableSets = useCallback(
-        async (reason: FetchSnippetVariablesReason = FetchSnippetVariablesReason.Initial) => {
-            const oldIx: number = selected !== undefined ? snippetVariableSets.findIndex(svs => svs.id === selected) : 0;
+        async (
+            reason: FetchSnippetVariablesReason = FetchSnippetVariablesReason.Initial
+        ) => {
+            const oldIx: number =
+                selectedSnippetVariableSet !== undefined
+                    ? snippetVariableSets.findIndex(
+                          (svs) => svs.id === selectedSnippetVariableSet
+                      )
+                    : 0;
             const sets = await getSnippetVariableSets(editedSnippet.id);
             setSnippetVariableSets(sets as SnippetVariableSet[]);
             if (sets.length) {
                 if (reason === FetchSnippetVariablesReason.Initial) {
-                    onSelect(sets[0].id);
-                }
-                else if (reason === FetchSnippetVariablesReason.Delete) {
-                    onSelect(sets[oldIx === 0 ? oldIx : oldIx - 1].id);
+                    setSelectedSnippetVariableSet(sets[0].id);
+                } else if (reason === FetchSnippetVariablesReason.Delete) {
+                    setSelectedSnippetVariableSet(
+                        sets[oldIx === 0 ? oldIx : oldIx - 1].id
+                    );
                 }
             } else {
-                onSelect(undefined);
+                setSelectedSnippetVariableSet(undefined);
             }
         },
-        [editedSnippet.id, snippetVariableSets, selected]
+        [editedSnippet.id, snippetVariableSets, selectedSnippetVariableSet]
     );
 
     useEffect(() => {
@@ -61,7 +70,7 @@ const SnippetVariableSetList: FunctionComponent<SnippetVariableSetListProps> = (
     }, [editedSnippet.id]);
 
     const onVariableSetClick = (e: MouseEvent, svs: SnippetVariableSet) => {
-        onSelect(svs.id);
+        setSelectedSnippetVariableSet(svs.id);
     };
 
     const renameSnippetVariableSet = async (
@@ -78,7 +87,9 @@ const SnippetVariableSetList: FunctionComponent<SnippetVariableSetListProps> = (
             snippetVariableSet
         );
         newSnippetVariableSets[snippetVariableSetPos].name = newName;
-        setSnippetVariableSets(newSnippetVariableSets);
+        setSnippetVariableSets(
+            sortByStringProp(newSnippetVariableSets, "name")
+        );
     };
 
     const doCreateVariableSet = async () => {
@@ -92,13 +103,30 @@ const SnippetVariableSetList: FunctionComponent<SnippetVariableSetListProps> = (
         let newSnippetsVariableSets = snippetVariableSets.slice(0);
         newSnippetsVariableSets.push(newSnippetVariableSet);
         setSnippetVariableSets(newSnippetsVariableSets);
-        onSelect(newSnippetVariableSet.id);
+        setSelectedSnippetVariableSet(newSnippetVariableSet.id);
     };
 
     const doDeleteSelectedVariableSet = async (e) => {
-        if (selected !== undefined && snippetVariableSets.length > 1) {
-            await deleteSnippetVariableSet({ snippetVariableSetId: selected });
-            await fetchSnippetVariableSets(FetchSnippetVariablesReason.Delete);
+        if (
+            selectedSnippetVariableSet !== undefined &&
+            snippetVariableSets.length > 1
+        ) {
+            await deleteSnippetVariableSet({
+                snippetVariableSetId: selectedSnippetVariableSet,
+            });
+
+            const oldIx: number = !!selectedSnippetVariableSet
+                ? snippetVariableSets.findIndex(
+                      (svs) => svs.id === selectedSnippetVariableSet
+                  )
+                : 0;
+            let newSnippetVariableSets = snippetVariableSets.slice();
+            newSnippetVariableSets.splice(oldIx, 1);
+            setSelectedSnippetVariableSet(
+                newSnippetVariableSets[oldIx === 0 ? oldIx : oldIx - 1].id
+            );
+
+            setSnippetVariableSets(newSnippetVariableSets);
         }
     };
 
@@ -108,7 +136,7 @@ const SnippetVariableSetList: FunctionComponent<SnippetVariableSetListProps> = (
                 <div>
                     {snippetVariableSets.map((svs) => (
                         <ListItem
-                            isSelected={selected === svs.id}
+                            isSelected={selectedSnippetVariableSet === svs.id}
                             onSelect={onVariableSetClick}
                             onTextChange={renameSnippetVariableSet}
                             model={svs}

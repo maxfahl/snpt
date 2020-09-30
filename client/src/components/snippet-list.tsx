@@ -1,6 +1,7 @@
 import React, {
     FunctionComponent,
     MouseEvent,
+    useCallback,
     useEffect,
     useState,
 } from "react";
@@ -11,8 +12,6 @@ import SimpleButton from "./simple-button";
 import { sortByStringProp } from "../utils/array";
 
 const SnippetList: FunctionComponent = () => {
-    const [snippets, setSnippets] = useState<Snippet[]>([]);
-    const [localSelectedSnippet, setLocalSelectedSnippet] = useState<Snippet>();
     const {
         state: {
             auth: {
@@ -26,20 +25,20 @@ const SnippetList: FunctionComponent = () => {
             getSnippetGroupsSnippets,
             createSnippet,
             updateSnippet,
-            deleteSnippet
+            deleteSnippet,
         },
     } = useOvermind();
+    const [snippets, setSnippets] = useState<Snippet[]>([]);
+    const fetchSnippets = useCallback(async () => {
+        setSnippets(await getSnippetGroupsSnippets(selectedSnippetGroup));
+    }, [selectedSnippetGroup]);
 
     useEffect(() => {
-        const fetchSnippetGroupSnippets = async () => {
-            setSnippets(await getSnippetGroupsSnippets(selectedSnippetGroup));
-        };
-        if (!!selectedSnippetGroup) fetchSnippetGroupSnippets();
+        if (!!selectedSnippetGroup) fetchSnippets();
         else setSnippets([]);
     }, [selectedSnippetGroup]);
 
     const onSnippetClick = (e: MouseEvent, s: Snippet) => {
-        setLocalSelectedSnippet(s);
         setSelectedSnippet(s.id);
     };
 
@@ -52,7 +51,7 @@ const SnippetList: FunctionComponent = () => {
         let newSnippets = snippets.slice(0);
         let snippetPos = snippets.indexOf(snippet);
         newSnippets[snippetPos].name = newName;
-        setSnippets(sortByStringProp(newSnippets, 'name'));
+        setSnippets(sortByStringProp(newSnippets, "name"));
     };
 
     const doCreateSnippet = async (e: MouseEvent) => {
@@ -69,21 +68,14 @@ const SnippetList: FunctionComponent = () => {
         let newSnippets = snippets.slice(0);
         newSnippets.push(newSnippet);
         setSnippets(newSnippets);
-        setLocalSelectedSnippet(newSnippet);
         setSelectedSnippet(newSnippet.id);
     };
 
     const doDeleteSelectedSnippet = async (e: MouseEvent) => {
-        if (localSelectedSnippet !== undefined) {
-            await deleteSnippet({ snippetId: localSelectedSnippet.id });
-
-            let snippetPos = snippets.indexOf(localSelectedSnippet);
-            let newSnippets = snippets.slice(0);
-            newSnippets.splice(snippetPos, 1);
-
-            setSnippets(newSnippets);
-            setLocalSelectedSnippet(undefined);
+        if (selectedSnippet !== undefined) {
+            await deleteSnippet({ snippetId: selectedSnippet });
             setSelectedSnippet(undefined);
+            await fetchSnippets();
         }
     };
 

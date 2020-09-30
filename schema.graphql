@@ -93,6 +93,7 @@ input CreateSnippetVariableInput {
 
 input CreateSnippetVariableSetInput {
     name: String!
+    snippetId: Int!
 }
 
 input UpdateSnippetGroupInput {

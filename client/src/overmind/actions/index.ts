@@ -172,7 +172,7 @@ export const createSnippetVariableSet: AsyncAction<
     SnippetVariableSet
 > = async ({ effects }, { fields }) => {
     const {
-        snippetVariableSet,
+        createSnippetVariableSet: snippetVariableSet,
     } = await effects.gql.mutations.createSnippetVariableSet({ fields });
     return snippetVariableSet as SnippetVariableSet;
 };

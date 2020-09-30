@@ -11,6 +11,7 @@ import { CreateSnippetInput } from "./../../../graphql-global-types";
 
 export interface CreateSnippet_createSnippet {
   id: number;
+  language: string;
   name: string;
   content: string;
 }

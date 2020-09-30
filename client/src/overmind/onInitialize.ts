@@ -19,7 +19,6 @@ export const onInitialize = ({ state, effects }, instance) => {
                     "selectedSnippetGroup",
                     selectedSnippetGroup.toString()
                 );
-                localStorage.removeItem("selectedSnippet");
             } else {
                 localStorage.removeItem("selectedSnippetGroup");
             }

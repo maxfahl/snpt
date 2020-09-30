@@ -26,6 +26,7 @@ export interface CreateSnippetVariableInput {
 }
 
 export interface CreateSnippetVariableSetInput {
+  snippetId: number;
   name: string;
 }
 

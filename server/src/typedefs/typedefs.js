@@ -89,6 +89,7 @@ const typeDefs = `
 	}
 	
 	input CreateSnippetVariableSetInput {
+	    snippetId: Int!
 		name: String!
 	}
 	

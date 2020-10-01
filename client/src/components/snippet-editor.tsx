@@ -3,18 +3,33 @@ import React, {
     Ref,
     useCallback,
     useEffect,
-    useMemo,
     useRef,
-    useState,
 } from "react";
 import { useOvermind } from "../overmind";
 import AceEditor from "react-ace";
 import { matchAll } from "../utils/regex";
 import { addVariableHighlight } from "../utils/ace";
 import * as _ from "lodash";
-import useDebounce from "../hooks/use-debounce";
 import produce from "immer";
 import { Snippet } from "../models/snippet";
+import Selector, { SelectorItem } from "./selector";
+
+const languageSeelectorItems: SelectorItem[] = [
+    { value: "css", label: "CSS" },
+    { value: "graphqlschema", label: "GraphQL Schema" },
+    { value: "html", label: "HTML" },
+    { value: "java", label: "Java" },
+    { value: "javascript", label: "Javascript" },
+    { value: "json", label: "JSON" },
+    { value: "jsx", label: "JSX" },
+    { value: "sass", label: "SASS" },
+    { value: "scss", label: "SCSS" },
+    { value: "sh", label: "SH" },
+    { value: "svg", label: "SVG" },
+    { value: "text", label: "Text" },
+    { value: "tsx", label: "TSX" },
+    { value: "typescript", label: "Typescript" },
+];
 
 const SnippetEditor: FunctionComponent = () => {
     const {
@@ -61,6 +76,14 @@ const SnippetEditor: FunctionComponent = () => {
         updateAvailableSnippetVariables();
     };
 
+    const onLanguageChange = (language: string) => {
+        const newState = produce<Snippet>(editedSnippet, (draftState) => {
+            draftState.language = language;
+        });
+        setEditedSnippet(newState);
+        delayedSaveSnippetChanges(newState);
+    }
+
     useEffect(() => {
         addVariableHighlight(aceEditor);
     }, [aceEditor.current]);
@@ -94,6 +117,12 @@ const SnippetEditor: FunctionComponent = () => {
                     enableLiveAutocompletion: true,
                 }}
             />
+            <div
+                className="absolute w-64"
+                style={{ top: "20px", right: "20px" }}
+            >
+                <Selector items={languageSeelectorItems} value={editedSnippet.language} onChange={onLanguageChange}/>
+            </div>
         </div>
     );
 };

@@ -61,6 +61,16 @@ export const getUserSnippetGroups: AsyncAction<number, SnippetGroup[]> = async (
     return snippetGroups as SnippetGroup[];
 };
 
+export const getSnippetGroups: AsyncAction<number, SnippetGroup[]> = async (
+    { effects },
+    userId
+) => {
+    const {
+        snippetGroups
+    } = await effects.gql.queries.snippetGroups({ userId });
+    return snippetGroups as SnippetGroup[];
+};
+
 export const getSnippetGroupsSnippets: AsyncAction<number, Snippet[]> = async (
     { effects },
     snippetGroupId

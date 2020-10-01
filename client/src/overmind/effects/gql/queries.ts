@@ -31,6 +31,22 @@ export const userSnippetGroups: Query<
     }
 `;
 
+export const snippetGroups: Query<
+    any,
+    any
+> = gql`
+    query SnippetGroups($userId: Int!) {
+        snippetGroups(userId: $userId) {
+            id
+            name
+            snippets {
+                id
+                name
+            }
+        }
+    }
+`;
+
 export const snippetGroupSnippets: Query<
     SnippetGroupSnippets,
     SnippetGroupSnippetsVariables

@@ -1,15 +1,8 @@
-import React, {
-    FunctionComponent,
-    MouseEvent,
-    useCallback,
-    useEffect,
-    useState,
-} from "react";
+import React, { FunctionComponent, MouseEvent, useCallback, useEffect, useState } from "react";
 import { useOvermind } from "../overmind";
 import { SnippetGroup } from "../models/snippet-group";
 import ListItem from "./list-item";
 import SimpleButton from "./simple-button";
-import { Snippet } from "../models/snippet";
 import { sortByStringProp } from "../utils/array";
 
 const SnippetGroupList: FunctionComponent = () => {
@@ -95,7 +88,7 @@ const SnippetGroupList: FunctionComponent = () => {
     return (
         <div className="border-r border-gray-700 flex-1 flex flex-col">
             <div className="flex-1 flex flex-col overflow-auto">
-                {snippetGroups.map((sg) => (
+                {snippetGroups.map(sg => (
                     <ListItem
                         isSelected={selectedSnippetGroup === sg.id}
                         onSelect={onGroupClick}

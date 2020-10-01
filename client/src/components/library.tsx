@@ -1,17 +1,26 @@
-import React, { FunctionComponent } from "react";
-import SnippetGroupList from "./snippet-group-list";
-import SnippetList from "./snippet-list";
+import React, { FunctionComponent, useEffect, useState } from "react";
+import { useOvermind } from "../overmind";
+import SnippetGroupLibraryItem from "./snippet-group-library-item";
 
 const Editor: FunctionComponent = () => {
+    const {
+        state: {},
+        actions: { getSnippetGroups },
+    } = useOvermind();
+    const [snippetGroups, setSnippetGroups] = useState([]);
+
+    useEffect(() => {
+        const fetchSnippetGroups = async () => {
+            setSnippetGroups(await getSnippetGroups(1));
+        };
+        fetchSnippetGroups();
+    }, []);
+
     return (
-        // <div></div>
-        <div id="library" className="" style={{ display: "flex" }}>
-            <div className="snippet-group-list-container w-56 flex flex-col">
-                <SnippetGroupList />
-            </div>
-            <div className="snippet-list-container w-56 flex flex-col">
-                <SnippetList />
-            </div>
+        <div id="library" className="w-64 flex flex-col">
+            {snippetGroups.map((sg) => (
+                <SnippetGroupLibraryItem snippetGroup={sg} key={sg.id} />
+            ))}
         </div>
     );
 };

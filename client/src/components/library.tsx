@@ -17,7 +17,7 @@ const Editor: FunctionComponent = () => {
     }, []);
 
     return (
-        <div id="library" className="w-64 flex flex-col">
+        <div id="library" className="w-64 px-4 pt-2 border-r border-gray-700 flex flex-col">
             {snippetGroups.map((sg) => (
                 <SnippetGroupLibraryItem snippetGroup={sg} key={sg.id} />
             ))}

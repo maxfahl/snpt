@@ -1,32 +1,43 @@
 export const onInitialize = ({ state, effects }, instance) => {
-    const previouslySelectedSnippetGroup = localStorage.getItem(
-        "selectedSnippetGroup"
-    );
-    if (!!previouslySelectedSnippetGroup) {
-        state.selectedSnippetGroup = +previouslySelectedSnippetGroup;
-        const previouslySelectedSnippet = localStorage.getItem(
-            "selectedSnippet"
-        );
-        if (!!previouslySelectedSnippet)
-            state.selectedSnippet = +previouslySelectedSnippet;
+    const previouslyExpandedGroups = localStorage.getItem("expandedGroups");
+    if (!!previouslyExpandedGroups) {
+        state.expandedGroups = JSON.parse(previouslyExpandedGroups);
     }
 
+    const previouslySelectedSnippet = localStorage.getItem("selectedSnippet");
+    if (!!previouslySelectedSnippet)
+        state.selectedSnippet = +previouslySelectedSnippet;
+
     instance.reaction(
-        ({ selectedSnippetGroup }) => selectedSnippetGroup,
-        (selectedSnippetGroup) => {
-            if (selectedSnippetGroup) {
+        ({ expandedGroups }) => expandedGroups,
+        (expandedGroups) => {
+            if (expandedGroups) {
                 localStorage.setItem(
-                    "selectedSnippetGroup",
-                    selectedSnippetGroup.toString()
+                    "expandedGroups",
+                    JSON.stringify(expandedGroups)
                 );
-            } else {
-                localStorage.removeItem("selectedSnippetGroup");
             }
         },
         {
-            nested: false,
+            nested: true
         }
     );
+
+    instance.reaction(
+        ({ expandedGroups }) => expandedGroups,
+        (expandedGroups) => {
+            if (expandedGroups) {
+                localStorage.setItem(
+                    "expandedGroups",
+                    JSON.stringify(expandedGroups)
+                );
+            }
+        },
+        {
+            nested: true
+        }
+    );
+
     instance.reaction(
         ({ selectedSnippet }) => selectedSnippet,
         (selectedSnippet) => {

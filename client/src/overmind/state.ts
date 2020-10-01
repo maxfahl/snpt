@@ -8,6 +8,17 @@ export type Auth = {
     }
 };
 
+export enum ListHighlightType {
+    SnippetGroup,
+    Snippet,
+    SnippetVariableSet
+}
+
+export type ListHighlight = {
+    type: ListHighlightType;
+    id: number;
+}
+
 export type SnippetRunnerContext = {
     code: string;
     variables: SnippetVariable[];
@@ -15,8 +26,9 @@ export type SnippetRunnerContext = {
 
 export type State = {
     auth: Auth;
-    selectedSnippetGroup: number;
+    expandedGroups: number[],
     selectedSnippet: number;
+    currentListHighlight: ListHighlight;
     editedSnippet: Snippet;
     availableSnippetVariables: string[];
     snippetRunnerContext: SnippetRunnerContext;
@@ -29,8 +41,9 @@ export const state: State = {
             id: 1
         }
     },
-    selectedSnippetGroup: 0,
+    expandedGroups: [],
     selectedSnippet: 0,
+    currentListHighlight: { type: undefined, id: 0 },
     editedSnippet: undefined,
     availableSnippetVariables: [],
     snippetRunnerContext: undefined,

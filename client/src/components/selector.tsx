@@ -109,10 +109,13 @@ const Selector: FunctionComponent<SelectorProps> = ({
                         aria-haspopup="listbox"
                         aria-expanded="true"
                         aria-labelledby="listbox-label"
-                        className="cursor-default relative w-full rounded-md border border-gray-300 bg-white pl-3 pr-10 py-2 text-left focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition ease-in-out duration-150 sm:text-sm sm:leading-5 cursor-pointer"
+                        className={
+                            "cursor-default relative w-full rounded-md border border-gray-700 bg-gray-900 pl-3 pr-10 py-2 text-left focus:outline-none transition ease-in-out duration-150 sm:leading-5 cursor-pointer" +
+                            (isOpen ? "" : " opacity-25 hover:opacity-100")
+                        }
                         onClick={toggleOpen}
                     >
-                        <span className="block truncate text-black">
+                        <span className="block truncate text-white">
                             {selectedLabel}
                         </span>
                         <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
@@ -134,12 +137,11 @@ const Selector: FunctionComponent<SelectorProps> = ({
                 </span>
 
                 <motion.div
-                    className="absolute mt-1 w-full rounded-md bg-white shadow-lg overflow-auto"
+                    className="absolute mt-1 w-full rounded-md bg-gray-900 shadow-lg border border-gray-700 overflow-hidden"
                     style={{
-                        maxHeight: "200px",
                         opacity: 0,
                         pointerEvents: isOpen ? "auto" : "none",
-                        transformOrigin: '50% 0'
+                        transformOrigin: "50% 0",
                     }}
                     initial="hidden"
                     animate={animationControls}
@@ -148,7 +150,11 @@ const Selector: FunctionComponent<SelectorProps> = ({
                         role="listbox"
                         aria-labelledby="listbox-label"
                         aria-activedescendant="listbox-item-3"
-                        className="max-h-60 rounded-md py-1 text-base leading-6 shadow-xs overflow-auto focus:outline-none sm:text-sm sm:leading-5"
+                        className="rounded-md py-1 text-base leading-6 bg-gray-900 overflow-auto focus:outline-none"
+                        style={{
+                            maxHeight: "280px",
+                            scrollSnapType: "y mandatory",
+                        }}
                         ref={listRef}
                     >
                         {items.map((item) => (
@@ -158,27 +164,27 @@ const Selector: FunctionComponent<SelectorProps> = ({
                                     item.value.toLowerCase()
                                 }
                                 role="option"
-                                className="text-gray-900 cursor-default select-none relative py-2 pl-3 pr-9 cursor-pointer"
+                                className={
+                                    "cursor-default select-none relative py-2 pl-3 pr-9 cursor-pointer hover:bg-gray-800" +
+                                    (itemIsSelected(item)
+                                        ? " text-white"
+                                        : " text-gray-600")
+                                }
+                                style={{
+                                    scrollSnapAlign: "start",
+                                }}
                                 key={item.value}
                                 onClick={() =>
                                     !itemIsSelected(item) && onItemClick(item)
                                 }
                             >
-                                <span
-                                    className={
-                                        "font-normal block truncate" +
-                                        (itemIsSelected(item)
-                                            ? " text-black"
-                                            : " text-gray-600")
-                                    }
-                                >
+                                <span className={"font-normal block truncate"}>
                                     {item.label}
                                 </span>
                                 <span className="text-indigo-600 absolute inset-y-0 right-0 flex items-center pr-4">
                                     <svg
-                                        className="h-5 w-5"
+                                        className="h-5 w-5 fill-current text-white"
                                         viewBox="0 0 20 20"
-                                        fill="currentColor"
                                         style={{
                                             opacity: itemIsSelected(item)
                                                 ? "1"

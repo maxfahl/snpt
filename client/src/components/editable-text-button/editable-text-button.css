@@ -1,0 +1,7 @@
+.root:hover .edit-button {
+	opacity: 0.2;
+}
+
+.root .edit-button:hover {
+	opacity: 1;
+}

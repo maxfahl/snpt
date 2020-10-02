@@ -17,6 +17,10 @@ export const updateSnippetGroup = gql`
         updateSnippetGroup(snippetGroupId: $snippetGroupId, fields: $fields) {
             id
             name
+            snippets {
+                id
+                name
+            }
         }
     }
 `;

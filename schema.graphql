@@ -28,6 +28,7 @@ type Query {
     snippetGroups(userId: Int!): [SnippetGroup]!
     snippetVariableSets(snippetId: Int!): [SnippetVariableSet]!
     snippetVariables(snippetVariableSetId: Int!): [SnippetVariable]!
+    snippets(snippetGroupId: Int!): [Snippet]!
     user(userId: Int!): User!
     users: [User]
 }

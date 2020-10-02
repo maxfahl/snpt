@@ -6,6 +6,11 @@ const resolvers = {
         snippet: async (parent, { snippetId }, { auth }) => {
             return await models.Snippet.findOne({ where: { id: snippetId } });
         },
+        snippets: async (parent, { snippetGroupId }, { auth }) => {
+            return await models.Snippet.findAll({
+                where: { snippetGroupId: snippetGroupId },
+            });
+        },
     },
 
     Snippet: {
@@ -30,16 +35,13 @@ const resolvers = {
             await snippet.update({ userId, snippetGroupId, name, content });
             return snippet;
         },
-        deleteSnippet: async (
-            parent,
-            { snippetId }
-        ) => {
+        deleteSnippet: async (parent, { snippetId }) => {
             // const s = await models.Snippet.findOne({ where: { id: snippetId } })
             // await s.destroy();
 
             return await models.Snippet.destroy({
                 where: { id: snippetId },
-                individualHooks: true
+                individualHooks: true,
             });
         },
     },

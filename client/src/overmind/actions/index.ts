@@ -105,6 +105,14 @@ export const getSnippet: AsyncAction<number, Snippet> = async (
     return snippet as Snippet;
 };
 
+export const getSnippets: AsyncAction<number, Snippet[]> = async (
+    { effects },
+    snippetGroupId
+) => {
+    const { snippets } = await effects.gql.queries.snippets({ snippetGroupId });
+    return snippets as Snippet[];
+};
+
 export const getSnippetVariableSets: AsyncAction<
     number,
     SnippetVariableSet[]

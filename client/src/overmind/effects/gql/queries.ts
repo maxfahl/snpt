@@ -39,10 +39,6 @@ export const snippetGroups: Query<
         snippetGroups(userId: $userId) {
             id
             name
-            snippets {
-                id
-                name
-            }
         }
     }
 `;
@@ -68,6 +64,18 @@ export const snippet: Query<Snippet, any> = gql`
             name
             language
             content
+        }
+    }
+`;
+
+export const snippets: Query<
+    any,
+    any
+    > = gql`
+    query Snippets($snippetGroupId: Int!) {
+        snippets(snippetGroupId: $snippetGroupId) {
+            id
+            name
         }
     }
 `;

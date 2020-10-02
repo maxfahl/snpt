@@ -1,18 +1,22 @@
 import React, { FunctionComponent, useEffect, useState } from "react";
-import EditableTextButton from "./editable-text-button";
 import { SnippetGroup } from "../models/snippet-group";
 import { useOvermind } from "../overmind";
 import { Snippet } from "../models/snippet";
 import { AnimatePresence, motion } from "framer-motion";
 import { ListHighlightType } from "../overmind/state";
 import { NamedModel } from "../models/model";
+import EditableTextButton from "./editable-text-button/editable-text-button";
+import { string } from "prop-types";
+import { sortByStringProp } from "../utils/array";
 
 type SnippetGroupLibraryItemProps = {
     snippetGroup: SnippetGroup;
+    onNameChange: (snippetGroup: SnippetGroup, newName: string) => void;
 };
 
 const SnippetGroupLibraryItem: FunctionComponent<SnippetGroupLibraryItemProps> = ({
     snippetGroup,
+    onNameChange,
 }) => {
     const {
         state: { selectedSnippet, currentListHighlight, expandedGroups },
@@ -21,14 +25,23 @@ const SnippetGroupLibraryItem: FunctionComponent<SnippetGroupLibraryItemProps> =
             addExpandedGroup,
             removeExpandedGroup,
             setSelectedSnippet,
+            getSnippets,
+            updateSnippet,
         },
     } = useOvermind();
 
     const [isOpen, setIsOpen] = useState<boolean>();
+    const [snippets, setSnippets] = useState([]);
 
     useEffect(() => {
-        if (expandedGroups)
-            setIsOpen(expandedGroups.includes(snippetGroup.id));
+        const fetchSnippets = async () => {
+            setSnippets(await getSnippets(snippetGroup.id))
+        };
+        fetchSnippets();
+    }, []);
+
+    useEffect(() => {
+        if (expandedGroups) setIsOpen(expandedGroups.includes(snippetGroup.id));
     }, [expandedGroups.length]);
 
     const onGroupClick = () => {
@@ -48,18 +61,44 @@ const SnippetGroupLibraryItem: FunctionComponent<SnippetGroupLibraryItemProps> =
         });
     };
 
-    const isItemHighlighted = (currentType: ListHighlightType, item: NamedModel) => {
+    const isItemHighlighted = (
+        currentType: ListHighlightType,
+        item: NamedModel
+    ) => {
         if (!currentListHighlight) return false;
-        return currentType === currentListHighlight.type && item.id === currentListHighlight.id;
+        return (
+            currentType === currentListHighlight.type &&
+            item.id === currentListHighlight.id
+        );
+    };
+
+    const snippetNameChange = async (
+        snippet: Snippet,
+        newName: string
+    ) => {
+        const oldIx = snippets.indexOf(snippet);
+        await updateSnippet({
+            snippetId: snippet.id,
+            fields: {
+                name: newName,
+            },
+        });
+        const newSnippets = snippets.slice();
+        newSnippets[oldIx].name = newName;
+        setSnippets(sortByStringProp(newSnippets, "name"));
     };
 
     return (
-        <div className="">
+        <>
             <EditableTextButton
                 model={snippetGroup}
                 isSelected={isOpen}
-                isHighlighted={isItemHighlighted(ListHighlightType.SnippetGroup, snippetGroup)}
+                isHighlighted={isItemHighlighted(
+                    ListHighlightType.SnippetGroup,
+                    snippetGroup
+                )}
                 onSelect={onGroupClick}
+                onTextChange={(model, newName) => onNameChange(model, newName)}
                 hasChildren={true}
             />
             <AnimatePresence initial={false}>
@@ -79,9 +118,9 @@ const SnippetGroupLibraryItem: FunctionComponent<SnippetGroupLibraryItemProps> =
                             ease: [0.04, 0.62, 0.23, 0.98],
                         }}
                     >
-                        {snippetGroup.snippets.map((s: Snippet, i) => (
+                        {snippets.map((snippet: Snippet, i) => (
                             <motion.div
-                                key={s.id}
+                                key={snippet.id}
                                 className="flex flex-col"
                                 variants={{
                                     open: { opacity: 1, translateX: 0 },
@@ -94,18 +133,22 @@ const SnippetGroupLibraryItem: FunctionComponent<SnippetGroupLibraryItemProps> =
                                 }}
                             >
                                 <EditableTextButton
-                                    model={s}
-                                    isSelected={selectedSnippet === s.id}
-                                    isHighlighted={isItemHighlighted(ListHighlightType.Snippet, s)}
-                                    onSelect={() => onSnippetClick(s.id)}
-                                    className="pl-3 ml-3"
+                                    model={snippet}
+                                    isSelected={selectedSnippet === snippet.id}
+                                    isHighlighted={isItemHighlighted(
+                                        ListHighlightType.Snippet,
+                                        snippet
+                                    )}
+                                    onSelect={() => onSnippetClick(snippet.id)}
+                                    onTextChange={snippetNameChange}
+                                    className="pl-3 ml-4"
                                 />
                             </motion.div>
                         ))}
                     </motion.div>
                 )}
             </AnimatePresence>
-        </div>
+        </>
     );
 };
 

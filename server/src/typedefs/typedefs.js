@@ -1,8 +1,9 @@
 const typeDefs = `
 	type Query {
-		snippet(snippetId: Int!): Snippet!
 		snippetGroups(userId: Int!): [SnippetGroup]!
 		snippetGroup(snippetGroupId: Int!): SnippetGroup!
+		snippet(snippetId: Int!): Snippet!
+		snippets(snippetGroupId: Int!): [Snippet]!
 		snippetVariableSets(snippetId: Int!): [SnippetVariableSet]!
 		snippetVariables(snippetVariableSetId: Int!): [SnippetVariable]!
 		user(userId: Int!): User!

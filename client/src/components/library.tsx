@@ -3,9 +3,6 @@ import { useOvermind } from "../overmind";
 import SnippetGroupLibraryItem from "./snippet-group-library-item";
 import { SnippetGroup } from "../models/snippet-group";
 import { sortByStringProp } from "../utils/array";
-import { snippet } from "../overmind/effects/gql/queries";
-import { Snippet } from "../models/snippet";
-import { string } from "prop-types";
 
 const Editor: FunctionComponent = () => {
     const {
@@ -40,9 +37,7 @@ const Editor: FunctionComponent = () => {
     return (
         <div
             id="library"
-            className="px-4 pt-2 border-r border-gray-700 flex flex-col"
-            style={{ width: "18rem" }}
-        >
+            className="w-64 px-4 pt-2 border-r border-gray-700 flex flex-col" >
             {snippetGroups.map((sg) => (
                 <SnippetGroupLibraryItem
                     snippetGroup={sg}

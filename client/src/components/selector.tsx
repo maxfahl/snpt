@@ -1,14 +1,6 @@
-import React, {
-    FunctionComponent,
-    useCallback,
-    useEffect,
-    useLayoutEffect,
-    useRef,
-    useState,
-} from "react";
+import React, { FunctionComponent, useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { useOvermind } from "../overmind";
 import { motion, useAnimation } from "framer-motion";
-import { isNodeOrChild } from "framer-motion/types/gestures/utils/is-node-or-child";
 import { isDescendant } from "../utils/dom";
 
 type SelectorProps = {

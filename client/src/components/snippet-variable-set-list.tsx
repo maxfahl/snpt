@@ -10,6 +10,9 @@ import ListItem from "./list-item";
 import { SnippetVariableSet } from "../models/snippet-variable-set";
 import SimpleButton from "./simple-button";
 import { sortByStringProp } from "../utils/array";
+import EditableTextButton from "./editable-text-button/editable-text-button";
+import { ListHighlight, ListHighlightType } from "../overmind/state";
+import { NamedModel } from "../models/model";
 
 type SnippetVariableSetListProps = {
     onSelect: (id: number) => void;
@@ -26,12 +29,14 @@ const SnippetVariableSetList: FunctionComponent<SnippetVariableSetListProps> = (
     selected: selectedSnippetVariableSet,
 }) => {
     const {
-        state: { editedSnippet },
+        state: { editedSnippet, currentListHighlight },
         actions: {
             getSnippetVariableSets,
             updateSnippetVariableSet,
             createSnippetVariableSet,
             deleteSnippetVariableSet,
+            setCurrentListHighlight,
+            isItemHighlighted,
         },
     } = useOvermind();
     const [snippetVariableSets, setSnippetVariableSets] = useState<
@@ -71,6 +76,10 @@ const SnippetVariableSetList: FunctionComponent<SnippetVariableSetListProps> = (
 
     const onVariableSetClick = (e: MouseEvent, svs: SnippetVariableSet) => {
         setSelectedSnippetVariableSet(svs.id);
+        setCurrentListHighlight({
+            type: ListHighlightType.SnippetVariableSet,
+            id: svs.id,
+        });
     };
 
     const renameSnippetVariableSet = async (
@@ -131,33 +140,24 @@ const SnippetVariableSetList: FunctionComponent<SnippetVariableSetListProps> = (
     };
 
     return (
-        <div className="w-56 border-r border-gray-700 flex flex-col">
+        <div className="w-64 px-4 pt-2 border-r border-gray-700 flex flex-col">
             <div className="flex-1 overflow-auto">
                 <div>
                     {snippetVariableSets.map((svs) => (
-                        <ListItem
+                        <EditableTextButton
                             isSelected={selectedSnippetVariableSet === svs.id}
+                            isHighlighted={isItemHighlighted({
+                                type: ListHighlightType.SnippetVariableSet,
+                                id: svs.id
+                            })}
                             onSelect={onVariableSetClick}
                             onTextChange={renameSnippetVariableSet}
                             model={svs}
                             key={svs.id}
+                            className="pl-3"
                         />
                     ))}
                 </div>
-            </div>
-            <div className="h-10 relative flex">
-                <SimpleButton
-                    onClick={doCreateVariableSet}
-                    className="bg-blue-800"
-                >
-                    <span>+</span>
-                </SimpleButton>
-                <SimpleButton
-                    onClick={doDeleteSelectedVariableSet}
-                    className="bg-blue-800"
-                >
-                    <span>-</span>
-                </SimpleButton>
             </div>
         </div>
     );

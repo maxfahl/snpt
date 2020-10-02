@@ -27,6 +27,7 @@ const SnippetGroupLibraryItem: FunctionComponent<SnippetGroupLibraryItemProps> =
             setSelectedSnippet,
             getSnippets,
             updateSnippet,
+            isItemHighlighted,
         },
     } = useOvermind();
 
@@ -35,7 +36,7 @@ const SnippetGroupLibraryItem: FunctionComponent<SnippetGroupLibraryItemProps> =
 
     useEffect(() => {
         const fetchSnippets = async () => {
-            setSnippets(await getSnippets(snippetGroup.id))
+            setSnippets(await getSnippets(snippetGroup.id));
         };
         fetchSnippets();
     }, []);
@@ -61,21 +62,18 @@ const SnippetGroupLibraryItem: FunctionComponent<SnippetGroupLibraryItemProps> =
         });
     };
 
-    const isItemHighlighted = (
-        currentType: ListHighlightType,
-        item: NamedModel
-    ) => {
-        if (!currentListHighlight) return false;
-        return (
-            currentType === currentListHighlight.type &&
-            item.id === currentListHighlight.id
-        );
-    };
+    // const isItemHighlighted = (
+    //     currentType: ListHighlightType,
+    //     item: NamedModel
+    // ) => {
+    //     if (!currentListHighlight) return false;
+    //     return (
+    //         currentType === currentListHighlight.type &&
+    //         item.id === currentListHighlight.id
+    //     );
+    // };
 
-    const snippetNameChange = async (
-        snippet: Snippet,
-        newName: string
-    ) => {
+    const snippetNameChange = async (snippet: Snippet, newName: string) => {
         const oldIx = snippets.indexOf(snippet);
         await updateSnippet({
             snippetId: snippet.id,
@@ -93,10 +91,10 @@ const SnippetGroupLibraryItem: FunctionComponent<SnippetGroupLibraryItemProps> =
             <EditableTextButton
                 model={snippetGroup}
                 isSelected={isOpen}
-                isHighlighted={isItemHighlighted(
-                    ListHighlightType.SnippetGroup,
-                    snippetGroup
-                )}
+                isHighlighted={isItemHighlighted({
+                    type: ListHighlightType.SnippetGroup,
+                    id: snippetGroup.id,
+                })}
                 onSelect={onGroupClick}
                 onTextChange={(model, newName) => onNameChange(model, newName)}
                 hasChildren={true}
@@ -135,10 +133,10 @@ const SnippetGroupLibraryItem: FunctionComponent<SnippetGroupLibraryItemProps> =
                                 <EditableTextButton
                                     model={snippet}
                                     isSelected={selectedSnippet === snippet.id}
-                                    isHighlighted={isItemHighlighted(
-                                        ListHighlightType.Snippet,
-                                        snippet
-                                    )}
+                                    isHighlighted={isItemHighlighted({
+                                        type: ListHighlightType.Snippet,
+                                        id: snippet.id,
+                                    })}
                                     onSelect={() => onSnippetClick(snippet.id)}
                                     onTextChange={snippetNameChange}
                                     className="pl-3 ml-4"

@@ -3,13 +3,14 @@ import { Snippet } from "../../models/snippet";
 import { SnippetGroup } from "../../models/snippet-group";
 import { SnippetVariable } from "../../models/snippet-variable";
 import { UpdateSnippetVariableVariables } from "../effects/gql/graphql-types/UpdateSnippetVariable";
-import { ListHighlight, SnippetRunnerContext } from "../state";
+import { ListHighlight, ListHighlightType, SnippetRunnerContext } from "../state";
 import { CreateSnippetVariables } from "../effects/gql/graphql-types/CreateSnippet";
 import { CreateSnippetGroupVariables } from "../effects/gql/graphql-types/CreateSnippetGroup";
 import { UpdateSnippetGroupVariables } from "../effects/gql/graphql-types/UpdateSnippetGroup";
 import { CreateSnippetVariableSetVariables } from "../effects/gql/graphql-types/CreateSnippetVariableSet";
 import { SnippetVariableSet } from "../../models/snippet-variable-set";
 import { UpdateSnippetVariableSetVariables } from "../effects/gql/graphql-types/UpdateSnippetVariableSet";
+import { NamedModel } from "../../models/model";
 
 
 // State management
@@ -64,6 +65,17 @@ export const setSnippetRunnerContext: Action<SnippetRunnerContext> = (
 ) => {
     state.snippetRunnerContext = context;
 };
+
+export const isItemHighlighted: Action<ListHighlight, boolean> = (
+    { state: { currentListHighlight } },
+    listHighlight
+): boolean => {
+    if (!currentListHighlight) return false;
+    return (
+        listHighlight.type === currentListHighlight.type &&
+        listHighlight.id === currentListHighlight.id
+    );
+}
 
 // GraphQL queries
 

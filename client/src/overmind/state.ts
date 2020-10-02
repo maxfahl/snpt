@@ -43,7 +43,7 @@ export const state: State = {
     },
     expandedGroups: [],
     selectedSnippet: 0,
-    currentListHighlight: { type: undefined, id: 0 },
+    currentListHighlight: undefined,
     editedSnippet: undefined,
     availableSnippetVariables: [],
     snippetRunnerContext: undefined,

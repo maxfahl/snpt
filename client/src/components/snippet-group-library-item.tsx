@@ -49,6 +49,7 @@ const SnippetGroupLibraryItem: FunctionComponent<SnippetGroupLibraryItemProps> =
     };
 
     const isItemHighlighted = (currentType: ListHighlightType, item: NamedModel) => {
+        if (!currentListHighlight) return false;
         return currentType === currentListHighlight.type && item.id === currentListHighlight.id;
     };
 

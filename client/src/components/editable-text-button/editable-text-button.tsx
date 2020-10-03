@@ -33,25 +33,7 @@ const EditableTextButton: FunctionComponent<EditableTextButtonProps> = ({
 }) => {
     const [disabled, setDisabled] = useState(true);
     const [text, setText] = useState(model.name);
-
     const contentEditable: RefObject<HTMLSpanElement> = React.createRef();
-
-    // useEffect(() => {
-    //     if (!disabled && contentEditable && contentEditable.current) {
-    //         const element = contentEditable.current;
-    //         const onKey = (e: KeyboardEvent) => {
-    //             const code = e.code;
-    //             if (code === "Enter") {
-    //                 e.preventDefault();
-    //                 contentEditable.current.blur();
-    //             }
-    //         };
-    //         element.addEventListener("keypress", onKey);
-    //         return () => {
-    //             element.removeEventListener("keypress", onKey);
-    //         };
-    //     }
-    // }, [disabled && contentEditable]);
 
     useEffect(() => {
         if (!disabled) {

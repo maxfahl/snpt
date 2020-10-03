@@ -4,10 +4,9 @@ import { useOvermind } from "../overmind";
 import { Snippet } from "../models/snippet";
 import { AnimatePresence, motion } from "framer-motion";
 import { ListHighlightType } from "../overmind/state";
-import { NamedModel } from "../models/model";
 import EditableTextButton from "./editable-text-button/editable-text-button";
-import { string } from "prop-types";
 import { sortByStringProp } from "../utils/array";
+import { useHotkeys } from "react-hotkeys-hook";
 
 type SnippetGroupLibraryItemProps = {
     snippetGroup: SnippetGroup;
@@ -19,7 +18,14 @@ const SnippetGroupLibraryItem: FunctionComponent<SnippetGroupLibraryItemProps> =
     onNameChange,
 }) => {
     const {
-        state: { selectedSnippet, currentListHighlight, expandedGroups },
+        state: {
+            selectedSnippet,
+            currentListHighlight,
+            expandedGroups,
+            auth: {
+                user: { id: userId },
+            },
+        },
         actions: {
             setCurrentListHighlight,
             addExpandedGroup,
@@ -28,9 +34,10 @@ const SnippetGroupLibraryItem: FunctionComponent<SnippetGroupLibraryItemProps> =
             getSnippets,
             updateSnippet,
             isItemHighlighted,
+            createSnippet,
+            deleteSnippet,
         },
     } = useOvermind();
-
     const [isOpen, setIsOpen] = useState<boolean>();
     const [snippets, setSnippets] = useState([]);
 
@@ -62,17 +69,6 @@ const SnippetGroupLibraryItem: FunctionComponent<SnippetGroupLibraryItemProps> =
         });
     };
 
-    // const isItemHighlighted = (
-    //     currentType: ListHighlightType,
-    //     item: NamedModel
-    // ) => {
-    //     if (!currentListHighlight) return false;
-    //     return (
-    //         currentType === currentListHighlight.type &&
-    //         item.id === currentListHighlight.id
-    //     );
-    // };
-
     const snippetNameChange = async (snippet: Snippet, newName: string) => {
         const oldIx = snippets.indexOf(snippet);
         await updateSnippet({
@@ -85,6 +81,66 @@ const SnippetGroupLibraryItem: FunctionComponent<SnippetGroupLibraryItemProps> =
         newSnippets[oldIx].name = newName;
         setSnippets(sortByStringProp(newSnippets, "name"));
     };
+
+    const addSnippet = () => {
+        if (
+            (currentListHighlight.type === ListHighlightType.SnippetGroup &&
+                currentListHighlight.id === snippetGroup.id) ||
+            (currentListHighlight.type === ListHighlightType.Snippet &&
+                snippets.some((s) => s.id === currentListHighlight.id))
+        ) {
+            createSnippet({
+                fields: {
+                    userId: userId,
+                    snippetGroupId: snippetGroup.id,
+                    language: "text",
+                    name: "New snippet",
+                    content: "",
+                },
+            }).then((newSnippet) => {
+                let newSnippets = snippets.slice(0);
+                newSnippets.unshift(newSnippet);
+                setSnippets(newSnippets);
+                setSelectedSnippet(newSnippet.id);
+                setCurrentListHighlight({
+                    type: ListHighlightType.Snippet,
+                    id: newSnippet.id,
+                });
+                if (!isOpen) addExpandedGroup(snippetGroup.id);
+            });
+        }
+    };
+    useHotkeys("ctrl+n", addSnippet, [currentListHighlight, isOpen, snippets.length]);
+
+    const deleteSelectedSnippet = () => {
+        if (currentListHighlight.type === ListHighlightType.Snippet) {
+            const selectedSnippet = currentListHighlight.id;
+
+            if (snippets.some((s) => s.id === selectedSnippet)) {
+                deleteSnippet({ snippetId: selectedSnippet }).then(() => {
+                    const oldIx: number = snippets.findIndex((s) => s.id === selectedSnippet);
+                    let newSnippets = snippets.slice();
+                    newSnippets.splice(oldIx, 1);
+                    setSnippets(newSnippets);
+                    if (newSnippets.length) {
+                        setCurrentListHighlight({
+                            type: ListHighlightType.Snippet,
+                            id: newSnippets[oldIx === 0 ? oldIx : oldIx - 1].id,
+                        });
+                    } else {
+                        setCurrentListHighlight({
+                            type: ListHighlightType.SnippetGroup,
+                            id: snippetGroup.id,
+                        });
+                    }
+                });
+            }
+        }
+    };
+    useHotkeys("backspace", deleteSelectedSnippet, [
+        snippets.length,
+        currentListHighlight,
+    ]);
 
     return (
         <>
@@ -102,7 +158,6 @@ const SnippetGroupLibraryItem: FunctionComponent<SnippetGroupLibraryItemProps> =
             <AnimatePresence initial={false}>
                 {isOpen && (
                     <motion.div
-                        className="mt-1 space-y-1 flex flex-col"
                         key="content"
                         initial="collapsed"
                         animate="open"

@@ -4,7 +4,7 @@ import SnippetVariableSetList from "./snippet-variable-set-list";
 import SnippetVariablesEditor from "./snippet-variables-editor";
 import SnippetRunner from "./snippet-runner";
 
-const SnippetFuwq: FunctionComponent = () => {
+const SnippetDetails: FunctionComponent = () => {
     const {
         state: { editedSnippet },
     } = useOvermind();
@@ -26,4 +26,4 @@ const SnippetFuwq: FunctionComponent = () => {
     );
 };
 
-export default SnippetFuwq;
+export default SnippetDetails;

@@ -77,6 +77,7 @@ const SnippetEditor: FunctionComponent = () => {
     };
 
     const onLanguageChange = (language: string) => {
+        console.log(language);
         const newState = produce<Snippet>(editedSnippet, (draftState) => {
             draftState.language = language;
         });

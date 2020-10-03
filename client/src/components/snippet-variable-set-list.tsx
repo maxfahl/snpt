@@ -13,6 +13,7 @@ import { sortByStringProp } from "../utils/array";
 import EditableTextButton from "./editable-text-button/editable-text-button";
 import { ListHighlight, ListHighlightType } from "../overmind/state";
 import { NamedModel } from "../models/model";
+import { useHotkeys } from "react-hotkeys-hook";
 
 type SnippetVariableSetListProps = {
     onSelect: (id: number) => void;
@@ -101,43 +102,85 @@ const SnippetVariableSetList: FunctionComponent<SnippetVariableSetListProps> = (
         );
     };
 
-    const doCreateVariableSet = async () => {
-        const newSnippetVariableSet = await createSnippetVariableSet({
+    const createVariableSet = () => {
+        createSnippetVariableSet({
             fields: {
                 snippetId: editedSnippet.id,
                 name: "New variable set",
             },
-        });
-
-        let newSnippetsVariableSets = snippetVariableSets.slice(0);
-        newSnippetsVariableSets.push(newSnippetVariableSet);
-        setSnippetVariableSets(newSnippetsVariableSets);
-        setSelectedSnippetVariableSet(newSnippetVariableSet.id);
-    };
-
-    const doDeleteSelectedVariableSet = async (e) => {
-        if (
-            selectedSnippetVariableSet !== undefined &&
-            snippetVariableSets.length > 1
-        ) {
-            await deleteSnippetVariableSet({
-                snippetVariableSetId: selectedSnippetVariableSet,
+        }).then(newSnippetVariableSet => {
+            let newSnippetsVariableSets = snippetVariableSets.slice(0);
+            newSnippetsVariableSets.unshift(newSnippetVariableSet);
+            setSnippetVariableSets(newSnippetsVariableSets);
+            setSelectedSnippetVariableSet(newSnippetVariableSet.id);
+            setCurrentListHighlight({
+                type: ListHighlightType.SnippetVariableSet,
+                id: newSnippetVariableSet.id,
             });
+        });
+    };
+    useHotkeys("ctrl+shift+option+n", createVariableSet, [currentListHighlight, snippetVariableSets.length]);
 
-            const oldIx: number = !!selectedSnippetVariableSet
-                ? snippetVariableSets.findIndex(
-                      (svs) => svs.id === selectedSnippetVariableSet
-                  )
-                : 0;
-            let newSnippetVariableSets = snippetVariableSets.slice();
-            newSnippetVariableSets.splice(oldIx, 1);
-            setSelectedSnippetVariableSet(
-                newSnippetVariableSets[oldIx === 0 ? oldIx : oldIx - 1].id
-            );
+    const deleteSelectedVariableSet = () => {
+        if (snippetVariableSets.length > 1 && currentListHighlight.type === ListHighlightType.SnippetVariableSet) {
+            const selectedSnippetVariableSet = currentListHighlight.id;
 
-            setSnippetVariableSets(newSnippetVariableSets);
+            if (snippetVariableSets.some((s) => s.id === selectedSnippetVariableSet)) {
+                deleteSnippetVariableSet({
+                    snippetVariableSetId: selectedSnippetVariableSet,
+                }).then(() => {
+                    const oldIx: number = snippetVariableSets.findIndex((s) => s.id === selectedSnippetVariableSet);
+                    let newSnippetsVariableSets = snippetVariableSets.slice();
+                    newSnippetsVariableSets.splice(oldIx, 1);
+                    setSnippetVariableSets(newSnippetsVariableSets);
+                    setCurrentListHighlight({
+                        type: ListHighlightType.SnippetVariableSet,
+                        id: newSnippetsVariableSets[oldIx === 0 ? oldIx : oldIx - 1].id,
+                    });
+                });
+            }
         }
     };
+    useHotkeys("backspace", deleteSelectedVariableSet, [
+        snippetVariableSets.length,
+        currentListHighlight,
+    ]);
+
+    // const addSnippet = () => {
+    //     if (
+    //         (currentListHighlight.type === ListHighlightType.SnippetGroup &&
+    //             currentListHighlight.id === snippetGroup.id) ||
+    //         (currentListHighlight.type === ListHighlightType.Snippet &&
+    //             snippets.some((s) => s.id === currentListHighlight.id))
+    //     ) {
+    //         createSnippet({
+    //             fields: {
+    //                 userId: userId,
+    //                 snippetGroupId: snippetGroup.id,
+    //                 language: "text",
+    //                 name: "New snippet",
+    //                 content: "",
+    //             },
+    //         }).then((newSnippet) => {
+    //             let newSnippets = snippets.slice(0);
+    //             newSnippets.unshift(newSnippet);
+    //             setSnippets(newSnippets);
+    //             setSelectedSnippet(newSnippet.id);
+    //             if (newSnippets.length) {
+    //                 setCurrentListHighlight({
+    //                     type: ListHighlightType.Snippet,
+    //                     id: newSnippet.id,
+    //                 });
+    //             } else {
+    //                 setCurrentListHighlight({
+    //                     type: ListHighlightType.SnippetGroup,
+    //                     id: snippetGroup.id,
+    //                 });
+    //             }
+    //             if (!isOpen) addExpandedGroup(snippetGroup.id);
+    //         });
+    //     }
+    // };
 
     return (
         <div className="w-64 px-4 pt-2 border-r border-gray-700 flex flex-col">

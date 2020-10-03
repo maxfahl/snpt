@@ -59,7 +59,7 @@ const Editor: FunctionComponent = () => {
             newSnippetGroups.unshift(newGroup);
             setSnippetGroups(newSnippetGroups);
             setCurrentListHighlight({
-                type: ListHighlightType.SnippetVariableSet,
+                type: ListHighlightType.SnippetGroup,
                 id: newGroup.id
             });
         });

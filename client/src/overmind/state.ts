@@ -1,6 +1,5 @@
 import { Snippet } from "../models/snippet";
 import { SnippetVariable } from "../models/snippet-variable";
-import { NamedModel } from "../models/model";
 
 export type Auth = {
     token: string;

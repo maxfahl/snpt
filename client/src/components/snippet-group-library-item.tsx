@@ -7,6 +7,7 @@ import { ListHighlightType } from "../overmind/state";
 import EditableTextButton from "./editable-text-button/editable-text-button";
 import { sortByStringProp } from "../utils/array";
 import { useHotkeys } from "react-hotkeys-hook";
+import { setEditedSnippet } from "../overmind/actions";
 
 type SnippetGroupLibraryItemProps = {
     snippetGroup: SnippetGroup;
@@ -22,6 +23,7 @@ const SnippetGroupLibraryItem: FunctionComponent<SnippetGroupLibraryItemProps> =
             selectedSnippet,
             currentListHighlight,
             expandedGroups,
+            editedSnippet,
             auth: {
                 user: { id: userId },
             },
@@ -36,6 +38,7 @@ const SnippetGroupLibraryItem: FunctionComponent<SnippetGroupLibraryItemProps> =
             isItemHighlighted,
             createSnippet,
             deleteSnippet,
+            setEditedSnippet,
         },
     } = useOvermind();
     const [isOpen, setIsOpen] = useState<boolean>();
@@ -110,7 +113,11 @@ const SnippetGroupLibraryItem: FunctionComponent<SnippetGroupLibraryItemProps> =
             });
         }
     };
-    useHotkeys("ctrl+n", addSnippet, [currentListHighlight, isOpen, snippets.length]);
+    useHotkeys("ctrl+n", addSnippet, [
+        currentListHighlight,
+        isOpen,
+        snippets.length,
+    ]);
 
     const deleteSelectedSnippet = () => {
         if (currentListHighlight.type === ListHighlightType.Snippet) {
@@ -118,20 +125,25 @@ const SnippetGroupLibraryItem: FunctionComponent<SnippetGroupLibraryItemProps> =
 
             if (snippets.some((s) => s.id === selectedSnippet)) {
                 deleteSnippet({ snippetId: selectedSnippet }).then(() => {
-                    const oldIx: number = snippets.findIndex((s) => s.id === selectedSnippet);
+                    const oldIx: number = snippets.findIndex(
+                        (s) => s.id === selectedSnippet
+                    );
                     let newSnippets = snippets.slice();
                     newSnippets.splice(oldIx, 1);
                     setSnippets(newSnippets);
                     if (newSnippets.length) {
+                        const newSelectedSnippet = newSnippets[oldIx === 0 ? oldIx : oldIx - 1];
                         setCurrentListHighlight({
                             type: ListHighlightType.Snippet,
-                            id: newSnippets[oldIx === 0 ? oldIx : oldIx - 1].id,
+                            id: newSelectedSnippet.id,
                         });
+                        setSelectedSnippet(newSelectedSnippet.id);
                     } else {
                         setCurrentListHighlight({
                             type: ListHighlightType.SnippetGroup,
                             id: snippetGroup.id,
                         });
+                        setSelectedSnippet(0);
                     }
                 });
             }

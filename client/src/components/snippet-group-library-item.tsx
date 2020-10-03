@@ -246,7 +246,7 @@ const SnippetGroupLibraryItem: FunctionComponent<SnippetGroupLibraryItemProps> =
                                 }}
                                 transition={{
                                     duration: 0.25,
-                                    delay: i * 0.05,
+                                    delay: i * 0.01,
                                     ease: [0.04, 0.62, 0.23, 0.98],
                                 }}
                             >

@@ -10,16 +10,23 @@ const StateManager: FunctionComponent<PropsWithChildren<any>> = ({
         actions: { setCurrentListHighlight },
     } = useOvermind();
 
-    const onDocumentMouseDown = useCallback(
-        (e: MouseEvent) => {
-            if (!!currentListHighlight && !hasListItemParent(e.target))
-                setCurrentListHighlight(undefined);
-        },
-        [currentListHighlight]
-    );
+    // const onDocumentMouseDown = useCallback(
+    //     (e: MouseEvent) => {
+    //         if (!!currentListHighlight && !hasListItemParent(e.target)) {
+    //             setCurrentListHighlight(undefined);
+    //         }
+    //         console.log('onDocumentMouseDown');
+    //     },
+    //     [currentListHighlight]
+    // );
 
     useEffect(() => {
         if (!!currentListHighlight) {
+            const onDocumentMouseDown = (e: MouseEvent) => {
+                if (!!currentListHighlight && !hasListItemParent(e.target))
+                    setCurrentListHighlight(undefined);
+            };
+
             document.addEventListener("mousedown", onDocumentMouseDown);
             return () => {
                 document.removeEventListener("mousedown", onDocumentMouseDown);

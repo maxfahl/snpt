@@ -20,6 +20,7 @@ type EditableTextButtonProps = {
     onTextChange?: (model: NamedModel, text: string) => void;
     className?: string;
     hasChildren?: boolean;
+    startEditable: boolean;
 };
 
 const EditableTextButton: FunctionComponent<EditableTextButtonProps> = ({
@@ -30,10 +31,12 @@ const EditableTextButton: FunctionComponent<EditableTextButtonProps> = ({
     onTextChange = noop,
     className,
     hasChildren = false,
+    startEditable = false
 }) => {
     const [disabled, setDisabled] = useState(true);
     const [text, setText] = useState(model.name);
     const contentEditable: RefObject<HTMLSpanElement> = React.createRef();
+
 
     useEffect(() => {
         if (!disabled) {
@@ -60,15 +63,23 @@ const EditableTextButton: FunctionComponent<EditableTextButtonProps> = ({
         }
     }, [disabled]);
 
-    const onEditButtonClick = (e: MouseEvent) => {
-        if (disabled) {
-            e.stopPropagation();
-            setDisabled(!disabled);
-        }
-    };
+    // useEffect(() => {
+    //     if (startEditable)
+    //         startEdit();
+    // }, []);
 
     const onClick = (e: MouseEvent) => {
         if (disabled) onSelect(e, model);
+    };
+
+    const startEdit = () => {
+        setDisabled(!disabled);
+    };
+
+    const onEditButtonClick = (e: MouseEvent) => {
+        e.stopPropagation();
+        if (disabled)
+            startEdit();
     };
 
     let editedText = model.name; // Component will not re-render during typing.
@@ -100,7 +111,7 @@ const EditableTextButton: FunctionComponent<EditableTextButtonProps> = ({
                 backgroundColor +
                 (disabled ? " cursor-pointer" : "")
             }
-            onMouseDown={onClick}
+            onClick={onClick}
         >
             {hasChildren ? (
                 <motion.svg

@@ -209,7 +209,7 @@ const Editor: FunctionComponent = () => {
     return (
         <div
             id="library"
-            className="w-64 px-4 pt-2 border-r border-gray-700 overflow-auto"
+            className="w-64 px-4 py-3 border-r border-gray-700 overflow-auto"
         >
             {snippetGroups.map((sg) => (
                 <SnippetGroupLibraryItem

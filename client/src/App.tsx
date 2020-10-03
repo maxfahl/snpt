@@ -25,7 +25,7 @@ const App: FunctionComponent = () => {
                         <div className="h-16 border-b border-gray-700 flex items-center justify-start">
                             <h1 className="text-4xl font-bold ml-4">SNPT</h1>
                         </div>
-                        <div className="flex-1 flex">
+                        <div className="flex-1 flex" style={{ minHeight: 0 }}>
                             <Library />
                             <Main />
                         </div>

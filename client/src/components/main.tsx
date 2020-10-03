@@ -18,7 +18,8 @@ const Main: FunctionComponent = () => {
     }, [selectedSnippet]);
 
     let child;
-    if (editedSnippet) child = <SnippetViewer />;
+    if (editedSnippet)
+        child = <SnippetViewer />;
     else
         child = (
             <div className="absolute inset-0 flex items-center justify-center">

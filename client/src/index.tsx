@@ -3,6 +3,9 @@ import ReactDOM from "react-dom";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 import "./ace";
+import { enableMapSet } from "immer";
+
+enableMapSet()
 
 ReactDOM.render(
     <React.StrictMode>

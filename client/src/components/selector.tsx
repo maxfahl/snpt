@@ -1,4 +1,11 @@
-import React, { FunctionComponent, useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
+import React, {
+    FunctionComponent,
+    useCallback,
+    useEffect,
+    useLayoutEffect,
+    useRef,
+    useState,
+} from "react";
 import { useOvermind } from "../overmind";
 import { motion, useAnimation } from "framer-motion";
 import { isDescendant } from "../utils/dom";

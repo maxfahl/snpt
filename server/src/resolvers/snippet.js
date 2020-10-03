@@ -27,12 +27,12 @@ const resolvers = {
         },
         updateSnippet: async (
             parent,
-            { snippetId, fields: { userId, snippetGroupId, name, content } }
+            { snippetId, fields }
         ) => {
             const snippet = await models.Snippet.findOne({
                 where: { id: snippetId },
             });
-            await snippet.update({ userId, snippetGroupId, name, content });
+            await snippet.update(fields);
             return snippet;
         },
         deleteSnippet: async (parent, { snippetId }) => {

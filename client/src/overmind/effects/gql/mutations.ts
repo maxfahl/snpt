@@ -47,6 +47,7 @@ export const updateSnippet = gql`
         updateSnippet(snippetId: $snippetId, fields: $fields) {
             id
             name
+            language
             content
         }
     }

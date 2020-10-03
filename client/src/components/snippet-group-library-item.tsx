@@ -7,23 +7,25 @@ import { ListHighlightType } from "../overmind/state";
 import EditableTextButton from "./editable-text-button/editable-text-button";
 import { sortByStringProp } from "../utils/array";
 import { useHotkeys } from "react-hotkeys-hook";
-import { setEditedSnippet } from "../overmind/actions";
 
 type SnippetGroupLibraryItemProps = {
     snippetGroup: SnippetGroup;
     onNameChange: (snippetGroup: SnippetGroup, newName: string) => void;
+    navigateOut: (snippetGroup: SnippetGroup, up: boolean) => void;
+    notifyChildrenIds: (snippetGroup: SnippetGroup, snippetIds: number[]) => void;
 };
 
 const SnippetGroupLibraryItem: FunctionComponent<SnippetGroupLibraryItemProps> = ({
     snippetGroup,
     onNameChange,
+    navigateOut,
+    notifyChildrenIds,
 }) => {
     const {
         state: {
             selectedSnippet,
             currentListHighlight,
             expandedGroups,
-            editedSnippet,
             auth: {
                 user: { id: userId },
             },
@@ -38,11 +40,10 @@ const SnippetGroupLibraryItem: FunctionComponent<SnippetGroupLibraryItemProps> =
             isItemHighlighted,
             createSnippet,
             deleteSnippet,
-            setEditedSnippet,
         },
     } = useOvermind();
     const [isOpen, setIsOpen] = useState<boolean>();
-    const [snippets, setSnippets] = useState([]);
+    const [snippets, setSnippets] = useState<Snippet[]>([]);
 
     useEffect(() => {
         const fetchSnippets = async () => {
@@ -50,6 +51,11 @@ const SnippetGroupLibraryItem: FunctionComponent<SnippetGroupLibraryItemProps> =
         };
         fetchSnippets();
     }, []);
+
+    useEffect(() => {
+        if (snippets)
+            notifyChildrenIds(snippetGroup, snippets.map(s => s.id));
+    }, [snippets]);
 
     useEffect(() => {
         if (expandedGroups) setIsOpen(expandedGroups.includes(snippetGroup.id));
@@ -116,8 +122,54 @@ const SnippetGroupLibraryItem: FunctionComponent<SnippetGroupLibraryItemProps> =
     useHotkeys("ctrl+n", addSnippet, [
         currentListHighlight,
         isOpen,
-        snippets.length,
+        snippets,
     ]);
+
+    const navigateList = (keyboardEvent: KeyboardEvent) => {
+        if (currentListHighlight.type === ListHighlightType.Snippet) {
+            const oldIx: number = snippets.findIndex(
+                (s) => s.id === currentListHighlight.id
+            );
+            if (oldIx !== -1) {
+                const arrowUp = keyboardEvent.code === "ArrowUp";
+                if (
+                    (arrowUp && oldIx === 0) ||
+                    (!arrowUp && oldIx === snippets.length - 1)
+                ) {
+                    navigateOut(snippetGroup, arrowUp);
+                } else if (oldIx !== -1) {
+                    const newIx = Math.min(
+                        snippets.length - 1,
+                        Math.max(0, oldIx + (arrowUp ? -1 : 1))
+                    );
+                    const newSel = snippets[newIx];
+                    setCurrentListHighlight({
+                        type: ListHighlightType.Snippet,
+                        id: newSel.id,
+                    });
+                    setSelectedSnippet(newSel.id);
+                }
+            }
+        }
+    };
+    useHotkeys("up,down", navigateList, [
+        currentListHighlight,
+        snippets
+    ]);
+
+    const openOrCloseGroup = (keyboardEvent: KeyboardEvent) => {
+        if (
+            currentListHighlight.type === ListHighlightType.SnippetGroup &&
+            currentListHighlight.id === snippetGroup.id
+        ) {
+            if (keyboardEvent.code === "ArrowLeft") {
+                removeExpandedGroup(snippetGroup.id);
+            } else {
+                addExpandedGroup(snippetGroup.id);
+            }
+        }
+    };
+    useHotkeys("left,right", openOrCloseGroup, [currentListHighlight, isOpen]);
 
     const deleteSelectedSnippet = () => {
         if (currentListHighlight.type === ListHighlightType.Snippet) {
@@ -132,7 +184,8 @@ const SnippetGroupLibraryItem: FunctionComponent<SnippetGroupLibraryItemProps> =
                     newSnippets.splice(oldIx, 1);
                     setSnippets(newSnippets);
                     if (newSnippets.length) {
-                        const newSelectedSnippet = newSnippets[oldIx === 0 ? oldIx : oldIx - 1];
+                        const newSelectedSnippet =
+                            newSnippets[oldIx === 0 ? oldIx : oldIx - 1];
                         setCurrentListHighlight({
                             type: ListHighlightType.Snippet,
                             id: newSelectedSnippet.id,

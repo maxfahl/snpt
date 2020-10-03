@@ -146,41 +146,21 @@ const SnippetVariableSetList: FunctionComponent<SnippetVariableSetListProps> = (
         currentListHighlight,
     ]);
 
-    // const addSnippet = () => {
-    //     if (
-    //         (currentListHighlight.type === ListHighlightType.SnippetGroup &&
-    //             currentListHighlight.id === snippetGroup.id) ||
-    //         (currentListHighlight.type === ListHighlightType.Snippet &&
-    //             snippets.some((s) => s.id === currentListHighlight.id))
-    //     ) {
-    //         createSnippet({
-    //             fields: {
-    //                 userId: userId,
-    //                 snippetGroupId: snippetGroup.id,
-    //                 language: "text",
-    //                 name: "New snippet",
-    //                 content: "",
-    //             },
-    //         }).then((newSnippet) => {
-    //             let newSnippets = snippets.slice(0);
-    //             newSnippets.unshift(newSnippet);
-    //             setSnippets(newSnippets);
-    //             setSelectedSnippet(newSnippet.id);
-    //             if (newSnippets.length) {
-    //                 setCurrentListHighlight({
-    //                     type: ListHighlightType.Snippet,
-    //                     id: newSnippet.id,
-    //                 });
-    //             } else {
-    //                 setCurrentListHighlight({
-    //                     type: ListHighlightType.SnippetGroup,
-    //                     id: snippetGroup.id,
-    //                 });
-    //             }
-    //             if (!isOpen) addExpandedGroup(snippetGroup.id);
-    //         });
-    //     }
-    // };
+    const navigateList = (keyboardEvent: KeyboardEvent) => {
+        if (currentListHighlight.type === ListHighlightType.SnippetVariableSet) {
+            const oldIx: number = snippetVariableSets.findIndex((svs) => svs.id === currentListHighlight.id);
+            const newIx = Math.min(snippetVariableSets.length - 1, Math.max(0, oldIx + (keyboardEvent.code === 'ArrowUp' ? -1 : 1)));
+            const newSel = snippetVariableSets[newIx];
+            setCurrentListHighlight({
+                type: ListHighlightType.SnippetVariableSet,
+                id: newSel.id
+            });
+             setSelectedSnippetVariableSet(newSel.id);
+        }
+    };
+    useHotkeys("up,down", navigateList, [
+        currentListHighlight, snippetVariableSets.length
+    ]);
 
     return (
         <div className="w-64 px-4 pt-2 border-r border-gray-700 flex flex-col">

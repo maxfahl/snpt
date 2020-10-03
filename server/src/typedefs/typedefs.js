@@ -87,6 +87,7 @@ const typeDefs = `
 	
 	input UpdateSnippetInput {
 		name: String
+		language: String
 		content: String
 	}
 	

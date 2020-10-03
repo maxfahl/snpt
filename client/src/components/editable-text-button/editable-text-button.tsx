@@ -95,12 +95,12 @@ const EditableTextButton: FunctionComponent<EditableTextButtonProps> = ({
     return (
         <div
             className={
-                "root mt-1 mb-1 flex items-center pr-2 py-2 leading-5 rounded transition-colors duration-300" +
+                "root list-item mt-1 mb-1 flex items-center pr-2 py-2 leading-5 rounded transition-colors duration-300" +
                 (className ? ` ${className}` : "") +
                 backgroundColor +
                 (disabled ? " cursor-pointer" : "")
             }
-            onClick={onClick}
+            onMouseDown={onClick}
         >
             {hasChildren ? (
                 <motion.svg

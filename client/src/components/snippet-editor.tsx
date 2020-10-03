@@ -52,6 +52,7 @@ const SnippetEditor: FunctionComponent = () => {
             fields: {
                 name: snippet.name,
                 content: snippet.content,
+                language: snippet.language
             },
         });
     };

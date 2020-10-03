@@ -8,3 +8,15 @@ export const isDescendant = (parent, child): boolean => {
     }
     return false;
 }
+
+export const hasListItemParent = (child): boolean => {
+    let node = child;
+    let level = 0;
+    while (node != null && level < 5) {
+        if (node.classList.contains('list-item'))
+            return true;
+        node = node.parentNode;
+        level++;
+    }
+    return false;
+}

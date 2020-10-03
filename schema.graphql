@@ -104,6 +104,7 @@ input UpdateSnippetGroupInput {
 
 input UpdateSnippetInput {
     content: String
+    language: String
     name: String
 }
 

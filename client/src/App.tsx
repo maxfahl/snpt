@@ -1,6 +1,5 @@
 import "./App.css";
 import React, { FunctionComponent, useEffect } from "react";
-import Library from "./components/library";
 import Main from "./components/main";
 import { createOvermind } from "overmind";
 import { config } from "./overmind";
